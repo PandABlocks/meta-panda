@@ -361,22 +361,7 @@ def parse(block):
     ipmi.add_sections(parse_multi_area(block[multi_area:]))
     return ipmi
 
+
 def parse_file(filename):
-    block = numpy.fromfile(filename, dtype = numpy.uint8)
+    block = numpy.fromfile(filename, dtype=numpy.uint8)
     return parse(block)
-
-
-if __name__ == '__main__':
-    ipmi = parse_file(sys.argv[1])
-    if len(sys.argv) == 2:
-        ipmi.emit()
-    else:
-        # Compare with ini file
-        match = ini_file.load_ini_file(sys.argv[2])
-        try:
-            ini_file.compare_ini(match, ipmi)
-        except ini_file.CompareFail as fail:
-            print('Compare failed:', fail)
-            sys.exit(1)
-        else:
-            print('Match ok')

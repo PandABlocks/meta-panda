@@ -103,13 +103,3 @@ def compare_ini(match, other, ignore = []):
                         raise CompareFail(
                             'Option "%s.%s": value "%s" != "%s"' % (
                                 section.name, key, value, other_value))
-
-
-if __name__ == '__main__':
-    ini = load_ini_file(sys.argv[1])
-    if len(sys.argv) == 2:
-        ini.emit()
-    else:
-        match = load_ini_file(sys.argv[2])
-        compare_ini(match, ini)
-        print('Match ok')

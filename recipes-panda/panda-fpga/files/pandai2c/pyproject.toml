@@ -1,0 +1,19 @@
+[project]
+name = "pandai2c"
+description = "Panda scripts to deal with FMC EEPROMs"
+version = "0.0.1"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.scripts]
+pandai2c-cli = "pandai2c.__main__:main"

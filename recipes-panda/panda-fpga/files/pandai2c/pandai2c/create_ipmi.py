@@ -207,13 +207,3 @@ def generate_ipmi(ini, serial_number=None):
     multi = generate_multi_area(ini)
     header = generate_header(board, multi)
     return numpy.concatenate((header, board, multi))
-
-
-if __name__ == '__main__':
-    from . import ini_file
-    ini = ini_file.load_ini_file(sys.argv[1])
-    ipmi = generate_ipmi(ini)
-    if len(sys.argv) == 2:
-        print(ipmi)
-    else:
-        ipmi.tofile(sys.argv[2])
