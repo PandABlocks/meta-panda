@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# This script is run at startup to parse /boot/config.txt and configure the
+# network settings accordingly.
+
+NETWORK_CONFIG=/run/systemd/network/20-wired.network
+CONFIG_FILE=/boot/config.txt
+
+IPprefix_by_netmask () {
+   c=0 x=0$( printf '%o' ${1//./ } )
+   while [ $x -gt 0 ]; do
+       let c+=$((x%2)) 'x>>=1'
+   done
+   echo /$c
+}
+
+get_mac_address()
+{
+    [ -e /persistent/MAC ] && cat /persistent/MAC
+}
+
+# TODO: find a clean way in which each target sets /persistent/MAC
+#[ -e /boot/target-defs ] && source /boot/target-defs
+
+# Returns the corresponding config file entry, or an empty string if not
+# present.
+parse_config()
+{
+    # Extract file entry removing leading and trailing whitespace
+    # and windows line endings
+    local config="$(
+        sed -n "/^[ \t]*$1[ \t]*=[ \t]*/{s///;s/[ \t]*\r*$//;p}" <"$CONFIG_FILE")"
+    printf %s "$config"
+    [ -n "$config" ]
+}
+
+# First set the MAC address
+MAC="$(get_mac_address)"
+[ -n "$MAC" ] && ifconfig eth0 hw ether "$MAC"
+
+# Prepare the interfaces file.
+{
+    cat <<EOF
+[Match]
+Name=eth0
+
+[Network]
+EOF
+    if [ -e "$CONFIG_FILE" ]; then
+        if ADDRESS="$(parse_config ADDRESS)"  &&
+           NETMASK="$(parse_config NETMASK)"
+        then
+            echo "Address=${ADDRESS}$(IPprefix_by_netmask $NETMASK)"
+            # Add gateway if specified
+            GATEWAY="$(parse_config GATEWAY)"  &&
+                echo "Gateway=$GATEWAY"
+        else
+            echo "DHCP=ipv4"
+        fi
+        DNS="$(parse_config DNS)"  &&
+        {
+            DNS_SEARCH="$(parse_config DNS_SEARCH)"  && {
+                echo "Domains=$DNS_SEARCH"
+            }
+            for server in $DNS; do
+                echo "DNS=$server"
+            done
+        }
+        NTP="$(parse_config NTP)" && {
+            for server in $NTP; do
+                echo "NTP=$server"
+            done
+        }
+    else
+        echo "LinkLocalAddressing=ipv4"
+        echo "DHCP=ipv4"
+    fi
+} >$NETWORK_CONFIG
+
+if HOSTNAME="$(parse_config HOSTNAME)"; then
+    hostnamectl hostname "$HOSTNAME"
+else
+    hostnamectl hostname panda
+fi

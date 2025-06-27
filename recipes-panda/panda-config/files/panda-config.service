@@ -1,0 +1,12 @@
+[Unit]
+Description=Configure network based on /boot/config.txt
+Requires=network-pre.target
+Before=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/panda-config
+
+[Install]
+WantedBy=sysinit.target
