@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <title>PandA</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="dark">
+    <div class="header">
+      <h1>PandA</h1>
+    </div>
+
+    <div class="content">
+      <p>
+        This page lists documentation for the components of this PandA
+      </p>
+      <h2>Rootfs</h2>
+      <p>
+      The rootfs is responsible for booting the version of Linux that powers this
+      device, including setting up networking.
+      </p>
+      <a target="_blank" rel="noopener noreferrer"
+         href="/panda-rootfs-faq.html">
+        Rootfs FAQ
+      </a>
+
+      <h2>FPGA</h2>
+      <p>
+        The FPGA provides the implementation of the logical Blocks that are wired
+        together for a given application. It exposes a register interface to the
+        TCP server so that the parameters and wiring of these Blocks can be changed
+        at runtime.
+      </p>
+      <a target="_blank" rel="noopener noreferrer"
+         href="/panda-fpga/index.html">
+        FPGA Documentation
+      </a>
+
+      <h2>TCP Server</h2>
+      <p>
+        The TCP server is meant for integration into Control systems like EPICS and
+        Tango. It exposes an ASCII Control interface on port 8888 and a binary Data
+        interface on port 8889.
+      </p>
+      <a target="_blank" rel="noopener noreferrer"
+         href="/panda-server/index.html">
+        TCP Server Documentation
+      </a>
+
+      <h2>Web Control</h2>
+      <p>
+        Web Control provides a webserver that exposes a browser based Graphical User
+        Interface that can be used to inspect, configure and modify the system.
+      </p>
+
+      <a target="_blank" rel="noopener noreferrer"
+         href="/panda-webcontrol/index.html">
+        Web Control Documentation
+      </a>
+    </div>
+  </body>
+</html>
