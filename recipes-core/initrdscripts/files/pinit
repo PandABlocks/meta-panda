@@ -1,0 +1,144 @@
+#!/bin/sh
+
+# This is called if something goes horribly wrong.
+panic()
+{
+    echo >&2 "$@"
+    echo >&2 Unable to continue
+    set-led SYSTEM_ERR
+    exec /bin/sh
+}
+
+resize_sdcard()
+{
+    mkdir -p /tmp/boot/
+    cp -r /boot/* /tmp/boot/
+    mkdir -p /mnt
+    mount /dev/mmcblk0p3 /mnt
+    cp /mnt/* /tmp/boot/
+    umount /mnt &&
+    umount /boot &&
+    {
+        cat <<EOF | sed 's/ *#.*//' | fdisk /dev/mmcblk0
+o # create new partition table
+n # create new partition
+p # primary
+1 # number 1
+  # from sd card start
+  # to sd card end
+t # type
+1 # of partition 1
+c # fat32
+p # print
+w # write
+EOF
+    } &&
+    mkfs.vfat -v -n boot /dev/mmcblk0p1 &&
+    mount /dev/mmcblk0p1 /boot &&
+    mv /tmp/boot/* /boot/  ||
+        panic 'Failed to resize sdcard'
+}
+
+create_changes_image()
+{
+    dd if=/dev/zero of=/boot/changes.ext4 count=64 bs=1M
+    # The options are needed to prevent an error at mount time because of
+    # unsupported WRITE_ZEROES operation by underlying fat32 system
+    mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 -F /boot/changes.ext4
+    changes_image_created=true
+}
+
+validate_mac_address()
+{
+    [ "$(echo "$1" |
+         sed 's/OK/xx/g; s/[0-9A-F][0-9A-F]/OK/g')" = 'OK:OK:OK:OK:OK:OK' ]
+}
+
+read_mac_address()
+{
+    set-led ATTENTION
+    while :; do
+        echo >&2
+        echo >&2 ------------------------------------
+        read -p 'Enter MAC address: '
+        if validate_mac_address "$REPLY"; then
+            break
+        else
+            echo >&2 MAC address "$REPLY" failed validation
+        fi
+    done
+
+    echo "$REPLY" >/rootfs/persistent/MAC
+    set-led BOOTING
+}
+
+echo PandA init
+set -x
+
+# /proc, /sys and /dev were already mounted by caller script
+mkdir -p /tmp
+mount -t tmpfs tmpfs /tmp
+
+# Make sure dynamic libraries are findable
+/sbin/ldconfig
+
+while [ ! -e /dev/mmcblk0p1 ]; do
+    echo "Waiting for /dev/mmcblk0p1 to appear"
+    sleep 1
+done
+
+mkdir -p /boot
+mount -t vfat /dev/mmcblk0p1 /boot  ||
+    panic 'Unable to mount boot partition!'
+
+# we might need target specific LED configuration from target-defs, so we need
+# to start led-daemon after mounting /boot
+led-daemon &
+LED_DAEMON_PID=$!
+
+# Partition table follows the old scheme, let's re-size
+[ -b /dev/mmcblk0p3 ] && resize_sdcard
+[ -e /boot/packages.squashfs ] || panic 'Rootfs not found'
+[ ! -e /boot/changes.ext4 ] && create_changes_image
+mkdir -p /tmp/packages /tmp/changes
+if [ -e /boot/to-ram ]; then
+    # We might want to copy to RAM for a faster system and because updating is
+    # safer if it's not in used
+    cp /boot/packages.squashfs /tmp/
+    mount -t squashfs /tmp/packages.squashfs /tmp/packages/ ||
+        panic 'Unable to mount packages'
+else
+    mount -t squashfs /boot/packages.squashfs /tmp/packages/ ||
+        panic 'Unable to mount packages'
+fi
+mount -t ext4 /boot/changes.ext4 /tmp/changes
+mkdir -p /tmp/changes/upper /tmp/changes/work
+mount -t overlay -o lowerdir=/tmp/packages/,upperdir=/tmp/changes/upper/,workdir=/tmp/changes/work/ overlay /rootfs ||
+    panic 'Unable to mount rootfs'
+mkdir -p /rootfs/boot /rootfs/proc /rootfs/sys /rootfs/dev /rootfs/tmp /rootfs/persistent
+# Try to mount persistent storage
+if [ -e /dev/mtd2 ]; then
+    mount -t jffs2 mtd2 /rootfs/persistent || {
+        # Erase QSPI only the first time after firmware was deployed
+        if [ "$changes_image_created" = true ]; then
+            echo Erasing QSPI
+            flash_erase -j -q /dev/mtd2 0 0  &&
+                mount -t jffs2 mtd2 /rootfs/persistent
+        fi
+    }
+fi
+# Some targets will require to manually set the MAC address
+[ ! -e /persistent/MAC ] && [ -e /boot/ask-for-mac ] && {
+    read_mac_address
+    rm -f /boot/ask-for-mac
+}
+kill $LED_DAEMON_PID
+sync
+mount --move /boot /rootfs/boot
+mount --move /proc /rootfs/proc
+mount --move /sys /rootfs/sys
+mount --move /dev /rootfs/dev
+# This also move the mounts underneath /tmp so that it can be accessed from the
+# new root
+mount --move /tmp /rootfs/tmp
+exec switch_root -c /dev/console /rootfs/ /sbin/init
