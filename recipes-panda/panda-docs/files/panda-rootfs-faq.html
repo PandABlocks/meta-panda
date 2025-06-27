@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <title>PandA Rootfs FAQ</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="dark">
+    <div class="header">
+      <h1>PandA Rootfs Frequently Asked Questions</h1>
+    </div>
+    <div class="content">
+      <h2>How to configure the network statically?</h2>
+      DHCP is used by default, a static configuration can be added by writing to
+      the file boot.txt in the SD card, for example:
+      <pre>
+          <code>
+              ADDRESS=192.168.0.2
+              NETMASK=255.255.255.0
+              GATEWAY=192.168.0.254
+              HOSTNAME=mypanda
+          </code>
+      </pre>
+
+      <h2>How to disable sub-net validation in the webcontrol</h2>
+      Drop an empty file under state/options in the SD card called
+      no-subnet-validation.
+
+      <h2>How to recover from catastrophic changes?</h2>
+      Remove the file changes.ext4 from the SD card.
+
+      <h2>How to disable changes being saved between reboots?</h2>
+      Replace changes.ext4 in the SD card with an empty file.
+
+      <h2>How to load the full rootfs to RAM at boot time?</h2>
+      Drop an empty file called to-ram in the SD card, please keep in
+      mind that in some targets(like ZedBoard), this might lead to the server
+      failing because the driver cannot allocate enough DMA buffers.
+
+      <h2>What to do if system freezes after loading the FPGA?</h2>
+      Drop an empty file called no-fpga in the SD card, the FPGA loader will
+      not load the bitstream when this file exists and will allow to try other
+      bitstream manually.
+
+      <h2>How to update a running PandA?</h2>
+      First delete /boot/packages.squashfs to make sure the new file is not used
+      by the mounted rootfs (this step is not needed if you are running rootfs
+      from RAM), then scp the new uImage, packages.squashfs, boot.bin, boot.scr,
+      system.dtb and target-defs. Finally, reboot the system.
+
+      If you are upgrading from an old PandA firmware, it is important to delete
+      the old files first.
+
+      <h2>How to override the FPGA bitstream variant used?</h2>
+      By default, the bitstream is selected based on the product name found in
+      the FMC EEPROM, if no EEPROM is found, it will default to the no-fmc
+      variant.
+      This selection can be overridden by setting the variable APP in the file
+      config.txt in the SD card, for example: APP=fmc_acq430, this will take
+      affect only if the PandA FPGA variant package was installed in the system.
+      Some of the PandA FPGA variants that could be available are:
+      fmc_acq430, fmc_acq427, fmc_24vio and fmc_lback-sfp_lback.
+
+      <h2>How to authorise a public key for ssh?</h2>
+      Add the public key to file authorized_keys in the SD card.
+    </div>
+  </body>
+</html>
