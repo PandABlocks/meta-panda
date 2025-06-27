@@ -1,0 +1,22 @@
+From e806735f54163dcf3254c0bd2e25e15814a5d979 Mon Sep 17 00:00:00 2001
+From: Emilio Perez <emiliopeju@gmail.com>
+Date: Wed, 25 Jun 2025 09:25:03 +0100
+Subject: [PATCH] Add hack to work around broken annotypes in python 3.10
+
+---
+ malcolm/core/models.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/malcolm/core/models.py b/malcolm/core/models.py
+index 92d2db5..0f27968 100644
+--- a/malcolm/core/models.py
++++ b/malcolm/core/models.py
+@@ -778,7 +778,7 @@ class ChoiceArrayMeta(ChoiceMeta, VArrayMeta):
+     def validate(self, value: Any) -> Array[str]:
+         """Check if the value is valid returns it"""
+         if value is None:
+-            return Array[self.enum_cls]()
++            return Array[self.enum_cls](typ=self.enum_cls)
+         else:
+             ret = []
+             if isinstance(value, str):
