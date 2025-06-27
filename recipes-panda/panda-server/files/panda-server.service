@@ -1,0 +1,10 @@
+[Unit]
+Description=PandABlocks-server service
+Requires=panda-fpga.service panda-extension-server.service
+After=panda-fpga.service panda-extension-server.service
+
+[Service]
+ExecStart=/usr/bin/panda-server-wrapper
+
+[Install]
+WantedBy=multi-user.target

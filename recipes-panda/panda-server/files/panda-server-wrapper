@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+osversion=$(cat /etc/os-release | grep VERSION= | cut -d= -f2 | tr -d '"')
+mkdir -p /boot/state
+/usr/bin/panda-server \
+    -c /opt/share/panda-fpga/config_d -f /boot/state/panda.state -R -X 9999 \
+    -r "$osversion"
