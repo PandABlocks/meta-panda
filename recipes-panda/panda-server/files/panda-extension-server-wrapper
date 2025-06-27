@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/usr/bin/panda-extension-server -s /opt/share/panda-fpga/extensions

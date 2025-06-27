@@ -1,0 +1,12 @@
+[Unit]
+Description=PandABlocks extension server service
+Requires=panda-fpga.service
+After=panda-fpga.service
+
+[Service]
+Type=notify
+NotifyAccess=all
+ExecStart=/usr/bin/panda-extension-server-wrapper
+
+[Install]
+WantedBy=multi-user.target
