@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# Script to load Panda FPGA image
+
+fail()
+{
+    echo >&2 "$@"
+    exit 1
+}
+
+parse_config()
+{
+    CONFIG_FILE=/boot/config.txt
+    # Extract file entry removing leading and trailing whitespace
+    # and windows line endings
+    local config="$(
+        sed -n "/^[ \t]*$1[ \t]*=[ \t]*/{s///;s/[ \t]*\r*$//;p}" <"$CONFIG_FILE")"
+    printf %s "$config"
+    [ -n "$config" ]
+}
+
+select_fpga_flavor() {
+    # Make sure last selection is not leaked
+    rm -f /opt/share/panda-fpga
+    [ -f /boot/no-fpga ] && fail "FPGA loading disabled by file /boot/no-fpga"
+    local available=($(find /opt/share/ -name 'panda-fpga-*' | grep -v slowfpga))
+    # Select the appropriate FPGA bitstream in the following order:
+    # - if there is only one, use that one
+    # - if config.txt specifies a valid one, use it
+    # - if FMC EEPROM specifies a known product, use the associated bitstream
+    # - if it is unknown or errors, use no-fmc flavor
+    if [[ ${#available[@]} -eq 1 ]]; then
+        fpgadir=${available[0]}
+        echo "Unique FPGA folder: $fpgadir"
+    else
+        local app=$(parse_config APP)
+        local possible=/opt/share/panda-fpga-$app
+        if [[ -n $app && -e $possible ]]; then
+            fpgadir=$possible
+            echo "Configured FPGA folder: $fpgadir"
+        else
+            local product=$(pandai2c-cli dump --path 'Board.product name')
+            case $product in
+                *ACQ430FMC*) fpgadir=/opt/share/panda-fpga-fmc_acq430
+                ;;
+                *ACQ427ELF*) fpgadir=/opt/share/panda-fpga-fmc_acq427
+                ;;
+                *FMC-24V*) fpgadir=/opt/share/panda-fpga-fmc_24vio
+                ;;
+                *) fpgadir=/opt/share/panda-fpga-no-fmc
+                ;;
+            esac
+            [[ ! -e $fpgadir ]] && fail "Could not find the FPGA bitstream"
+            echo "Detected FPGA folder: $fpgadir"
+        fi
+    fi
+
+    # Let server know of the selection
+    ln -sf $(basename $fpgadir) /opt/share/panda-fpga
+}
+
+# This function is needed on the revision C version of the PicoZed to enable
+# access to the I2C
+configure_gpio_m0()
+{
+    # This GPIO is used by PicoZed revision C to multiplex pins PS_MIO[15:9] between
+    # EMMC IO pins and GPIO pins.  For PandA we use these pins for programming the
+    # slow FPGA and for access to the I2C bus.
+    GPIO_M0=906
+    echo $GPIO_M0 >/sys/class/gpio/export  &&
+    echo out >/sys/class/gpio/gpio$GPIO_M0/direction  &&
+    echo 1 >/sys/class/gpio/gpio$GPIO_M0/value  &&
+    echo $GPIO_M0 >/sys/class/gpio/unexport
+}
+
+# Ensure I2C is accessible in Pandabox
+{ cat /proc/device-tree/model | grep "PandABox" &> /dev/null; } &&
+    PANDABOX=1 && configure_gpio_m0
+
+select_fpga_flavor
+
+# Check whether the FMC IPMI configuration matches that expected by the FPGA
+/usr/bin/pandai2c-cli check $fpgadir/ipmi.ini  || fail "Failed to check IPMI"
+
+if lsmod | grep -q '^panda\>'; then
+    rmmod panda || fail "Failed to remove panda kernel module"
+fi
+
+# If FMC passes then load the carrier firmware
+fpgautil -b $fpgadir/panda_top.bin  || fail "Failed to program FPGA"
+
+# Finally load the slow FPGA
+if [[ -n $PANDABOX ]]; then
+    /usr/bin/panda-slow-load < /opt/share/panda-fpga-slowfpga/slow_top.bin ||
+        fail "Failed to load slow FPGA"
+fi
+
+modprobe panda
