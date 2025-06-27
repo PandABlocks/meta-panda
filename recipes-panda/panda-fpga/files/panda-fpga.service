@@ -1,0 +1,10 @@
+[Unit]
+Description=PandABlocks FPGA loading service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/panda-load-firmware
+
+[Install]
+WantedBy=sysinit.target
