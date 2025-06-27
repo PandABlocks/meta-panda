@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+designsdir="/boot/state/designs"
+optionsdir="/boot/state/options"
+mkdir -p "$designsdir" "$optionsdir"
+/opt/bin/panda-webcontrol.py \
+    --admindir /opt/share/panda-webcontrol/templates \
+    --configdir "$designsdir" \
+    --templatedesigns /opt/share/panda-fpga/template_designs \
+    --templatedir /opt/share/panda-webcontrol/templates \
+    --optionsdir "$optionsdir" \
+    --etcdir /opt/share/panda-webcontrol/etc_www

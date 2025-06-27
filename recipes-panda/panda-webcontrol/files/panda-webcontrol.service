@@ -1,0 +1,12 @@
+[Unit]
+Description=PandABlocks-webcontrol service
+Requires=panda-server.service
+After=panda-server.service
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/bin/panda-webcontrol-wrapper
+
+[Install]
+WantedBy=multi-user.target
