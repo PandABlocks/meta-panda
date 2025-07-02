@@ -21,6 +21,7 @@ IMAGE_INSTALL = " \
     linux-xlnx-udev-rules \
     mtd-utils \
     pciutils \
+    perf \
     tcf-agent \
     tmux \
 "
