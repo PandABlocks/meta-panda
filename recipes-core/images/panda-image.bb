@@ -22,6 +22,7 @@ IMAGE_INSTALL = " \
     mtd-utils \
     pciutils \
     perf \
+    sysstat \
     tcf-agent \
     tmux \
 "
