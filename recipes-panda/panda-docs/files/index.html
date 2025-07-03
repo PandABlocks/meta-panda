@@ -49,7 +49,11 @@
         TCP Server Documentation
       </a>
 
-      <h2>Web Control</h2>
+      <h2><a id="web_control_link">Web Control</a></h2>
+      <script>
+        document.getElementById('web_control_link').href =
+          'http://' + window.location.hostname + ':8008';
+      </script>
       <p>
         Web Control provides a webserver that exposes a browser based Graphical User
         Interface that can be used to inspect, configure and modify the system.
