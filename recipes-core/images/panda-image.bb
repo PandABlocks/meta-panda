@@ -1,7 +1,7 @@
 inherit core-image
 inherit plnx-image
 
-IMAGE_NAME = "packages"
+IMAGE_NAME = "rootfs"
 IMAGE_NAME_SUFFIX = ""
 IMAGE_INSTALL = " \
     packagegroup-core-boot \
