@@ -98,22 +98,22 @@ LED_DAEMON_PID=$!
 
 # Partition table follows the old scheme, let's re-size
 [ -b /dev/mmcblk0p3 ] && resize_sdcard
-[ -e /boot/packages.squashfs ] || panic 'Rootfs not found'
+[ -e /boot/rootfs.squashfs ] || panic 'Rootfs file not found'
 [ ! -e /boot/changes.ext4 ] && create_changes_image
-mkdir -p /tmp/packages /tmp/changes
+mkdir -p /tmp/fixed-rootfs /tmp/changes
 if [ -e /boot/to-ram ]; then
     # We might want to copy to RAM for a faster system and because updating is
     # safer if it's not in used
-    cp /boot/packages.squashfs /tmp/
-    mount -t squashfs /tmp/packages.squashfs /tmp/packages/ ||
-        panic 'Unable to mount packages'
+    cp /boot/rootfs.squashfs /tmp/
+    mount -t squashfs /tmp/rootfs.squashfs /tmp/fixed-rootfs/ ||
+        panic 'Unable to mount fixed rootfs'
 else
-    mount -t squashfs /boot/packages.squashfs /tmp/packages/ ||
-        panic 'Unable to mount packages'
+    mount -t squashfs /boot/rootfs.squashfs /tmp/fixed-rootfs/ ||
+        panic 'Unable to mount fixed rootfs'
 fi
 mount -t ext4 /boot/changes.ext4 /tmp/changes
 mkdir -p /tmp/changes/upper /tmp/changes/work
-mount -t overlay -o lowerdir=/tmp/packages/,upperdir=/tmp/changes/upper/,workdir=/tmp/changes/work/ overlay /rootfs ||
+mount -t overlay -o lowerdir=/tmp/fixed-rootfs/,upperdir=/tmp/changes/upper/,workdir=/tmp/changes/work/ overlay /rootfs ||
     panic 'Unable to mount rootfs'
 mkdir -p /rootfs/boot /rootfs/proc /rootfs/sys /rootfs/dev /rootfs/tmp /rootfs/persistent
 # Try to mount persistent storage
