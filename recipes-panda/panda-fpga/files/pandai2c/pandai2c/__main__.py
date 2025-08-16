@@ -2,20 +2,25 @@
 
 import argparse
 import errno
+import logging
 import sys
 
 from pandai2c import ini_file, eeprom, parse_ipmi, create_ipmi
+log = logging.getLogger(__name__)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description='flash data to FMC EEPROM')
+    parser.add_argument('--log-level', type=str, default='WARNING',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help='Set logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
     subparsers = parser.add_subparsers(dest='command', required=True)
     # Check sub-command
     check_parser = subparsers.add_parser(
         'check', help='Check the FMC EEPROM against an IPMI file')
     check_parser.add_argument(
         'ini_path', type=str, help='Path to IPMI definition file')
-    # dump sub-command
+    # Dump sub-command
     dump_parser = subparsers.add_parser(
         'dump', help='Dump the contents of the FMC EEPROM')
     dump_parser.add_argument(
@@ -24,6 +29,13 @@ def parse_args():
     dump_parser.add_argument(
         '--path', type=str, default='',
         help='Path to field, e.g. \'Board.product name\'')
+    # Select sub-command
+    select_parser = subparsers.add_parser(
+        'select',
+        help='Among the IPMI files passed as argument, output the one that '
+             'matches the FMC EEPROM')
+    select_parser.add_argument(
+        'ini_paths', type=str, nargs='+', help='Paths to IPMI definition files')
     # Write sub-command
     write_parser = subparsers.add_parser(
         'write', help='Write to the FMC EEPROM based on a definition file')
@@ -95,6 +107,46 @@ def dump(args):
             ipmi.emit()
 
 
+def select(args):
+    ini_paths = args.ini_paths
+    ignore_ones = []
+    fmc_ones = []
+    for ini_path in ini_paths:
+        ini = ini_file.load_ini_file(ini_path)
+        if ini.get('.', {}).get('eeprom') == 'ignore':
+            ignore_ones.append((ini_path, ini))
+        else:
+            fmc_ones.append((ini_path, ini))
+
+    # If there are no FMC images, select the first with eeprom='ignore'
+    if not fmc_ones:
+        log.info('No FMC options, selecting first non-FMC one')
+        print(ignore_ones[0][0])
+        sys.exit(0)
+
+    try:
+        ipmi = parse_ipmi.parse(eeprom.read_eeprom())
+    except TimeoutError:
+        log.info('EEPROM read timeout, assuming no FMC fitted')
+        ipmi = None
+
+    if ipmi:
+        # Iterate over all FMC ini files until
+        for ini_path, ini in fmc_ones:
+            try:
+                ini_file.compare_ini(ini, ipmi, ignore=['.'])
+                print(ini_path)
+                sys.exit(0)
+            except ini_file.CompareFail:
+                pass
+
+    # At this point, we can choose only from the ignore ones
+    if not ignore_ones:
+        log.error('Could not find an valid selection')
+        sys.exit(1)
+
+    print(ignore_ones[0][0])
+
 
 def write(args):
     ini = ini_file.load_ini_file(args.ini_path)
@@ -122,6 +174,7 @@ def write(args):
 
 def main():
     args = parse_args()
+    logging.basicConfig(level=getattr(logging, args.log_level))
     globals().get(args.command)(args)
 
 
