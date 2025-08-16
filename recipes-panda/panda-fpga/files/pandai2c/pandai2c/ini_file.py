@@ -99,7 +99,7 @@ def compare_ini(match, other, ignore = []):
                     raise CompareFail(
                         'Option "%s.%s" not present' % (section.name, key))
                 else:
-                    if value != other_value:
+                    if value.strip() != other_value.strip():
                         raise CompareFail(
                             'Option "%s.%s": value "%s" != "%s"' % (
                                 section.name, key, value, other_value))
