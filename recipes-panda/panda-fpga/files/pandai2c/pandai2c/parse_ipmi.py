@@ -70,9 +70,9 @@ def decode_6bit_ascii(s):
         return chr(x + ord(' '))
     return flatten_ll([
         convert(x[0] & 0x3f),
-        convert(((x[1] & 0xf) << 2) | (x[0] >> 6)),
-        convert(((x[2] & 0x3) << 4) | (x[1] >> 4)),
-        convert(x[2] >> 2)] for x in choplist(s, 3))
+        convert(((x[1] & 0xf) << 2) | (x[0] >> 6)) if len(x) > 1 else '',
+        convert(((x[2] & 0x3) << 4) | (x[1] >> 4)) if len(x) > 2 else '',
+        convert(x[2] >> 2) if len(x) > 2 else ''] for x in choplist(s, 3))
 
 
 # Parses a string preceded by a type/length byte, as documented in section 13.
