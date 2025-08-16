@@ -24,38 +24,25 @@ select_fpga_flavor() {
     [ -f /boot/no-fpga ] && fail "FPGA loading disabled by file /boot/no-fpga"
     local available=($(find /opt/share/ -name 'panda-fpga-*' | grep -v slowfpga))
     # Select the appropriate FPGA bitstream in the following order:
-    # - if there is only one, use that one
-    # - if config.txt specifies a valid one, use it
-    # - if FMC EEPROM specifies a known product, use the associated bitstream
-    # - if it is unknown or errors, use no-fmc flavor
-    if [[ ${#available[@]} -eq 1 ]]; then
-        fpgadir=${available[0]}
-        echo "Unique FPGA folder: $fpgadir"
+    # if config.txt specifies a valid one, use it, otherwise use selection
+    # based on ipmi.ini files
+    local app=$(parse_config APP)
+    local app_dir="/opt/share/panda-fpga-$app"
+    if [[ -n $app && -d $app_dir ]]; then
+            fpga_dir=$app_dir
+            echo "Configured FPGA folder: $fpga_dir"
     else
-        local app=$(parse_config APP)
-        local possible=/opt/share/panda-fpga-$app
-        if [[ -n $app && -e $possible ]]; then
-            fpgadir=$possible
-            echo "Configured FPGA folder: $fpgadir"
+        ipmi_path=$(pandai2c-cli select /opt/share/*/ipmi.ini)
+        if [[ -n "$ipmi_path" ]]; then
+            fpga_dir="$(dirname "$ipmi_path")"
+            echo "Selected FPGA folder: $fpga_dir"
         else
-            local product=$(pandai2c-cli dump --path 'Board.product name')
-            case $product in
-                *ACQ430FMC*) fpgadir=/opt/share/panda-fpga-fmc_acq430
-                ;;
-                *ACQ427ELF*) fpgadir=/opt/share/panda-fpga-fmc_acq427
-                ;;
-                *FMC-24V*) fpgadir=/opt/share/panda-fpga-fmc_24vio
-                ;;
-                *) fpgadir=/opt/share/panda-fpga-no-fmc
-                ;;
-            esac
-            [[ ! -e $fpgadir ]] && fail "Could not find the FPGA bitstream"
-            echo "Detected FPGA folder: $fpgadir"
+            fail "Could not find a suitable FPGA image"
         fi
     fi
 
     # Let server know of the selection
-    ln -sf $(basename $fpgadir) /opt/share/panda-fpga
+    ln -sf $(basename $fpga_dir) /opt/share/panda-fpga
 }
 
 # This function is needed on the revision C version of the PicoZed to enable
@@ -78,20 +65,15 @@ configure_gpio_m0()
 
 select_fpga_flavor
 
-# Check whether the FMC IPMI configuration matches that expected by the FPGA
-/usr/bin/pandai2c-cli check $fpgadir/ipmi.ini  || fail "Failed to check IPMI"
-
 if lsmod | grep -q '^panda\>'; then
     rmmod panda || fail "Failed to remove panda kernel module"
 fi
 
 # If FMC passes then load the carrier firmware
-fpgautil -b $fpgadir/panda_top.bin  || fail "Failed to program FPGA"
+fpgautil -b $fpga_dir/panda_top.bin || fail "Failed to program FPGA"
 
 # Finally load the slow FPGA
 if [[ -n $PANDABOX ]]; then
-    /usr/bin/panda-slow-load < /opt/share/panda-fpga-slowfpga/slow_top.bin ||
+    /usr/bin/panda-slow-load < /opt/share/panda-slowfpga/slow_top.bin ||
         fail "Failed to load slow FPGA"
 fi
-
-modprobe panda

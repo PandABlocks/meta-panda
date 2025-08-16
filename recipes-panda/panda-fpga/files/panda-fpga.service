@@ -5,6 +5,7 @@ Description=PandABlocks FPGA loading service
 Type=oneshot
 RemainAfterExit=true
 ExecStart=/usr/bin/panda-load-firmware
+ExecStartPost=/sbin/modprobe panda
 
 [Install]
 WantedBy=sysinit.target
