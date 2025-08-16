@@ -57,6 +57,12 @@ class Section:
     def __getitem__(self, key):
         return self.__keys[key]
 
+    def get(self, name, default=None):
+        try:
+            return self[name]
+        except KeyError:
+            return default
+
     def __iter__(self):
         return iter(self.__keys.items())
 
