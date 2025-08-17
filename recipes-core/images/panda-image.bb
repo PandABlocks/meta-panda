@@ -12,7 +12,6 @@ IMAGE_INSTALL = " \
     panda-config \
     panda-server \
     panda-webcontrol \
-    panda-docs \
     bridge-utils \
     fpga-manager-script \
     htop \
