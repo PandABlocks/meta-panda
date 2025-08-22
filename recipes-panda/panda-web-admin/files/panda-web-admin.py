@@ -1,9 +1,9 @@
 #!/usr/bin/env python
+import asyncio
 import logging.handlers
 import subprocess
 import glob
 import os
-import sys
 import shutil
 import mimetypes
 from collections import defaultdict, OrderedDict
@@ -17,29 +17,21 @@ from tornado.iostream import StreamClosedError
 from tornado.web import RequestHandler, Application, StaticFileHandler, \
     HTTPError
 
+APP_PORT = 80
+
 # Some paths
 OPT_ETC = "/opt/etc/www"
 OPT_SHARE_WWW = "/opt/share/www"
 TEMPLATES = "/usr/share/web-admin/templates"
 STATIC = "/usr/share/web-admin/static"
 AUTHORIZED_KEYS = "/boot/authorized_keys"
-LOG_FILE = "/var/log/web-admin.log"
 MNT = "/mnt"
 ROOTFS_VERSION = os.path.join(os.path.dirname(__file__), "rootfs-version.sh")
 ROOTFS_OLD = "/boot/*.old"
 ROOTFS_TMP = "/tmp/rootfs"
-ROOTFS = '/boot/imagefile.cpio.gz'
-
-# Log to a rotating file
-extended_formatter = logging.Formatter(
-    """%(asctime)s - %(levelname)6s - %(name)s
-    %(message)s""")
-file_handler = logging.handlers.RotatingFileHandler(
-    LOG_FILE, maxBytes=1000000, backupCount=4)
-file_handler.setFormatter(extended_formatter)
-logging.root.addHandler(file_handler)
-logging.root.setLevel(logging.INFO)
-logging.info("Loading web-admin...")
+ROOTFS_FILENAME = 'rootfs.squashfs'
+ROOTFS_PATH = f'/boot/{ROOTFS_FILENAME}'
+CHANGES_PATH = '/boot/changes.ext4'
 
 # Add mimetype for SVG
 mimetypes.types_map[".svg"] = 'image/svg+xml'
@@ -165,11 +157,11 @@ class CommandHandler(RequestHandler):
         yield self.run_command('sync')
 
     @coroutine
-    def zpkg(self, action, *packages):
+    def opkg(self, action, *packages):
         if packages:
             package_strings = ", ".join(tt(x) for x in packages)
             self.p("About to %s %s..." % (action, package_strings))
-            yield self.run_command("zpkg", action, *packages)
+            yield self.run_command("opkg", action, *packages)
             yield self.sync()
             self.p("Package %s operation complete." % action)
             self.maybe_scroll_to_bottom()
@@ -177,7 +169,7 @@ class CommandHandler(RequestHandler):
             self.p("Nothing to %s." % action)
 
     def list_package_instructions(self):
-        self.p("Packages have file extension .zpg and are downloaded from a "
+        self.p("Packages have file extension .ipk and are downloaded from a "
                "GitHub release of the relevant repository:")
         self.write("<ul>")
         for repo in ("PandABlocks-FPGA", "PandABlocks-server",
@@ -235,7 +227,7 @@ class CommandHandler(RequestHandler):
     def get_admin(self):
         """Administration"""
         self.h2("Version information")
-        self.list_file('/etc/version')
+        self.list_file('/etc/os-release')
         self.p("Use the side-bar on the left to access the Admin functions")
 
     @add_get_page("system/restart")
@@ -248,8 +240,9 @@ class CommandHandler(RequestHandler):
 
     @add_get_page("system/log")
     def get_log_messages(self):
-        """Show /var/log/messages"""
-        self.list_file('/var/log/messages')
+        """Show Logs"""
+        for line in blocking_cmd_lines('journalctl', '-b'):
+            self.command_row(line)
 
     @add_get_page("system/network")
     def get_network_config(self):
@@ -271,14 +264,16 @@ class CommandHandler(RequestHandler):
         """List Installed Packages"""
         self.list_package_instructions()
         self.p("The following packages are already installed")
-        zpkg_list = sorted(blocking_cmd_lines('zpkg', 'list'))
-        if zpkg_list:
+        pkg_list = sorted(
+            (item for item in blocking_cmd_lines('opkg', 'list') if
+                 item.startswith(b'panda-')))
+        if pkg_list:
             details = {}
-            for line in zpkg_list:
+            for line in pkg_list:
                 pkg = line.split()[0]
-                details[line] = blocking_cmd_lines('zpkg', 'show', pkg)
+                details[line] = blocking_cmd_lines('opkg', 'info', pkg)
             self.t("form_select.html", label="Delete Selected Packages",
-                   path="/admin/packages/remove", titles=zpkg_list,
+                   path="/admin/packages/remove", titles=pkg_list,
                    details=details)
         else:
             self.p("No packages installed")
@@ -289,7 +284,7 @@ class CommandHandler(RequestHandler):
         self.ensure_trailing_slash()
         self.list_package_instructions()
         self.p("Packages placed on the USB stick can be navigated to below:")
-        root, glob_list = glob_dir('*.zpg', *path_suffix)
+        root, glob_list = glob_dir("*.ipk", *path_suffix)
         glob_list.sort()
         if glob_list:
             self.h2("Available in %s:" % tt(root))
@@ -305,13 +300,13 @@ class CommandHandler(RequestHandler):
         self.ensure_trailing_slash()
         self.write("<p>")
         self.write("Updated rootfs images can be installed by placing the "
-                   "boot.zip (or imagefile.cpio.gz from within it) from the ")
+                   "boot.zip (or rootfs.squashfs from within it) from the ")
         link = "https://github.com/PandABlocks/PandABlocks-rootfs/releases"
         self.popup(link, "rootfs release")
         self.write(" onto the USB stick, and navigating to it below:")
         self.write("</p>")
         root, glob_list = glob_dir('*.zip', *path_suffix)
-        glob_list += glob_dir('imagefile.cpio.gz', *path_suffix)[1]
+        glob_list += glob_dir(ROOTFS_FILENAME, *path_suffix)[1]
         if glob_list:
             self.h2("Available in %s:" % tt(root))
             self.t("form_select.html", label="Replace rootfs on next reboot",
@@ -360,8 +355,10 @@ class CommandHandler(RequestHandler):
     @add_post_page("system/restart")
     def post_restart(self):
         """Restarting Services"""
-        self.p("Restarting services provided by packages...")
-        yield self.run_command('/etc/init.d/zpkg-daemon', 'restart')
+        self.p("Restarting panda services ...")
+        # Restarting the FPGA loader will cause restarting the dependent
+        # services
+        yield self.run_command('systemctl', 'restart', 'panda-fpga')
         self.p("Operation complete")
 
     def single_filename_argument(self, text):
@@ -391,7 +388,7 @@ class CommandHandler(RequestHandler):
         """Removing packages"""
         ensure_usb_key_inserted()
         packages = [x.split()[0] for x in self.get_arguments('value')]
-        yield self.zpkg("remove", *packages)
+        yield self.opkg("remove", *packages)
 
     @add_post_page("packages/install")
     def post_packages_install(self, *path_suffix):
@@ -400,13 +397,13 @@ class CommandHandler(RequestHandler):
         root = os.path.join(MNT, *path_suffix)
         packages = [os.path.join(root, f) for f in self.get_arguments('value')]
         packages.sort()
-        yield self.zpkg("install", *packages)
+        yield self.opkg("install", *packages)
 
     @coroutine
     def revert_rootfs_files(self):
-        if os.path.exists(ROOTFS):
-            self.p("Removing %s" % tt(ROOTFS))
-            os.remove(ROOTFS)
+        if os.path.exists(ROOTFS_PATH):
+            self.p("Removing %s" % tt(ROOTFS_PATH))
+            os.remove(ROOTFS_PATH)
         for f in glob.glob(ROOTFS_OLD):
             orig = f[:-4]
             self.p("Restoring %s" % tt(orig))
@@ -432,12 +429,12 @@ class CommandHandler(RequestHandler):
                 if f != "config.txt":
                     to_copy[os.path.join("/boot", f)] = os.path.join(ROOTFS_TMP, f)
         else:
-            # This is an imagefile.cpio.gz
-            to_copy[ROOTFS] = source_path
+            # This is an rootfs.squashfs
+            to_copy[ROOTFS_PATH] = source_path
         # Remove old backups
         yield self.run_command("rm", "-f", ROOTFS_OLD)
         self.p("Checking new rootfs version...")
-        yield self.run_command(ROOTFS_VERSION, to_copy[ROOTFS])
+        yield self.run_command(ROOTFS_VERSION, to_copy[ROOTFS_PATH])
         for dest, src in to_copy.items():
             self.p("Installing %s..." % tt(dest))
             # Backup the old files in case we want to revert
@@ -458,13 +455,13 @@ class CommandHandler(RequestHandler):
             "will be installed on boot. If you have changed your mind you "
             "can delete the new rootfs from the SD card and cancel. "
             "For a major upgrade it is recommended that you remove the" 
-            "installed zpkgs to avoid compatibility issues.")
-        self.t('button.html', label='Remove zpkgs, Reboot and install it now',
-                path='system/remove_zpkgs_reboot_rootfs')
+            "installed ipks to avoid compatibility issues.")
+        self.t('button.html', label='Remove changes layer, Reboot and install it now',
+                path='system/remove_changes_reboot_rootfs')
         self.t('button.html', label='Delete new rootfs and cancel',
-                path='packages/delete_rootfs')
+               path='packages/delete_rootfs')
         self.t('button.html', label='Reboot and install it now',
-                path='system/reboot_rootfs')
+               path='system/reboot_rootfs')
 
     @add_post_page("packages/delete_rootfs")
     def post_delete_rootfs(self):
@@ -473,16 +470,11 @@ class CommandHandler(RequestHandler):
         yield self.revert_rootfs_files()
         self.p("Rootfs upgrade successfully cancelled.")
 
-    @add_post_page("system/remove_zpkgs_reboot_rootfs")
-    def post_remove_zpkgs_reboot_rootfs(self):
-        """Removing zpkgs, Rebooting System to Install Rootfs"""
+    @add_post_page("system/remove_changes_reboot_rootfs")
+    def post_remove_ipkgs_reboot_rootfs(self):
+        """Removing changes layer, Rebooting System to Install Rootfs"""
         ensure_usb_key_inserted()
-        zpkg_list = sorted(blocking_cmd_lines('zpkg', 'list'))
-        pkgs = []
-        if zpkg_list:
-            for line in zpkg_list:
-                pkgs.append(line.split()[0])
-        yield self.zpkg("remove", *pkgs)
+        yield self.run_command("rm", "-f", CHANGES_PATH)
         yield self.run_command("rm", "-f", ROOTFS_OLD)
         yield self.sync()
         self.p("Rebooting now, please wait. "
@@ -571,38 +563,21 @@ class TemplateHandler(RequestHandler):
         self.render(path, etc_loader=etc_loader)
 
 
-class IdleApplication(Application):
-    timeout_handle = None
+async def main():
+    logging.root.setLevel(logging.INFO)
+    logging.info("Loading web-admin...")
 
-    def reset_timeout(self):
-        loop = IOLoop.current()
-        if self.timeout_handle is not None:
-            loop.remove_timeout(self.timeout_handle)
-        # Run for 10 minutes then exit
-        self.timeout_handle = loop.call_later(600, loop.stop)
+    # Start the application
+    app = Application([
+        (r"/(|index\.html|docs\.html)", TemplateHandler),
+        (r"/admin\.html", CommandHandler),
+        (r"/admin/(.*)", CommandHandler),
+        (r"/opt/(.*)", StaticFileHandler, {"path": OPT_SHARE_WWW})
+    ], template_path=TEMPLATES, static_path=STATIC)
+    app.listen(APP_PORT)
+    shutdown_event = asyncio.Event()
+    await shutdown_event.wait()
 
-    def start_request(self, server_conn, request_conn):
-        self.reset_timeout()
-        return super(IdleApplication, self).start_request(
-            server_conn, request_conn)
 
-
-# Start the application
-app = IdleApplication([
-    (r"/(|index\.html|docs\.html)", TemplateHandler),
-    (r"/admin\.html", CommandHandler),
-    (r"/admin/(.*)", CommandHandler),
-    (r"/opt/(.*)", StaticFileHandler, {"path": OPT_SHARE_WWW})
-], template_path=TEMPLATES, static_path=STATIC)
-app.listen(8080)
-app.reset_timeout()
-
-if os.fork():
-    # Exit first parent
-    sys.exit(0)
-
-# Do second fork to avoid generating zombies
-if os.fork():
-    sys.exit(0)
-
-IOLoop.current().start()
+if __name__ == '__main__':
+    asyncio.run(main())
