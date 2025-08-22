@@ -8,4 +8,4 @@ mkdir -p "$designsdir" "$optionsdir"
     --templatedesigns /opt/share/panda-fpga/template_designs \
     --templatedir /opt/share/panda-webcontrol/templates \
     --optionsdir "$optionsdir" \
-    --etcdir /opt/share/panda-webcontrol/etc_www
+    --etcdir /opt/etc/www
