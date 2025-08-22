@@ -22,6 +22,20 @@ get_mac_address()
 # TODO: find a clean way in which each target sets /persistent/MAC
 #[ -e /boot/target-defs ] && source /boot/target-defs
 
+# Make sure all USB device nodes were created
+udevadm settle
+
+# Search for an alternative config.txt file.
+for config in /mnt/*/panda-config.txt; do
+    if [ -e $config ]; then
+        echo Using alternate config file $config
+        CONFIG_FILE=$config
+        break
+    fi
+done
+
+echo "$CONFIG_FILE" >/tmp/config_file
+
 # Returns the corresponding config file entry, or an empty string if not
 # present.
 parse_config()

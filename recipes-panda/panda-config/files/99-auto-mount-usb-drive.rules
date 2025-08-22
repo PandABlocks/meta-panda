@@ -1,0 +1,2 @@
+ACTION=="add", KERNEL=="sd?[0-9]", SUBSYSTEM=="block", RUN+="/bin/mkdir -p /mnt/%k", RUN+="/bin/mount /dev/%k /mnt/%k"
+ACTION=="remove", KERNEL=="sd?[0-9]", SUBSYSTEM=="block", RUN+="/bin/umount /mnt/%k", RUN+="/bin/rmdir /mnt/%k"
