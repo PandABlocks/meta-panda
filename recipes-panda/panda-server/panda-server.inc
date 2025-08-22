@@ -39,6 +39,8 @@ do_install() {
     install -m 0755 ${WORKDIR}/panda-server-wrapper ${D}/${bindir}
     install -d ${D}/opt/share/www
     cp -r ${S}/build/html ${D}/opt/share/www/panda-server
+    install -d ${D}/opt/etc/www
+    install -m 0644 ${S}/etc/panda-server.docs.html  ${D}/opt/etc/www
 }
 
 inherit systemd
@@ -49,4 +51,4 @@ SYSTEMD_SERVICE:${PN} = " \
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 FILES:${PN} += "${bindir}"
-FILES:${PN}-doc += "/opt/share/www"
+FILES:${PN} += "/opt/share/www /opt/etc/www"
