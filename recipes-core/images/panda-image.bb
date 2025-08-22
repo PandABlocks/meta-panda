@@ -12,6 +12,7 @@ IMAGE_INSTALL = " \
     panda-config \
     panda-server \
     panda-webcontrol \
+    panda-web-admin \
     bridge-utils \
     fpga-manager-script \
     htop \
@@ -21,6 +22,7 @@ IMAGE_INSTALL = " \
     mtd-utils \
     pciutils \
     perf \
+    squashfs-tools \
     sysstat \
     tcf-agent \
     tmux \
