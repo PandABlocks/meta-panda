@@ -4,8 +4,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += " \
     git://github.com/PandABlocks/PandABlocks-server;branch=master;protocol=https \
     file://CONFIG \
-    file://0001-Minor-build-improvements.patch \
     file://0002-extension-server-notify-systemd.patch \
 "
-SRCREV = "8debbfa3b9ca964cbb583d4259917aefaa131e66"
+SRCREV = "d5a8f9cbc3aa32f2d2109fad0ca9bd86052603d7"
 S = "${WORKDIR}/git"
