@@ -16,7 +16,7 @@ RDEPENDS:${PN}:append:pandabox = " \
     panda-fpga-pandabox-fmc-lback-sfp-lback \
 "
 
-RDEPENDS:${PN}:append:xu5_st1 = " \
+RDEPENDS:${PN}:append:xu5-st1 = " \
     panda-fpga-xu5-st1-no-fmc \
     panda-fpga-xu5-st1-fmc-acq430 \
 "
