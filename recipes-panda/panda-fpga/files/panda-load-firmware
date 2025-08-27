@@ -27,7 +27,9 @@ select_fpga_flavor() {
     # if config.txt specifies a valid one, use it, otherwise use selection
     # based on ipmi.ini files
     local app=$(parse_config APP)
-    local app_dir="/opt/share/panda-fpga-$app"
+    local lower_app="${app,,}"
+    local sane_app="${lower_app//_/-}"
+    local app_dir="/opt/share/panda-fpga-${sane_app}"
     if [[ -n $app && -d $app_dir ]]; then
             fpga_dir=$app_dir
             echo "Configured FPGA folder: $fpga_dir"
