@@ -35,3 +35,4 @@ ROOTFS_POSTPROCESS_COMMAND += "rm_boot_directory;"
 rm_boot_directory() {
   rm -rf ${IMAGE_ROOTFS}/boot/*
 }
+TOOLCHAIN_TARGET_TASK += "kernel-devsrc"
