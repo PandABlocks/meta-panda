@@ -1,0 +1,105 @@
+header:
+  version: 16
+
+distro: panda-petalinux
+target: panda-image
+machine: pandabox
+defaults:
+  repos:
+    branch: rel-v2023.2
+local_conf_header:
+  licenses: |
+    LICENSE_FLAGS_ACCEPTED = " xilinx"
+  parallel: |
+    BB_NUMBER_THREADS = " 8"
+    PARALLEL_MAKE = "-j 8"
+repos:
+  meta-custom:
+#  yocto-scripts:
+#    url: https://github.com/Xilinx/yocto-scripts
+#    path: sources/yocto-scripts
+#    layers:
+#      yocto-scripts: excluded
+  meta-xilinx:
+    url: https://github.com/Xilinx/meta-xilinx
+    path: sources/meta-xilinx
+    layers:
+      meta-xilinx-core:
+      meta-xilinx-bsp:
+      meta-microblaze:
+      meta-dpdk:
+      meta-xilinx-vendor:
+      meta-xilinx-standalone:
+      meta-xilinx-contrib:
+  meta-xilinx-tools:
+    url: https://github.com/Xilinx/meta-xilinx-tools
+    path: sources/meta-xilinx-tools
+  meta-petalinux:
+    url: https://github.com/Xilinx/meta-petalinux
+    path: sources/meta-petalinux
+  meta-xilinx-tsn:
+    url: https://github.com/Xilinx/meta-xilinx-tsn
+    path: sources/meta-xilinx-tsn
+  meta-kria:
+    url: https://github.com/Xilinx/meta-kria
+    path: sources/meta-kria
+  meta-embedded-plus:
+    url: https://github.com/Xilinx/meta-embedded-plus
+    path: sources/meta-embedded-plus
+  poky:
+    url: https://github.com/Xilinx/poky
+    path: sources/poky
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+      meta-skeleton:
+      meta-selftest:
+  meta-mingw:
+    url: https://github.com/Xilinx/meta-mingw
+    path: sources/meta-mingw
+  meta-virtualization:
+    url: https://github.com/Xilinx/meta-virtualization
+    path: sources/meta-virtualization
+  meta-security:
+    url: https://github.com/Xilinx/meta-security
+    path: sources/meta-security
+  meta-openembedded:
+    url: https://github.com/Xilinx/meta-openembedded
+    path: sources/meta-openembedded
+    layers:
+      meta-oe:
+      meta-initramfs:
+      meta-filesystems:
+      meta-multimedia:
+      meta-networking:
+      meta-perl:
+      meta-python:
+  meta-openamp:
+    url: https://github.com/Xilinx/meta-openamp
+    path: sources/meta-openamp
+  meta-qt5:
+    url: https://github.com/Xilinx/meta-qt5
+    path: sources/meta-qt5
+#  meta-aws:
+#    url: https://github.com/Xilinx/meta-aws
+#    path: sources/meta-aws
+  meta-ros:
+    url: https://github.com/Xilinx/meta-ros
+    path: sources/meta-ros
+    layers:
+      meta-ros2:
+      meta-ros2-humble:
+      meta-ros-common:
+  meta-jupyter:
+    url: https://github.com/Xilinx/meta-jupyter
+    path: sources/meta-jupyter
+#  meta-system-controller:
+#    url: https://github.com/Xilinx/meta-system-controller
+#    path: sources/meta-system-controller
+  meta-vitis:
+    url: https://github.com/Xilinx/meta-vitis
+    path: sources/meta-vitis
+#  meta-rauc:
+#    url: https://github.com/Xilinx/meta-rauc
+#    path: sources/meta-rauc
