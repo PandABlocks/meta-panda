@@ -1,0 +1,40 @@
+on:
+  workflow_call:
+env:
+  KAS_WORK_DIR: /repos/meta-panda
+jobs:
+  make_boot:
+    strategy:
+      fail-fast: false
+      matrix:
+        machine:
+          - pandabox
+    runs-on:
+      group: iris_runners
+    container:
+      image: ghcr.io/siemens/kas/kas:4.7
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          path: repos/meta-panda
+          fetch-depth: 0
+
+      - name: build and gather
+        id: build
+        run: |
+          cd repos/meta-panda
+          export KAS_MACHINE=${{ matrix.machine }}
+          kas build ./kas.yml
+          cd ${KAS_WORK_DIR}
+          mkdir boot
+          cp -Lf build/tmp/deploy/images/${{ matrix.machine }}/uImage-initramfs-pandabox boot/uImage
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/{rootfs.squashfs,boot.bin,boot.scr,target-defs,system.dtb} boot/
+          zip boot-${{ matrix.machine }}.zip boot/*
+
+      - name: Upload boot
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-${{ matrix.machine }}
+          path: ${KAS_WORK_DIR}/boot*.zip
+          if-no-files-found: error

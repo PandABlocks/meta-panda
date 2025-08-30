@@ -1,0 +1,16 @@
+name: Code CI
+
+on:
+  # Only run on changes to branches with open PRs
+  pull_request:
+    types: [opened, edited, synchronize]
+  # Run after PR merged, on implicit push, and on tag pushes
+  push:
+    tags:
+      - '*'
+    branches: [master]
+
+jobs:
+  # Make Boot files
+  make_boot:
+    uses: ./.github/workflows/_make_boot.yml
