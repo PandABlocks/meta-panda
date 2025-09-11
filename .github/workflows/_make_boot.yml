@@ -1,7 +1,7 @@
 on:
   workflow_call:
 env:
-  KAS_WORK_DIR: /repos/meta-panda
+  KAS_WORK_DIR: ${{ github.workspace }}
 jobs:
   make_boot:
     strategy:
@@ -20,21 +20,32 @@ jobs:
           path: repos/meta-panda
           fetch-depth: 0
 
+      - name: Check cash
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.KAS_WORK_DIR }}/build/sstate-cache
+          key: kas-${{ matrix.machine }}-${{ hashFiles('repos/meta-panda/kas.yml') }}
+          restore-keys: |
+            kas-${{ matrix.machine }}
+
       - name: build and gather
         id: build
         run: |
-          cd repos/meta-panda
           export KAS_MACHINE=${{ matrix.machine }}
-          kas build ./kas.yml
+          kas build repos/meta-panda/kas.yml
           cd ${KAS_WORK_DIR}
           mkdir boot
           cp -Lf build/tmp/deploy/images/${{ matrix.machine }}/fitImage-petalinux-initramfs-image-${{ matrix.machine }}-${{ matrix.machine }} boot/image.ub
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/{rootfs.squashfs,boot.bin,boot.scr,target-defs} boot/
-          zip boot-${{ matrix.machine }}.zip boot/*
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/rootfs.squashfs boot/
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.bin boot/
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.scr boot/
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/target-defs boot/
+          tar cvzf boot-${{ matrix.machine }}.tar.gz boot/*
 
       - name: Upload boot
         uses: actions/upload-artifact@v4
         with:
           name: boot-${{ matrix.machine }}
-          path: ${KAS_WORK_DIR}/boot*.zip
+          path: ${KAS_WORK_DIR}/boot*.tar.gz
           if-no-files-found: error

@@ -11,8 +11,10 @@ local_conf_header:
   licenses: |
     LICENSE_FLAGS_ACCEPTED = " xilinx"
   parallel: |
-    BB_NUMBER_THREADS = " 8"
-    PARALLEL_MAKE = "-j 8"
+    BB_NUMBER_THREADS = " 4"
+    PARALLEL_MAKE = "-j 4"
+  less-space: |
+    INHERIT += "rm_work"
 repos:
   meta-custom:
 #  yocto-scripts:
