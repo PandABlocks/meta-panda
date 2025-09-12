@@ -62,7 +62,7 @@ configure_gpio_m0()
 }
 
 # Ensure I2C is accessible in Pandabox
-{ cat /proc/device-tree/model | grep "PandABox" &> /dev/null; } &&
+{ grep "PandABox" /proc/device-tree/model &> /dev/null; } &&
     PANDABOX=1 && configure_gpio_m0
 
 select_fpga_flavor

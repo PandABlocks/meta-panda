@@ -14,13 +14,9 @@ IPprefix_by_netmask () {
    echo /$c
 }
 
-get_mac_address()
-{
-    [ -e /persistent/MAC ] && cat /persistent/MAC
-}
+get_mac_address() { :; }
 
-# TODO: find a clean way in which each target sets /persistent/MAC
-#[ -e /boot/target-defs ] && source /boot/target-defs
+[ -e /boot/target-defs ] && source /boot/target-defs
 
 # Make sure all USB device nodes were created
 udevadm settle

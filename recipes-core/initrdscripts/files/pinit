@@ -68,7 +68,7 @@ read_mac_address()
         fi
     done
 
-    echo "$REPLY" >/rootfs/persistent/MAC
+    echo "$REPLY" >/rootfs/qspi/MAC
     set-led BOOTING
 }
 
@@ -115,23 +115,23 @@ mount -t ext4 /boot/changes.ext4 /tmp/changes
 mkdir -p /tmp/changes/upper /tmp/changes/work
 mount -t overlay -o lowerdir=/tmp/fixed-rootfs/,upperdir=/tmp/changes/upper/,workdir=/tmp/changes/work/ overlay /rootfs ||
     panic 'Unable to mount rootfs'
-mkdir -p /rootfs/boot /rootfs/proc /rootfs/sys /rootfs/dev /rootfs/tmp /rootfs/persistent
+mkdir -p /rootfs/boot /rootfs/proc /rootfs/sys /rootfs/dev /rootfs/tmp /rootfs/qspi
 # Try to mount persistent storage
 if [ -e /dev/mtd2 ]; then
-    mount -t jffs2 mtd2 /rootfs/persistent || {
+    mount -t jffs2 mtd2 /rootfs/qspi || {
         # Erase QSPI only the first time after firmware was deployed
         if [ "$changes_image_created" = true ]; then
             echo Erasing QSPI
             flash_erase -j -q /dev/mtd2 0 0  &&
-                mount -t jffs2 mtd2 /rootfs/persistent
+                mount -t jffs2 mtd2 /rootfs/qspi
         fi
     }
 fi
-# Some targets will require to manually set the MAC address
-[ ! -e /persistent/MAC ] && [ -e /boot/ask-for-mac ] && {
+# PandABox requires to manually set the MAC address
+{ grep "PandABox" /proc/device-tree/model &> /dev/null; } &&
+    [ ! -e /qspi/MAC ] &&
     read_mac_address
-    rm -f /boot/ask-for-mac
-}
+
 kill $LED_DAEMON_PID
 sync
 mount --move /boot /rootfs/boot
