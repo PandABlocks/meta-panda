@@ -1,0 +1,4 @@
+PYTHON = python3
+SPHINX_BUILD =  $(PYTHON) -m sphinx
+CROSS_COMPILE =
+DEFAULT_TARGETS = server slow_load docs

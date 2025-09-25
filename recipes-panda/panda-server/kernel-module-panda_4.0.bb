@@ -9,7 +9,7 @@ DEPENDS = "python3"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " \
     git://github.com/PandABlocks/PandABlocks-server;branch=master;protocol=https \
-    file://CONFIG \
+    file://CONFIG_driver \
 "
 SRCREV = "d5a8f9cbc3aa32f2d2109fad0ca9bd86052603d7"
 S = "${WORKDIR}/git"
@@ -17,5 +17,6 @@ MAKE_TARGETS = "driver"
 MODULES_MODULE_SYMVERS_LOCATION = "build/driver"
 
 do_configure() {
-    cp -f ${WORKDIR}/CONFIG ${S}/
+    cp -f ${WORKDIR}/CONFIG_driver ${S}/CONFIG
+    echo "PLATFORM = ${PLATFORM}" >> ${S}/CONFIG
 }
