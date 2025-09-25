@@ -48,8 +48,6 @@ There are a some environment variables that you might want to set:
   - `DISTRO="panda-petalinux"`
 - Build panda-image by running: `bitbake panda-image`
 
-See script [build-example.sh](./build-example.sh) for more details.
-
 ## Maintainers
 
 - Famous Alele <famous.alele@diamond.ac.uk>
