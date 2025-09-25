@@ -30,7 +30,6 @@ IMAGE_INSTALL = " \
 GLIBC_GENERATE_LOCALES = "en_GB.UTF-8 en_US.UTF-8"
 IMAGE_LINGUAS = "en-gb en-us"
 IMAGE_FSTYPES = "squashfs squashfs.md5sum"
-KERNEL_IMAGETYPES = "uImage"
 ROOTFS_POSTPROCESS_COMMAND += "rm_boot_directory;"
 rm_boot_directory() {
   rm -rf ${IMAGE_ROOTFS}/boot/*

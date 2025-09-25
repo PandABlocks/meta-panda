@@ -28,8 +28,8 @@ jobs:
           kas build ./kas.yml
           cd ${KAS_WORK_DIR}
           mkdir boot
-          cp -Lf build/tmp/deploy/images/${{ matrix.machine }}/uImage-initramfs-pandabox boot/uImage
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/{rootfs.squashfs,boot.bin,boot.scr,target-defs,system.dtb} boot/
+          cp -Lf build/tmp/deploy/images/${{ matrix.machine }}/fitImage-petalinux-initramfs-image-${{ matrix.machine }}-${{ matrix.machine }} boot/image.ub
+          cp -f build/tmp/deploy/images/${{ matrix.machine }}/{rootfs.squashfs,boot.bin,boot.scr,target-defs} boot/
           zip boot-${{ matrix.machine }}.zip boot/*
 
       - name: Upload boot

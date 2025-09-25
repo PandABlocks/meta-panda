@@ -13,17 +13,23 @@ PROVIDES += "virtual/dtb"
 PROVIDES += "virtual/pmu-firmware"
 RPROVIDES:${PN} += "${PN}-bin"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 do_install() {
-    mkdir -p ${D}/boot
-    install -m 0744 ${WORKDIR}/boot/boot.bin ${D}/boot/boot.bin
-    install -m 0744 ${WORKDIR}/boot/target-defs ${D}/boot/target-defs
-    install -m 0744 ${WORKDIR}/boot/system.dtb ${D}/boot/system.dtb
+    mkdir -p ${D}/boot/devicetree
+    install -m 0644 ${WORKDIR}/boot/boot.bin ${D}/boot/boot.bin
+    install -m 0644 ${WORKDIR}/boot/target-defs ${D}/boot/target-defs
+    install -m 0644 ${WORKDIR}/boot/system.dtb ${D}/boot/devicetree/system.dtb
 }
 
 inherit deploy
 do_deploy() {
-    install -m 0744 ${D}/boot/* ${DEPLOYDIR}/
+    mkdir -p ${DEPLOYDIR}/devicetree
+    install -m 0744 ${D}/boot/boot.bin ${DEPLOYDIR}/
+    install -m 0744 ${D}/boot/target-defs ${DEPLOYDIR}/
+    install -m 0744 ${D}/boot/devicetree/system.dtb ${DEPLOYDIR}/devicetree
 }
 addtask deploy after do_install
 
-FILES:${PN} = "/boot"
+SYSROOT_DIRS += "/boot/devicetree"
+FILES:${PN} = "/boot/boot.bin /boot/target-defs /boot/devicetree/system.dtb"

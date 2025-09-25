@@ -29,8 +29,8 @@ files can be gathered and compressed for an easier delivery:
 
 ```bash
 mkdir boot
-cp -Lf build/tmp/deploy/images/pandabox/uImage-initramfs-pandabox boot/uImage
-cp -f build/tmp/deploy/images/pandabox/{rootfs.squashfs,boot.bin,boot.scr,target-defs,system.dtb} boot/
+cp -Lf build/tmp/deploy/images/pandabox/fitImage-petalinux-initramfs-image-pandabox-pandabox boot/image.ub
+cp -f build/tmp/deploy/images/pandabox/{rootfs.squashfs,boot.bin,boot.scr,target-defs} boot/
 zip boot-pandabox.zip boot/*
 ```
 
