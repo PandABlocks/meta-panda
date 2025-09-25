@@ -38,13 +38,6 @@ There are a some environment variables that you might want to set:
 - `KAS_MACHINE`: the default machine built is pandabox, if you want to build for
   a different machine, set this variable to the machine name, e.g.
   `KAS_MACHINE='xu5-st1'`.
-- `BB_NUMBER_THREADS` and `PARALLEL_MAKE`: default to 8, if you
-  want to build faster (and your server allows it), set these variable to a
-  bigger value, e.g. `BB_NUMBER_THREADS=" 31" PARALLEL_MAKE="-j31"`. Keep in
-  mind there are 2 limits that could be reached, first, if all the threads
-  consume more memory than available, the OOM Killer will be triggered, second,
-  if the number of threads in your build scope reaches `TasksMax` (configured in
-  systemd), any attempt to create new threads will fail.
 - `KAS_CONTAINER_IMAGE`: we are using the kas image by default, currently
   `ghcr.io/siemens/kas/kas:4.7`, but can be overridden with this variable.
 
