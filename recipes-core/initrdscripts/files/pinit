@@ -129,7 +129,7 @@ if [ -e /dev/mtd2 ]; then
 fi
 # PandABox requires to manually set the MAC address
 { grep "PandABox" /proc/device-tree/model &> /dev/null; } &&
-    [ ! -e /qspi/MAC ] &&
+    [ ! -e /rootfs/qspi/MAC ] &&
     read_mac_address
 
 kill $LED_DAEMON_PID

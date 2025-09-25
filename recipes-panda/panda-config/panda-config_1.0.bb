@@ -6,7 +6,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI = " \
     file://panda-config.service \
     file://panda-config \
-    file://99-auto-mount-usb-drive.rules \
 "
 
 RDEPENDS:${PN} = "bash"
@@ -20,7 +19,4 @@ do_install() {
     install -d ${D}/${systemd_system_unitdir} ${D}/${bindir} ${D}/etc/udev/rules.d
     install -m 0644 ${WORKDIR}/panda-config.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-config ${D}/${bindir}
-    install -m 0644 ${WORKDIR}/99-auto-mount-usb-drive.rules ${D}/etc/udev/rules.d
 }
-
-FILES:${PN} += "/etc/udev/rules.d"
