@@ -9,7 +9,7 @@ import subprocess
 
 DEFAULT_OWNER = 'PandABlocks'
 DEFAULT_REPO = 'PandABlocks-FPGA'
-VALID_MACHINES = ('pandabox', 'xu5-st1')
+VALID_MACHINES = ('pandabox', 'xu5-st1', 'zedboard')
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
