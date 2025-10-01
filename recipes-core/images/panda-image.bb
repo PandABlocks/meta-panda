@@ -11,7 +11,6 @@ IMAGE_INSTALL = " \
     packagegroup-panda-fpga \
     panda-config \
     panda-server \
-    panda-webcontrol \
     panda-web-admin \
     bridge-utils \
     fpga-manager-script \

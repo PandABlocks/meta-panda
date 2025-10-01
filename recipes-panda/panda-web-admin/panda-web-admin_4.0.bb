@@ -19,6 +19,10 @@ SRC_URI = " \
     file://templates/footer.html \
     file://templates/index.html \
     file://templates/nav.html \
+    file://panda-webcontrol.service \
+    file://panda-webcontrol-wrapper \
+    file://panda-webcontrol.py \
+    file://panda-webcontrol.nav.html \
 "
 S = "${WORKDIR}"
 
@@ -30,11 +34,15 @@ RDEPENDS:${PN} = " \
     bash \
     python3-cothread \
     python3-numpy \
+    python3-panda-malcolm \
     python3-tornado \
 "
 
 inherit systemd
-SYSTEMD_SERVICE:${PN} = "panda-web-admin.service"
+SYSTEMD_SERVICE:${PN} = " \
+    panda-web-admin.service \
+    panda-webcontrol.service \
+"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 do_install() {
@@ -65,9 +73,17 @@ with open('${D}/${datadir}/web-admin/static/rootfs-quickstart.html', 'a') as f:
 EOF
     echo '</body></html>' >> \
         ${D}/${datadir}/web-admin/static/rootfs-quickstart.html
+    # Webcontrol part
+    install -m 0644 ${WORKDIR}/panda-webcontrol.service ${D}/${systemd_system_unitdir}
+    install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
+    install -m 0755 ${WORKDIR}/panda-webcontrol-wrapper ${D}/${bindir}
+    install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
+    mkdir -p ${D}/opt/etc/www
+    install -m 0644 ${WORKDIR}/panda-webcontrol.nav.html ${D}/opt/etc/www
 }
 
 FILES:${PN} += " \
     ${bindir} \
     ${datadir} \
+    /opt/etc/www \
 "

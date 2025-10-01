@@ -1,12 +1,10 @@
-SUMMARY = "Pymalcolm python package that includes malcolmjs"
+SUMMARY = "Pymalcolm python package"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
 
 inherit pypi setuptools3
 
-MALCOLM_JS_VERSION="1.7.12-0-g4e5e25f"
 SRC_URI += " \
-    https://github.com/DiamondLightSource/malcolmjs/releases/download/1.7.12/malcolmjs-${MALCOLM_JS_VERSION}.tar.gz;name=malcolmjs;subdir=malcolmjs \
     file://0001-Add-hack-to-work-around-broken-annotypes-in-python-3.patch \
     file://favicon.ico \
 "
@@ -20,8 +18,19 @@ RDEPENDS:${PN} += " \
 "
 
 do_configure() {
-    cp -rf ${WORKDIR}/malcolmjs/* ${S}/malcolm/modules/web/www/
     echo '{ "version": "", "title": "PandA Web Control", "footerHeight": 45}' > ${S}/malcolm/modules/web/www/settings.json
-    rm ${S}/malcolm/modules/web/www/index.html
     cp ${WORKDIR}/favicon.ico ${S}/malcolm/modules/web/www
 }
+
+do_install:append() {
+    mkdir -p ${D}/${datadir}/web-admin/templates
+    cp -f ${S}/malcolm/modules/web/www/index.html \
+        ${D}/${datadir}/web-admin/templates/webcontrol-withoutnav.html
+
+    template='{% raw admin_loader.load("nav.html").generate(active="panda-webcontrol", etc_loader=etc_loader, request=request) %}'
+    sed -e "s|</body>|$template</body>|" \
+        ${S}/malcolm/modules/web/www/index.html > \
+        ${D}/${datadir}/web-admin/templates/webcontrol-index.html
+}
+
+FILES:${PN} += "${datadir}/web-admin/templates"

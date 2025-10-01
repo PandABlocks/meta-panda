@@ -84,10 +84,10 @@ class TemplateHandler(RequestHandler):
     def get(self, path):
         if path == "details":
             # /details/... shouldn't have bottom nav
-            self.render("withoutnav.html")
+            self.render("webcontrol-withoutnav.html")
         else:
             # /gui/... should have index.html, templated with nav
-            self.render("index.html", etc_loader=self.etc_loader,
+            self.render("webcontrol-index.html", etc_loader=self.etc_loader,
                         admin_loader=self.admin_loader)
 
 

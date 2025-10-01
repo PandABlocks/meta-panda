@@ -2,10 +2,10 @@
 designsdir="/boot/state/designs"
 optionsdir="/boot/state/options"
 mkdir -p "$designsdir" "$optionsdir"
-/opt/bin/panda-webcontrol.py \
+/usr/bin/panda-webcontrol.py \
     --admindir /usr/share/web-admin/templates \
     --configdir "$designsdir" \
     --templatedesigns /opt/share/panda-fpga/template_designs \
-    --templatedir /opt/share/panda-webcontrol/templates \
+    --templatedir /usr/share/web-admin/templates \
     --optionsdir "$optionsdir" \
     --etcdir /opt/etc/www
