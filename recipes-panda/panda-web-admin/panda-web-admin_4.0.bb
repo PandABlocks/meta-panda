@@ -2,12 +2,11 @@ SUMMARY = "PandABlocks-web-admin"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:${THISDIR}/../../:"
 SRC_URI = " \
     file://panda-web-admin.service \
     file://panda-web-admin.py \
     file://rootfs-version.sh \
-    file://quickstart.md \
     file://static/favicon.ico \
     file://static/PandA-logo-for-black-background.svg \
     file://static/style.css \
@@ -23,12 +22,83 @@ SRC_URI = " \
     file://panda-webcontrol-wrapper \
     file://panda-webcontrol.py \
     file://panda-webcontrol.nav.html \
+    file://panda-webcontrol.docs.html \
+    file://docs/webcontrol/contents.rst \
+    file://docs/webcontrol/_templates/page.html \
+    file://docs/webcontrol/_templates/layout.html \
+    file://docs/webcontrol/index.rst \
+    file://docs/webcontrol/_static/theme_overrides.css \
+    file://docs/webcontrol/build_popping_screenshot.js \
+    file://docs/webcontrol/malcolm-logo.ico \
+    file://docs/webcontrol/malcolm-logo.png \
+    file://docs/webcontrol/requirements.txt \
+    file://docs/webcontrol/userguide/quick-start.rst \
+    file://docs/webcontrol/userguide/glossary.rst \
+    file://docs/webcontrol/userguide/understanding_attribute_state.rst \
+    file://docs/webcontrol/userguide/index.rst \
+    file://docs/webcontrol/userguide/images/disconnected_icon.png \
+    file://docs/webcontrol/userguide/images/error_icon.png \
+    file://docs/webcontrol/userguide/images/information_icon.png \
+    file://docs/webcontrol/userguide/images/system_context.svg \
+    file://docs/webcontrol/userguide/images/warning_icon.png \
+    file://docs/webcontrol/userguide/images/ui_schematic.png \
+    file://docs/webcontrol/userguide/images/design_context.png \
+    file://docs/webcontrol/userguide/images/attribute_lifecycle.svg \
+    file://docs/webcontrol/userguide/images/put_process.svg \
+    file://docs/webcontrol/userguide/images/locally_edited_icon.png \
+    file://docs/webcontrol/userguide/working_with_a_design.rst \
+    file://docs/webcontrol/userguide/user_interface_overview.rst \
+    file://docs/webcontrol/userguide/screenshots/block-list.png \
+    file://docs/webcontrol/userguide/screenshots/attribute_view_chart.png \
+    file://docs/webcontrol/userguide/screenshots/PANDA-layout-spread-out.png \
+    file://docs/webcontrol/userguide/screenshots/PANDA-new-link.png \
+    file://docs/webcontrol/userguide/screenshots/window_popping_template.svg \
+    file://docs/webcontrol/userguide/screenshots/PANDA-block-details.png \
+    file://docs/webcontrol/userguide/screenshots/PANDA-layout.png \
+    file://docs/webcontrol/userguide/screenshots/window_popping_output.svg \
+    file://docs/webcontrol/userguide/screenshots/popping-1.png \
+    file://docs/webcontrol/userguide/screenshots/layout-button.png \
+    file://docs/webcontrol/userguide/screenshots/panel_popping.png \
+    file://docs/webcontrol/userguide/screenshots/starting-ui.png \
+    file://docs/webcontrol/userguide/screenshots/popping-2.png \
+    file://docs/webcontrol/userguide/screenshots/continuous_plot.png \
+    file://docs/webcontrol/userguide/screenshots/attribute_value_table.png \
+    file://docs/webcontrol/userguide/screenshots/popping-3.png \
+    file://docs/webcontrol/userguide/screenshots/popping-4.png \
+    file://docs/webcontrol/userguide/screenshots/chart_options.png \
+    file://docs/webcontrol/userguide/screenshots/example-ui.png \
+    file://docs/webcontrol/userguide/screenshots/attribute_table.png \
+    file://docs/webcontrol/userguide/monitoring_attribute_values.rst \
+    file://docs/webcontrol/userguide/contents.rst \
+    file://docs/webcontrol/copy_screenshots_from_e2e.js \
+    file://docs/webcontrol/conf.py \
+    file://docs/webcontrol/malcolm-logo.svg \
+    file://docs/tutorials.rst \
+    file://docs/_static/css/custom.css \
+    file://docs/explanations/README.txt \
+    file://docs/how-to.rst \
+    file://docs/reference/README.txt \
+    file://docs/reference.rst \
+    file://docs/conf.py \
+    file://docs/how-to/quickstart.rst \
+    file://docs/how-to/README.txt \
+    file://docs/how-to/building.rst \
+    file://docs/explanations.rst \
+    file://docs/images/PandA-logo-for-black-background.svg \
+    file://docs/images/favicon.ico \
+    file://docs/index.rst \
+    file://docs/tutorials/README.txt \
 "
 S = "${WORKDIR}"
 
 inherit python3native
 DEPENDS = " \
-    python3-mistune-native \
+    python3-docutils-native \
+    python3-jinja2-native \
+    python3-requests-native \
+    python3-six-native \
+    python3-sphinx-native \
+    python3-sphinx-rtd-theme-native \
 "
 RDEPENDS:${PN} = " \
     bash \
@@ -53,37 +123,21 @@ do_install() {
     install -m 0755 ${WORKDIR}/rootfs-version.sh ${D}/${bindir}
     cp -r ${WORKDIR}/templates ${D}/${datadir}/web-admin
     cp -r ${WORKDIR}/static ${D}/${datadir}/web-admin
-    cat <<EOF > ${D}/${datadir}/web-admin/static/rootfs-quickstart.html
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <title>PandA Rootfs Quickstart</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body class="dark">
-EOF
-    python3 <<EOF
-import mistune
-with open('${WORKDIR}/quickstart.md', 'r') as f:
-    output = mistune.markdown(f.read())
-with open('${D}/${datadir}/web-admin/static/rootfs-quickstart.html', 'a') as f:
-    f.write(output)
-EOF
-    echo '</body></html>' >> \
-        ${D}/${datadir}/web-admin/static/rootfs-quickstart.html
     # Webcontrol part
     install -m 0644 ${WORKDIR}/panda-webcontrol.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
     install -m 0755 ${WORKDIR}/panda-webcontrol-wrapper ${D}/${bindir}
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
-    mkdir -p ${D}/opt/etc/www
+    mkdir -p ${D}/opt/etc/www ${D}/opt/share/www/panda-webcontrol
     install -m 0644 ${WORKDIR}/panda-webcontrol.nav.html ${D}/opt/etc/www
+    install -m 0644 ${WORKDIR}/panda-webcontrol.docs.html ${D}/opt/etc/www
+    export VERSION=${PV}
+    python3 -m sphinx -b html ${WORKDIR}/docs ${D}/opt/share/www/panda-webcontrol
 }
 
 FILES:${PN} += " \
     ${bindir} \
     ${datadir} \
     /opt/etc/www \
+    /opt/share/www \
 "

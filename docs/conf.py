@@ -10,33 +10,21 @@ from subprocess import check_output
 from urllib.request import urlretrieve
 
 import requests
-
-import pandablocks
+import os
 
 # Download top level (github.io repo) files
-urlretrieve (
-    "https://raw.githubusercontent.com/PandABlocks/PandABlocks.github.io/main/docs/how-to/remote.rst",
-    "how-to/remote.rst"
-)
+remote_req = requests.get(
+    "https://raw.githubusercontent.com/PandABlocks/PandABlocks.github.io/main/docs/how-to/remote.rst")
+with open("how-to/remote.rst", "wb") as f:
+    f.write(remote_req.content)
 
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
-project = "PandABlocks-rootfs"
+project = "meta-panda"
 copyright = "2024, Diamond Light Source"
 author = "Tom Cobb"
-
-# The full version, including alpha/beta/rc tags.
-release = pandablocks.__version__
-
-# The short X.Y version.
-if "+" in release:
-    # Not on a tag, use branch name
-    root = Path(__file__).absolute().parent.parent
-    git_branch = check_output("git branch --show-current".split(), cwd=root)
-    version = git_branch.decode().strip()
-else:
-    version = release
+version = os.getenv('VERSION', '')
 
 extensions = [
     # Use this for generating API docs
@@ -49,12 +37,6 @@ extensions = [
     "sphinx.ext.viewcode",
     # Adds the inheritance-diagram generation directive
     "sphinx.ext.inheritance_diagram",
-    # Add a copy button to each code block
-    "sphinx_copybutton",
-    # For the card element
-    "sphinx_design",
-    # So we can write markdown files
-    "myst_parser",
 ]
 
 # So we can use the ::: syntax
@@ -84,6 +66,9 @@ nitpick_ignore = [
 # Both the class’ and the __init__ method’s docstring are concatenated and
 # inserted into the main body of the autoclass directive
 autoclass_content = "both"
+
+# The master toctree document.
+master_doc = 'contents'
 
 # Order the members by the order they appear in the source code
 autodoc_member_order = "bysource"
@@ -144,8 +129,14 @@ copybutton_prompt_is_regexp = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "pydata_sphinx_theme"
-github_repo = "PandABlocks-rootfs"
+try:
+    import sphinx_rtd_theme
+    html_theme = "sphinx_rtd_theme"
+    html_theme_options = dict(style_nav_header_background="black")
+except ImportError:
+    html_theme = 'default'
+
+github_repo = "meta-panda"
 github_user = "PandABlocks"
 switcher_json = f"https://{github_user}.github.io/{github_repo}/switcher.json"
 switcher_exists = requests.get(switcher_json).ok

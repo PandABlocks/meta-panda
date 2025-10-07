@@ -1,41 +1,40 @@
-# Getting a PandA on the network
+Getting a PandA on the network
+==============================
 
-The SD card inside a PandA contains a `config.txt` file that allows control of networking and other configuration settings
+The SD card inside a PandA contains a `config.txt` file that allows control of networking and other configuration settings::
 
-```
-# This file contains configuration settings.  In this file network and other
-# settings can be adjusted.
+    # This file contains configuration settings.  In this file network and other
+    # settings can be adjusted.
 
-# If ADDRESS and NETMASK are not both specified DHCP will be used instead.
-# The ADDRESS field can be set to a four part dotted IP address followed by a
-# network mask specification thus:
-#
-#   ADDRESS = 172.23.252.202
-#   NETMASK = 255.255.240.0
+    # If ADDRESS and NETMASK are not both specified DHCP will be used instead.
+    # The ADDRESS field can be set to a four part dotted IP address followed by a
+    # network mask specification thus:
+    #
+    #   ADDRESS = 172.23.252.202
+    #   NETMASK = 255.255.240.0
 
-# If the ADDRESS field has been set then the GATEWAY and DNS fields should be
-# set:
-#
-#   GATEWAY = 172.23.240.254
-#   DNS = 172.23.5.13 172.23.4.1 130.246.8.13
+    # If the ADDRESS field has been set then the GATEWAY and DNS fields should be
+    # set:
+    #
+    #   GATEWAY = 172.23.240.254
+    #   DNS = 172.23.5.13 172.23.4.1 130.246.8.13
 
-# Optionally the DNS search domain can be set:
-#
-#   DNS_SEARCH = diamond.ac.uk
+    # Optionally the DNS search domain can be set:
+    #
+    #   DNS_SEARCH = diamond.ac.uk
 
-# The NTP server or servers can be specified here:
-#
-#   NTP = 172.23.240.2 172.23.199.1
+    # The NTP server or servers can be specified here:
+    #
+    #   NTP = 172.23.240.2 172.23.199.1
 
-# The machine hostname can be specified here:
-#
-#   HOSTNAME = panda
+    # The machine hostname can be specified here:
+    #
+    #   HOSTNAME = panda
 
-# To skip loading any zpackages at startup, either for testing or as an
-# override to recover from a faulty zpkg install:
-#
-#   NO_ZPKG
-```
+    # To skip loading any zpackages at startup, either for testing or as an
+    # override to recover from a faulty zpkg install:
+    #
+    #   NO_ZPKG
 
 During startup the network will be configured as follows:
 
@@ -45,7 +44,8 @@ During startup the network will be configured as follows:
 
 Note that in the default configuration PandA will attempt to contact NTP servers at `0.pool.ntp.org` etc.
 
-## Override file
+Override file
+-------------
 
 If a static IP address needs to be set this can be configured after installation via the following override mechanism.
 
@@ -57,7 +57,8 @@ then this file will be used for network configuration instead of `config.txt` on
 
 This override file can be made permanent by using the `Show Network Configuration` function of the Web Admin as explained below.
 
-## Web Interface
+Web Interface
+-------------
 
 Once a PandA is on the network, it exposes a Web Interface that is accessible by typing it’s ip address or hostname into a browser. This consists of a number of areas:
 
@@ -66,63 +67,75 @@ Once a PandA is on the network, it exposes a Web Interface that is accessible by
 - Control: If the Web Control package is loaded then this allows the functional blocks that make up PandA to be wired together, parameters set, and the design saved and loaded.
 - Admin: Allows installation of packages from a USB key, setting up SSH keys, and other remote administration.
 
-## Web Admin
+Web Admin
+---------
 
 This allows the following functions:
 
 - System
-  * Reboot/Restart
-  * Show Logs
-  * Show Network Configuration
+  - Reboot/Restart
+  - Show /var/log/messages
+  - Show Network Configuration
 - Packages
-  * List Installed Packages
-  * Install Packages from USB
-  * Install Rootfs from USB
+  - List Installed Packages
+  - Install Packages from USB
+  - Install Rootfs from USB
 - SSH Keys
-  * Show Authorised SSH Keys
-  * Append SSH keys from USB
+  - Show Authorised SSH Keys
+  - Append SSH keys from USB
 
 Instructions on each operation is available by visiting the relevant Web Admin page.
 
-# Rootfs Frequently Asked Questions
+Frequently Asked Questions
+--------------------------
 
-## How to configure the network statically?
+How to configure the network statically?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 DHCP is used by default, a static configuration can be added by writing to
-the file boot.txt in the SD card, for example:
-```
-ADDRESS=192.168.0.2
-NETMASK=255.255.255.0
-GATEWAY=192.168.0.254
-HOSTNAME=mypanda
-```
+the file boot.txt in the SD card, for example::
 
-## How to disable sub-net validation in the webcontrol?
+    ADDRESS=192.168.0.2
+    NETMASK=255.255.255.0
+    GATEWAY=192.168.0.254
+    HOSTNAME=mypanda
+
+How to disable sub-net validation in the webcontrol?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Drop an empty file under state/options in the SD card called
 `no-subnet-validation`.
 
-## How to recover from catastrophic changes?
+How to recover from catastrophic changes?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Remove the file `changes.ext4` from the SD card.
 
-## How to disable changes layer(which saves changes between reboots)?</h2>
-Replace `changes.ext4` in the SD card with an empty file.
+How to load the full rootfs to RAM at boot time?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## How to load the full rootfs to RAM at boot time?
 Drop an empty file called `to-ram` in the SD card, please keep in
 mind that in some targets(like ZedBoard), this might lead to the server
 failing because the driver cannot allocate enough DMA buffers.
 
-## What to do if system freezes after loading the FPGA?
+What to do if system freezes after loading the FPGA?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Drop an empty file called `no-fpga` in the SD card, the FPGA loader will
 not load the bitstream when this file exists and will allow to try other
 bitstream manually.
 
-## How to override the FPGA bitstream variant used?
-By default, the bitstream is selected based on the IPMI information found found in
+How to override the FPGA bitstream variant used?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the bitstream is selected based on the IPMI information found in
 the FMC EEPROM, if no EEPROM is found, it will default to the no-fmc variant.
 
 This selection can be overridden by setting the variable APP in the file
-config.txt in the SD card, for example: APP=PandABox-fmc\_acq430, this will take
+config.txt in the SD card, for example: `APP=pandabox-fmc-acq430`, this will take
 affect only if the PandA FPGA variant package was installed in the system.
 
-## How to authorise a public key for ssh?
+How to authorise a public key for ssh?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Add the public key to file authorized\_keys in the SD card.
