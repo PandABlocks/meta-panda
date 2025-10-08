@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>meta-panda &mdash; meta-panda  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How-to Guides" href="how-to.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            meta-panda
+              <img src="_static/PandA-logo-for-black-background.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Linux System Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explanations.html">Explanations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Webcontrol Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html">User Interface Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html">Working With a Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html">Monitoring Attribute Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html">Understanding Attribute State</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">meta-panda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">meta-panda</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="meta-panda">
+<h1>meta-panda<a class="headerlink" href="#meta-panda" title="Permalink to this heading"></a></h1>
+<p>The layer meta-panda contains yocto recipes and configuration for building the
+linux system running in PandA.</p>
+<ul class="simple">
+<li><p>The machines provided are: <code class="xref any docutils literal notranslate"><span class="pre">pandabox</span></code> and <code class="xref any docutils literal notranslate"><span class="pre">xu5-st1</span></code>.</p></li>
+<li><p>The distro provided is <code class="xref any docutils literal notranslate"><span class="pre">panda-petalinux</span></code>.</p></li>
+<li><p>The image provided is <code class="xref any docutils literal notranslate"><span class="pre">panda-image</span></code>.</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Source code</p></td>
+<td><p><a class="reference external" href="https://github.com/PandABlocks/meta-panda">https://github.com/PandABlocks/meta-panda</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Documentation</p></td>
+<td><p><a class="reference external" href="https://PandABlocks.github.io/meta-panda">https://PandABlocks.github.io/meta-panda</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Changelog</p></td>
+<td><p><a class="reference external" href="https://github.com/PandABlocks/meta-panda/releases">https://github.com/PandABlocks/meta-panda/releases</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="what-does-the-panda-linux-system-do">
+<h1>What does the panda linux system do?<a class="headerlink" href="#what-does-the-panda-linux-system-do" title="Permalink to this heading"></a></h1>
+<p>The linux system sets up a number of services on it:</p>
+<ul class="simple">
+<li><p>Bringing up the network as specified in a config.txt file on the SD card</p></li>
+<li><p>Running an SSH server that allows debugging access to those who have their public keys on the PandA</p></li>
+<li><p>Programming the FPGA and running services like the TCP server and Web Control as specified in packages</p></li>
+<li><p>Running a Web Admin server on port 80 that allows IPK files to allow the installation and removal of packages, and addition of SSH keys from the USB stick</p></li>
+</ul>
+<div class="section" id="how-the-documentation-is-structured">
+<h2>How the documentation is structured<a class="headerlink" href="#how-the-documentation-is-structured" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Linux System Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how-to.html">How-to Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how-to/build.html">Building the panda image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how-to/build.html#output-files">Output Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how-to/packages.html">IPK Packages (opkg)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how-to/packages.html#installing-ipk-files">Installing IPK Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how-to/quickstart.html">Getting a PandA on the network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how-to/quickstart.html#override-file">Override file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how-to/quickstart.html#web-interface">Web Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how-to/quickstart.html#web-admin">Web Admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how-to/quickstart.html#frequently-asked-questions">Frequently Asked Questions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-configure-the-network-statically">How to configure the network statically?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-disable-sub-net-validation-in-the-webcontrol">How to disable sub-net validation in the webcontrol?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-recover-from-catastrophic-changes">How to recover from catastrophic changes?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-load-the-full-rootfs-to-ram-at-boot-time">How to load the full rootfs to RAM at boot time?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#what-to-do-if-system-freezes-after-loading-the-fpga">What to do if system freezes after loading the FPGA?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-override-the-fpga-bitstream-variant-used">How to override the FPGA bitstream variant used?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="how-to/quickstart.html#how-to-authorise-a-public-key-for-ssh">How to authorise a public key for ssh?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="how-to/remote.html">Updating a PandA via SSH</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="how-to/remote.html#updating-the-rootfs">Updating the rootfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how-to/remote.html#updating-zpkg-packages">Updating zpkg packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how-to/remote.html#update-24v-eeprom">Update 24V eeprom</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="explanations.html">Explanations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="explanations/boot-process.html">Boot Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/opkg.html"><code class="docutils literal notranslate"><span class="pre">opkg</span></code> Command</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/manual-build.html">Long way to build the panda image</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Webcontrol Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html">User Interface Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html#user-interface-components">User Interface Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html#principle-user-interface-views">Principle User Interface views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html#layout-view">Layout View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html#attribute-view">Attribute View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/user_interface_overview.html#panel-popping">Panel Popping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html">Working With a Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#adding-a-block-to-a-design">Adding a Block to a Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#removing-a-block-from-a-design">Removing a Block from a Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#working-with-the-block-palette">Working with the Block Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#specifying-block-attributes">Specifying Block Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#types-of-attributes">Types of Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#obtaining-information-about-an-attribute">Obtaining Information About an Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#setting-a-block-attribute">Setting a Block Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#view-edit-button">View/Edit Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#dropdown-list">Dropdown List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#text-input">Text Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#checkbox">Checkbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#exporting-attributes">Exporting Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#local-vs-server-parameter-attribute-state">Local vs. Server Parameter Attribute State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#attribute-change-lifecycle">Attribute Change Lifecycle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#complex-attributes">Complex Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#identifying-table-attributes">Identifying Table Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#specifying-attribute-table-content">Specifying Attribute Table Content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#static-vs-dynamic-attribute-tables">Static vs. Dynamic Attribute Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#working-with-block-methods">Working with Block Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#obtaining-information-about-method-execution">Obtaining information about Method execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#block-ports">Block Ports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#linking-blocks">Linking Blocks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#creating-a-block-link">Creating a Block Link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#interrogating-link-attributes">Interrogating Link Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#removing-a-link">Removing a Link</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#constraints-when-using-links">Constraints When Using Links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#saving-a-design">Saving a Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/working_with_a_design.html#opening-an-existing-design">Opening an Existing Design</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html">Monitoring Attribute Values</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#working-with-charts">Working With Charts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#interactive-chart-functionality">Interactive Chart Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#enhanced-chart-interactivity">Enhanced Chart Interactivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#exporting-a-chart-for-external-presentation">Exporting a Chart For External Presentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#data-retrieval-and-chart-update-frequency">Data Retrieval and Chart Update Frequency</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#working-with-numerical-tables">Working with Numerical Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webcontrol/userguide/monitoring_attribute_values.html#data-retrieval-and-table-update-frequency">Data Retrieval and Table Update Frequency</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html">Understanding Attribute State</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#normal-state">Normal State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#processing-state">Processing State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#locally-edited-state">Locally Edited State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#update-error-state">Update Error State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#warning-state">Warning State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#error-state">Error State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#invalid-state">Invalid State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#disconnected-state">Disconnected State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webcontrol/userguide/understanding_attribute_state.html#presenting-status-information">Presenting Status Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webcontrol/userguide/glossary.html">Glossary</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how-to.html" class="btn btn-neutral float-right" title="How-to Guides" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
