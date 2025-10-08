@@ -29,7 +29,7 @@ The result will be under ``build/tmp/deploy/images/<machine>``
     zip boot-pandabox.zip boot/*
 
 
-In order to simplify build even further, the you can run the following script
+In order to simplify build even further, you can run the following script
 that builds and collects everything required for a specific machine::
 
     ./build.sh <MACHINE> </path/to/workdir>
