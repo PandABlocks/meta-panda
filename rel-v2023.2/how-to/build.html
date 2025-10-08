@@ -110,18 +110,16 @@
 </div>
 </li>
 <li><p>If you don’t have kas, create a python venv and pip install it:</p>
-<p>python3 -m venv venv
-. venv/bin/activate
-pip install kas</p>
+<p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">venv</span> <span class="pre">&amp;&amp;</span> <span class="pre">.</span> <span class="pre">venv/bin/activate</span> <span class="pre">&amp;&amp;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">kas</span></code></p>
 </li>
-<li><p>Build panda image:</p>
+<li><p>Build the panda image:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kas</span><span class="o">-</span><span class="n">container</span> <span class="n">build</span> <span class="o">./</span><span class="n">kas</span><span class="o">.</span><span class="n">yml</span>
 </pre></div>
 </div>
 </li>
 </ol>
-<p>Environment variable <code class="docutils literal notranslate"><span class="pre">KAS_MACHINE</span></code> can be set to build for a different machine ,
-the default machine built is pandabox, e.g. <code class="docutils literal notranslate"><span class="pre">KAS_MACHINE='xu5-st1'</span></code>.</p>
+<p>Environment variable <code class="docutils literal notranslate"><span class="pre">KAS_MACHINE</span></code> can be set to build for a different machine
+(e.g. <code class="docutils literal notranslate"><span class="pre">KAS_MACHINE='xu5-st1'</span></code>), the default machine built is pandabox.</p>
 <p>The result will be under <code class="docutils literal notranslate"><span class="pre">build/tmp/deploy/images/&lt;machine&gt;</span></code></p>
 <ol class="arabic" start="4">
 <li><p>(optional) Collect the output files, e.g. for pandabox:</p>

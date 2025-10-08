@@ -8,18 +8,16 @@ Building the panda image
     git clone https://github.com/PandABlocks/meta-panda
     cd meta-panda
 
-2. If you don't have kas, create a python venv and pip install it::
+2. If you don't have kas, create a python venv and pip install it:
 
-   python3 -m venv venv
-   . venv/bin/activate
-   pip install kas
+   ``python3 -m venv venv && . venv/bin/activate && pip install kas``
 
-3. Build panda image::
+3. Build the panda image::
 
     kas-container build ./kas.yml
 
-Environment variable ``KAS_MACHINE`` can be set to build for a different machine ,
-the default machine built is pandabox, e.g. ``KAS_MACHINE='xu5-st1'``.
+Environment variable ``KAS_MACHINE`` can be set to build for a different machine
+(e.g. ``KAS_MACHINE='xu5-st1'``), the default machine built is pandabox.
 
 The result will be under ``build/tmp/deploy/images/<machine>``
 
