@@ -25,9 +25,12 @@ image), if the dependencies are not available in your system.
     git clone https://github.com/PandABlocks/meta-panda ../sources/meta-panda
     bitbake-layers add-layer ../sources/meta-panda
 
-- Set the following variables in ``conf/local.conf``
+- Set the following variables in ``conf/local.conf``:
+
   - ``MACHINE="pandabox"`` or ``MACHINE="xu5-s1"``
+
   - ``DISTRO="panda-petalinux"``
+
 - Build panda-image by running: ``bitbake panda-image``
 - Gather the output files from the deploy folder::
 

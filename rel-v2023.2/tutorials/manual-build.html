@@ -121,9 +121,12 @@ repo init -u https://gitenterprise.xilinx.com/Yocto/yocto-manifests.git -b $BRAN
 </pre></div>
 </div>
 </li>
-<li><p>Set the following variables in <code class="docutils literal notranslate"><span class="pre">conf/local.conf</span></code>
-- <code class="docutils literal notranslate"><span class="pre">MACHINE=&quot;pandabox&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">MACHINE=&quot;xu5-s1&quot;</span></code>
-- <code class="docutils literal notranslate"><span class="pre">DISTRO=&quot;panda-petalinux&quot;</span></code></p></li>
+<li><p>Set the following variables in <code class="docutils literal notranslate"><span class="pre">conf/local.conf</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MACHINE=&quot;pandabox&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">MACHINE=&quot;xu5-s1&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DISTRO=&quot;panda-petalinux&quot;</span></code></p></li>
+</ul>
+</li>
 <li><p>Build panda-image by running: <code class="docutils literal notranslate"><span class="pre">bitbake</span> <span class="pre">panda-image</span></code></p></li>
 <li><p>Gather the output files from the deploy folder:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">boot</span>
