@@ -1,7 +1,7 @@
 Getting a PandA on the network
 ==============================
 
-The SD card inside a PandA contains a `config.txt` file that allows control of networking and other configuration settings::
+The SD card inside a PandA contains a ``config.txt`` file that allows control of networking and other configuration settings::
 
     # This file contains configuration settings.  In this file network and other
     # settings can be adjusted.
@@ -38,11 +38,11 @@ The SD card inside a PandA contains a `config.txt` file that allows control of n
 
 During startup the network will be configured as follows:
 
-- If `ADDRESS` and `NETMASK` are set then a static `IP` will be assigned, and the remaining keys should also be set. Additionally, `NTP` can be set to specify a list of `NTP` servers.
-- Otherwise DHCP will be attempted. If successful this will assign the IP address, gateway and DNS settings, and may assign hostname. If the DHCP server provides the NTP option, it will be used to set the NTP servers. This will take priority over the `NTP` parameter.
+- If ``ADDRESS`` and ``NETMASK`` are set then a static ``IP`` will be assigned, and the remaining keys should also be set. Additionally, ``NTP`` can be set to specify a list of ``NTP`` servers.
+- Otherwise DHCP will be attempted. If successful this will assign the IP address, gateway and DNS settings, and may assign hostname. If the DHCP server provides the NTP option, it will be used to set the NTP servers. This will take priority over the ``NTP`` parameter.
 - If DCHP fails then “ZeroConf” is attempted. If this also fails then PandA will not be reachable on the network.
 
-Note that in the default configuration PandA will attempt to contact NTP servers at `0.pool.ntp.org` etc.
+Note that in the default configuration PandA will attempt to contact NTP servers at ``0.pool.ntp.org`` etc.
 
 Override file
 -------------
@@ -51,11 +51,11 @@ If a static IP address needs to be set this can be configured after installation
 
 If a USB drive is plugged into PandA while it is booting, and if the drive contains this file:
 
-	`panda-config.txt`
+	``panda-config.txt``
 
-then this file will be used for network configuration instead of `config.txt` on the `SD` card.
+then this file will be used for network configuration instead of ``config.txt`` on the ``SD`` card.
 
-This override file can be made permanent by using the `Show Network Configuration` function of the Web Admin as explained below.
+This override file can be made permanent by using the ``Show Network Configuration`` function of the Web Admin as explained below.
 
 Web Interface
 -------------
@@ -104,24 +104,24 @@ How to disable sub-net validation in the webcontrol?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Drop an empty file under state/options in the SD card called
-`no-subnet-validation`.
+``no-subnet-validation``.
 
 How to recover from catastrophic changes?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Remove the file `changes.ext4` from the SD card.
+Remove the file ``changes.ext4`` from the SD card.
 
 How to load the full rootfs to RAM at boot time?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Drop an empty file called `to-ram` in the SD card, please keep in
+Drop an empty file called ``to-ram`` in the SD card, please keep in
 mind that in some targets(like ZedBoard), this might lead to the server
 failing because the driver cannot allocate enough DMA buffers.
 
 What to do if system freezes after loading the FPGA?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Drop an empty file called `no-fpga` in the SD card, the FPGA loader will
+Drop an empty file called ``no-fpga`` in the SD card, the FPGA loader will
 not load the bitstream when this file exists and will allow to try other
 bitstream manually.
 
@@ -132,7 +132,7 @@ By default, the bitstream is selected based on the IPMI information found in
 the FMC EEPROM, if no EEPROM is found, it will default to the no-fmc variant.
 
 This selection can be overridden by setting the variable APP in the file
-config.txt in the SD card, for example: `APP=pandabox-fmc-acq430`, this will take
+config.txt in the SD card, for example: ``APP=pandabox-fmc-acq430``, this will take
 affect only if the PandA FPGA variant package was installed in the system.
 
 How to authorise a public key for ssh?

@@ -22,7 +22,8 @@ SRC_URI = " \
     file://panda-webcontrol-wrapper \
     file://panda-webcontrol.py \
     file://panda-webcontrol.nav.html \
-    file://panda-webcontrol.docs.html \
+    file://meta-panda.docs.html \
+    file://README.rst \
     file://docs/webcontrol/contents.rst \
     file://docs/webcontrol/_templates/page.html \
     file://docs/webcontrol/_templates/layout.html \
@@ -73,21 +74,21 @@ SRC_URI = " \
     file://docs/webcontrol/copy_screenshots_from_e2e.js \
     file://docs/webcontrol/conf.py \
     file://docs/webcontrol/malcolm-logo.svg \
-    file://docs/tutorials.rst \
     file://docs/_static/css/custom.css \
-    file://docs/explanations/README.txt \
+    file://docs/tutorials/manual-build.rst \
+    file://docs/tutorials.rst \
+    file://docs/how-to/quickstart.rst \
+    file://docs/how-to/build.rst \
+    file://docs/how-to/packages.rst \
     file://docs/how-to.rst \
-    file://docs/reference/README.txt \
+    file://docs/explanations/boot-process.rst \
+    file://docs/explanations.rst \
+    file://docs/reference/opkg.rst \
     file://docs/reference.rst \
     file://docs/conf.py \
-    file://docs/how-to/quickstart.rst \
-    file://docs/how-to/README.txt \
-    file://docs/how-to/building.rst \
-    file://docs/explanations.rst \
     file://docs/images/PandA-logo-for-black-background.svg \
     file://docs/images/favicon.ico \
     file://docs/index.rst \
-    file://docs/tutorials/README.txt \
 "
 S = "${WORKDIR}"
 
@@ -130,9 +131,9 @@ do_install() {
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
     mkdir -p ${D}/opt/etc/www ${D}/opt/share/www/panda-webcontrol
     install -m 0644 ${WORKDIR}/panda-webcontrol.nav.html ${D}/opt/etc/www
-    install -m 0644 ${WORKDIR}/panda-webcontrol.docs.html ${D}/opt/etc/www
+    install -m 0644 ${WORKDIR}/meta-panda.docs.html ${D}/opt/etc/www
     export VERSION=${PV}
-    python3 -m sphinx -b html ${WORKDIR}/docs ${D}/opt/share/www/panda-webcontrol
+    python3 -m sphinx -b html ${WORKDIR}/docs ${D}/opt/share/www/meta-panda
 }
 
 FILES:${PN} += " \
