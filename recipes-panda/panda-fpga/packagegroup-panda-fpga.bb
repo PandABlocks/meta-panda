@@ -7,6 +7,7 @@ RDEPENDS:${PN} = " \
     panda-fpga-loader \
     panda-fpga-doc \
 "
+
 RDEPENDS:${PN}:append:pandabox = " \
     panda-fpga-pandabox-no-fmc \
     panda-slowfpga \
@@ -14,6 +15,10 @@ RDEPENDS:${PN}:append:pandabox = " \
     panda-fpga-pandabox-fmc-acq427 \
     panda-fpga-pandabox-fmc-acq430 \
     panda-fpga-pandabox-fmc-lback-sfp-lback \
+"
+
+RDEPENDS:${PN}:append:pandabrick = " \
+    panda-fpga-pandabrick \
 "
 
 RDEPENDS:${PN}:append:xu5-st1 = " \
