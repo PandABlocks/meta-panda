@@ -5,14 +5,16 @@ import subprocess
 import glob
 import os
 import shutil
+import socket
 import mimetypes
-from collections import defaultdict, OrderedDict
 
+from collections import defaultdict, OrderedDict
 from tornado.ioloop import IOLoop
 from tornado.template import Loader
 from tornado.process import Subprocess
 from tornado.escape import xhtml_escape
 from tornado.gen import coroutine
+from tornado.httpserver import HTTPServer
 from tornado.iostream import StreamClosedError
 from tornado.web import RequestHandler, Application, StaticFileHandler, \
     HTTPError
@@ -47,6 +49,8 @@ drawer["ssh"] = ("SSH Keys", OrderedDict())
 
 # The get_pages with a decorator to add to them
 get_pages = OrderedDict()
+# An event to signal shutdown
+shutdown_event = asyncio.Event()
 
 
 class PrintableError(Exception):
@@ -563,19 +567,45 @@ class TemplateHandler(RequestHandler):
         self.render(path, etc_loader=etc_loader)
 
 
+class IdleApplication(Application):
+    timeout_handle = None
+
+    def stop(self):
+        shutdown_event.set()
+
+    def reset_timeout(self):
+        loop = IOLoop.current()
+        if self.timeout_handle is not None:
+            loop.remove_timeout(self.timeout_handle)
+        # Run for 10 minutes then exit
+        self.timeout_handle = loop.call_later(600, self.stop)
+
+    def start_request(self, server_conn, request_conn):
+        self.reset_timeout()
+        return super(IdleApplication, self).start_request(
+            server_conn, request_conn)
+
+
 async def main():
     logging.root.setLevel(logging.INFO)
     logging.info("Loading web-admin...")
 
     # Start the application
-    app = Application([
+    app = IdleApplication([
         (r"/(|index\.html|docs\.html)", TemplateHandler),
         (r"/admin\.html", CommandHandler),
         (r"/admin/(.*)", CommandHandler),
         (r"/opt/(.*)", StaticFileHandler, {"path": OPT_SHARE_WWW})
     ], template_path=TEMPLATES, static_path=STATIC)
-    app.listen(APP_PORT)
-    shutdown_event = asyncio.Event()
+    if os.getenv('LISTEN_FDS') == '1':
+        logging.info('Activated by systemd')
+        sock = socket.fromfd(3, socket.AF_INET, socket.SOCK_STREAM)
+        sock.setblocking(False)
+        server = HTTPServer(app)
+        server.add_sockets([sock])
+    else:
+        app.listen(APP_PORT)
+
     await shutdown_event.wait()
 
 

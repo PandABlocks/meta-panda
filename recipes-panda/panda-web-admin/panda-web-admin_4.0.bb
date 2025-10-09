@@ -4,6 +4,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:${THISDIR}/../../:"
 SRC_URI = " \
+    file://panda-web-admin.socket \
     file://panda-web-admin.service \
     file://panda-web-admin.py \
     file://rootfs-version.sh \
@@ -111,6 +112,7 @@ RDEPENDS:${PN} = " \
 
 inherit systemd
 SYSTEMD_SERVICE:${PN} = " \
+    panda-web-admin.socket \
     panda-web-admin.service \
     panda-webcontrol.service \
 "
@@ -119,6 +121,7 @@ SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 do_install() {
     install -d ${D}/${systemd_system_unitdir} ${D}/${bindir}
     install -d ${D}/${datadir}/web-admin
+    install -m 0644 ${WORKDIR}/panda-web-admin.socket ${D}/${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/panda-web-admin.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-web-admin.py ${D}/${bindir}
     install -m 0755 ${WORKDIR}/rootfs-version.sh ${D}/${bindir}

@@ -1,8 +1,10 @@
 [Unit]
 Description=Panda Web Admin service
+Requires=panda-web-admin.socket
+After=panda-web-admin.socket
 
 [Service]
 ExecStart=/usr/bin/panda-web-admin.py
 
 [Install]
-WantedBy=multi-user.target
+Also=panda-web-admin.socket
