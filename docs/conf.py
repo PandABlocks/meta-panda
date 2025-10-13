@@ -133,7 +133,11 @@ except ImportError:
 github_repo = "meta-panda"
 github_user = "PandABlocks"
 switcher_json = f"https://{github_user}.github.io/{github_repo}/switcher.json"
-switcher_exists = requests.get(switcher_json).ok
+try:
+    switcher_exists = requests.get(switcher_json).ok
+except Exception:
+    switcher_exists = False
+
 if not switcher_exists:
     print(
         "*** Can't read version switcher, is GitHub pages enabled? \n"
