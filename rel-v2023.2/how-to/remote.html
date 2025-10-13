@@ -24,7 +24,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Explanations" href="../explanations.html" />
+    <link rel="next" title="Run in a container" href="run-container.html" />
     <link rel="prev" title="Getting a PandA on the network" href="quickstart.html" /> 
 </head>
 
@@ -52,14 +52,16 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../how-to.html">How-to Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="build.html">Building the panda image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="make-release.html">Make a release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="packages.html">IPK Packages (opkg)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html">Getting a PandA on the network</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Updating a PandA via SSH</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#updating-the-rootfs">Updating the rootfs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#updating-zpkg-packages">Updating zpkg packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-24v-eeprom">Update 24V eeprom</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="run-container.html">Run in a container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-interface.html">Updating a PandA via web interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../explanations.html">Explanations</a></li>
@@ -116,73 +118,26 @@ or load it from USB via the Admin interface.</p>
 Root has privileges to break the system, so be careful when running the
 commands below.</p>
 </div>
-<p>First update rootfs and then, after a reboot, update to the latest available zpkg
-packages (while making sure to match the major versions of everything).</p>
 <div class="section" id="updating-the-rootfs">
 <h2>Updating the rootfs<a class="headerlink" href="#updating-the-rootfs" title="Permalink to this heading"></a></h2>
-<p>Download a new <code class="docutils literal notranslate"><span class="pre">boot-x.x.zip</span></code> file from <a class="reference external" href="https://github.com/PandABlocks/PandABlocks.github.io/releases">GitHub</a> and unzip it somewhere. You
+<p>Download a new <code class="docutils literal notranslate"><span class="pre">boot-{MACHINE}.tar.gz</span></code> file from <a class="reference external" href="https://github.com/PandABlocks/meta-panda/releases">GitHub</a> and extract it somewhere. You
 can then:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ md5sum boot/imagefile.cpio.gz
-$ scp boot/* root@my_panda_ip:/boot
-$ ssh root@my_panda_ip
-# sync
-# md5sum /boot/imagefile.cpio.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh root@my_panda_ip rm /boot/rootfs.squashfs
+$ scp boot-{MACHINE}/* root@my_panda_ip:/boot
+$ ssh root@my_panda_ip sync
 </pre></div>
 </div>
 <dl class="simple">
-<dt>If the two md5 sums match it has copied correctly. Within /boot you should find::</dt><dd><ul class="simple">
-<li><p>boot.scr</p></li>
-<li><p>uImage</p></li>
+<dt>Within /boot you should find::</dt><dd><ul class="simple">
 <li><p>boot.bin</p></li>
-<li><p>devicetree.dtb</p></li>
-<li><p>uinitramfs</p></li>
+<li><p>boot.scr</p></li>
+<li><p>Image</p></li>
+<li><p>rootfs.squashfs</p></li>
+<li><p>target-defs</p></li>
 </ul>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For PandA v3.0 and beyond boot.bin and devicetree.dtb now come from the PandABlocks-FPGA build
-but are combined in the <code class="docutils literal notranslate"><span class="pre">boot-x.x.zip</span></code> on the rootfs release page.</p>
-</div>
 <p>You can power cycle the box and it will install the new rootfs.</p>
-</div>
-<div class="section" id="updating-zpkg-packages">
-<h2>Updating zpkg packages<a class="headerlink" href="#updating-zpkg-packages" title="Permalink to this heading"></a></h2>
-<dl class="simple">
-<dt>A PandA firmware installation consists of 4 Zpkgs:</dt><dd><ul class="simple">
-<li><p>panda-fpga&#64;*.zpg</p></li>
-<li><p>panda-server&#64;*.zpg</p></li>
-<li><p>panda-webcontrol&#64;*.zpg</p></li>
-<li><p>panda-slowfpga&#64;*.zpg (PandA 3.0 onwards)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Download new zpkg files from <a class="reference external" href="https://github.com/PandABlocks/PandABlocks.github.io/releases">GitHub</a>, then:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ scp *.zpg root@my_panda_ip:/tmp
-$ ssh root@my_panda_ip
-# zpkg install /tmp/*.zpg
-</pre></div>
-</div>
-<p>This will install the new versions of the appropriate packages, and restart the services
-on the box to use them. From the PandA 3.0 release and beyond, a new zpkg file will be
-needed: panda-slowfpga&#64;*.zpg.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Release 1.0 of the rootfs contained a bug which means that if 1.0 or later
-versions of the FPGA zpkg were installed, then any subsequent installations
-of the FPGA zpkg with <strong>ANY</strong> version of the rootfs would fail with
-message:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">malcolm</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">fpga_docs</span> <span class="n">already</span> <span class="n">exists</span>
-</pre></div>
-</div>
-<p>Once you have seen this error, run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">malcolm</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">fpga_docs</span>
-</pre></div>
-</div>
-<p>and then retry the <code class="docutils literal notranslate"><span class="pre">zpkg</span></code> command and it should succeed. Release 1.1 of
-the rootfs fixes this, but you will still have to follow the steps above to
-correct the error.</p>
-</div>
 </div>
 <div class="section" id="update-24v-eeprom">
 <h2>Update 24V eeprom<a class="headerlink" href="#update-24v-eeprom" title="Permalink to this heading"></a></h2>
@@ -203,7 +158,7 @@ correct the error.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="quickstart.html" class="btn btn-neutral float-left" title="Getting a PandA on the network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../explanations.html" class="btn btn-neutral float-right" title="Explanations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="run-container.html" class="btn btn-neutral float-right" title="Run in a container" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

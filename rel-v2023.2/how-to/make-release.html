@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPK Packages (opkg) &mdash; meta-panda  documentation</title>
+  <title>Make a release &mdash; meta-panda  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,8 +24,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting a PandA on the network" href="quickstart.html" />
-    <link rel="prev" title="Make a release" href="make-release.html" /> 
+    <link rel="next" title="IPK Packages (opkg)" href="packages.html" />
+    <link rel="prev" title="Building the panda image" href="build.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,11 +52,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../how-to.html">How-to Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="build.html">Building the panda image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="make-release.html">Make a release</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">IPK Packages (opkg)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installing-ipk-files">Installing IPK Files</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Make a release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html">IPK Packages (opkg)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html">Getting a PandA on the network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote.html">Updating a PandA via SSH</a></li>
 <li class="toctree-l2"><a class="reference internal" href="run-container.html">Run in a container</a></li>
@@ -93,9 +90,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../how-to.html">How-to Guides</a></li>
-      <li class="breadcrumb-item active">IPK Packages (opkg)</li>
+      <li class="breadcrumb-item active">Make a release</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/how-to/packages.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/how-to/make-release.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -103,41 +100,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="ipk-packages-opkg">
-<h1>IPK Packages (opkg)<a class="headerlink" href="#ipk-packages-opkg" title="Permalink to this heading"></a></h1>
-<p>IPK files will be used for managing all application software. These packages are
-managed with the command opkg.</p>
-<blockquote>
-<div><p>The name of a ipk file must be of the form package_version.ipk, where package
-is the package name and version identifies the package version.</p>
-</div></blockquote>
-<div class="section" id="installing-ipk-files">
-<h2>Installing IPK Files<a class="headerlink" href="#installing-ipk-files" title="Permalink to this heading"></a></h2>
-<p>There are two ways to maintain installed software:</p>
-<ol class="arabic simple">
-<li><p>The simplest is via the Administration web page:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>First place the .ipk files to install on a USB stick.</p></li>
-<li><p>Insert USB stick into PandA</p></li>
-<li><p>Select “Install ipk files from USB” from admin page</p></li>
-<li><p>Navigate to appropriate location and select package(s) to install</p></li>
-<li><p>Click on “Install Selected”</p></li>
+  <div class="section" id="make-a-release">
+<h1>Make a release<a class="headerlink" href="#make-a-release" title="Permalink to this heading"></a></h1>
+<p>To make a new release, please follow this checklist:</p>
+<ul class="simple">
+<li><p>Choose a new PEP440 compliant release number (see <a class="reference external" href="https://peps.python.org/pep-0440/">https://peps.python.org/pep-0440/</a>)</p></li>
+<li><p>Go to the GitHub <a class="reference external" href="https://github.com/PandABlocks/PandABlocks.github.io/releases">release</a> page</p></li>
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">Draft</span> <span class="pre">New</span> <span class="pre">Release</span></code></p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Choose</span> <span class="pre">Tag</span></code> and supply the new tag you chose (click create new tag)</p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Generate</span> <span class="pre">release</span> <span class="pre">notes</span></code>, review and edit these notes</p></li>
+<li><p>Choose a title and click <code class="docutils literal notranslate"><span class="pre">Publish</span> <span class="pre">Release</span></code></p></li>
 </ul>
-</div></blockquote>
-<ol class="arabic simple" start="2">
-<li><p>Alternatively files can be copied directly to PandA and installed via a script, for example:</p></li>
-</ol>
-</div>
+<p>Note that tagging and pushing to the main branch has the same effect except that
+you will not get the option to edit the release notes.</p>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="make-release.html" class="btn btn-neutral float-left" title="Make a release" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="quickstart.html" class="btn btn-neutral float-right" title="Getting a PandA on the network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="build.html" class="btn btn-neutral float-left" title="Building the panda image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="packages.html" class="btn btn-neutral float-right" title="IPK Packages (opkg)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
