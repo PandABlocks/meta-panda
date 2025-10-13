@@ -49,3 +49,18 @@ jobs:
           name: boot-${{ matrix.machine }}
           path: ${KAS_WORK_DIR}/boot*.tar.gz
           if-no-files-found: error
+
+      - name: build sdk
+        id: build-sdk
+        run: |
+          export KAS_MACHINE=${{ matrix.machine }}
+          cd repos/meta-panda
+          kas build -c populate_sdk kas.yml
+          cp ${KAS_WORK_DIR}/build/tmp/deploy/sdk/pandablocks-sdk-${{ matrix.machine }}.sh .
+
+      - name: Upload sdk
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk-${{ matrix.machine }}
+          path: repos/meta-panda/pandablocks-sdk-${{ matrix.machine }}.sh
+          if-no-files-found: error
