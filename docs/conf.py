@@ -12,12 +12,6 @@ from urllib.request import urlretrieve
 import requests
 import os
 
-# Download top level (github.io repo) files
-remote_req = requests.get(
-    "https://raw.githubusercontent.com/PandABlocks/PandABlocks.github.io/main/docs/how-to/remote.rst")
-with open("how-to/remote.rst", "wb") as f:
-    f.write(remote_req.content)
-
 # -- General configuration ------------------------------------------------
 
 # General information about the project.

@@ -25,71 +25,91 @@ SRC_URI = " \
     file://panda-webcontrol.nav.html \
     file://meta-panda.docs.html \
     file://README.rst \
-    file://docs/webcontrol/contents.rst \
-    file://docs/webcontrol/_templates/page.html \
-    file://docs/webcontrol/_templates/layout.html \
-    file://docs/webcontrol/index.rst \
-    file://docs/webcontrol/_static/theme_overrides.css \
+    file://docs/images/PandA-logo.ico \
+    file://docs/images/tutorial1_bits.png \
+    file://docs/images/tutorial1_pulse.png \
+    file://docs/images/PandA-logo-for-black-background.svg \
+    file://docs/images/tutorial2_pcap.png \
+    file://docs/images/tutorial2_layout.png \
+    file://docs/images/favicon.ico \
+    file://docs/images/tutorial1_layout.png \
+    file://docs/images/tutorial2_positions.png \
+    file://docs/how-to.rst \
+    file://docs/tutorials/tutorial1_blinking_leds.rst \
+    file://docs/tutorials/manual-build.rst \
+    file://docs/tutorials/tutorial4_snake_scan.rst \
+    file://docs/tutorials/template_tutorial2_pcap.json \
+    file://docs/tutorials/tutorial2_position_capture.rst \
+    file://docs/tutorials/tutorial3_position_compare.rst \
+    file://docs/tutorials/tutorial2.timing.ini \
+    file://docs/tutorials/template_tutorial1_leds.json \
+    file://docs/how-to/packages.rst \
+    file://docs/how-to/remote.rst \
+    file://docs/how-to/build.rst \
+    file://docs/how-to/quickstart.rst \
+    file://docs/how-to/web-interface.rst \
+    file://docs/how-to/run-container.rst \
+    file://docs/how-to/make-release.rst \
+    file://docs/_static/css/custom.css \
+    file://docs/index.rst \
+    file://docs/explanations/boot-process.rst \
+    file://docs/tutorials.rst \
+    file://docs/explanations.rst \
+    file://docs/reference.rst \
+    file://docs/conf.py \
+    file://docs/reference/opkg.rst \
     file://docs/webcontrol/build_popping_screenshot.js \
-    file://docs/webcontrol/malcolm-logo.ico \
+    file://docs/webcontrol/malcolm-logo.svg \
+    file://docs/webcontrol/index.rst \
+    file://docs/webcontrol/contents.rst \
+    file://docs/webcontrol/conf.py \
     file://docs/webcontrol/malcolm-logo.png \
     file://docs/webcontrol/requirements.txt \
-    file://docs/webcontrol/userguide/quick-start.rst \
-    file://docs/webcontrol/userguide/glossary.rst \
-    file://docs/webcontrol/userguide/understanding_attribute_state.rst \
-    file://docs/webcontrol/userguide/index.rst \
-    file://docs/webcontrol/userguide/images/disconnected_icon.png \
-    file://docs/webcontrol/userguide/images/error_icon.png \
-    file://docs/webcontrol/userguide/images/information_icon.png \
-    file://docs/webcontrol/userguide/images/system_context.svg \
-    file://docs/webcontrol/userguide/images/warning_icon.png \
-    file://docs/webcontrol/userguide/images/ui_schematic.png \
-    file://docs/webcontrol/userguide/images/design_context.png \
-    file://docs/webcontrol/userguide/images/attribute_lifecycle.svg \
-    file://docs/webcontrol/userguide/images/put_process.svg \
-    file://docs/webcontrol/userguide/images/locally_edited_icon.png \
-    file://docs/webcontrol/userguide/working_with_a_design.rst \
     file://docs/webcontrol/userguide/user_interface_overview.rst \
-    file://docs/webcontrol/userguide/screenshots/block-list.png \
+    file://docs/webcontrol/userguide/working_with_a_design.rst \
+    file://docs/webcontrol/userguide/index.rst \
+    file://docs/webcontrol/userguide/glossary.rst \
+    file://docs/webcontrol/userguide/monitoring_attribute_values.rst \
+    file://docs/webcontrol/userguide/images \
+    file://docs/webcontrol/userguide/images/error_icon.png \
+    file://docs/webcontrol/userguide/images/ui_schematic.png \
+    file://docs/webcontrol/userguide/images/put_process.svg \
+    file://docs/webcontrol/userguide/images/system_context.svg \
+    file://docs/webcontrol/userguide/images/disconnected_icon.png \
+    file://docs/webcontrol/userguide/images/attribute_lifecycle.svg \
+    file://docs/webcontrol/userguide/images/information_icon.png \
+    file://docs/webcontrol/userguide/images/design_context.png \
+    file://docs/webcontrol/userguide/images/locally_edited_icon.png \
+    file://docs/webcontrol/userguide/images/warning_icon.png \
+    file://docs/webcontrol/userguide/screenshots \
     file://docs/webcontrol/userguide/screenshots/attribute_view_chart.png \
+    file://docs/webcontrol/userguide/screenshots/attribute_table.png \
+    file://docs/webcontrol/userguide/screenshots/block-list.png \
+    file://docs/webcontrol/userguide/screenshots/popping-1.png \
+    file://docs/webcontrol/userguide/screenshots/starting-ui.png \
+    file://docs/webcontrol/userguide/screenshots/window_popping_output.svg \
+    file://docs/webcontrol/userguide/screenshots/continuous_plot.png \
     file://docs/webcontrol/userguide/screenshots/PANDA-layout-spread-out.png \
-    file://docs/webcontrol/userguide/screenshots/PANDA-new-link.png \
     file://docs/webcontrol/userguide/screenshots/window_popping_template.svg \
     file://docs/webcontrol/userguide/screenshots/PANDA-block-details.png \
     file://docs/webcontrol/userguide/screenshots/PANDA-layout.png \
-    file://docs/webcontrol/userguide/screenshots/window_popping_output.svg \
-    file://docs/webcontrol/userguide/screenshots/popping-1.png \
-    file://docs/webcontrol/userguide/screenshots/layout-button.png \
-    file://docs/webcontrol/userguide/screenshots/panel_popping.png \
-    file://docs/webcontrol/userguide/screenshots/starting-ui.png \
-    file://docs/webcontrol/userguide/screenshots/popping-2.png \
-    file://docs/webcontrol/userguide/screenshots/continuous_plot.png \
-    file://docs/webcontrol/userguide/screenshots/attribute_value_table.png \
-    file://docs/webcontrol/userguide/screenshots/popping-3.png \
     file://docs/webcontrol/userguide/screenshots/popping-4.png \
+    file://docs/webcontrol/userguide/screenshots/popping-3.png \
+    file://docs/webcontrol/userguide/screenshots/panel_popping.png \
+    file://docs/webcontrol/userguide/screenshots/layout-button.png \
+    file://docs/webcontrol/userguide/screenshots/popping-2.png \
+    file://docs/webcontrol/userguide/screenshots/attribute_value_table.png \
     file://docs/webcontrol/userguide/screenshots/chart_options.png \
     file://docs/webcontrol/userguide/screenshots/example-ui.png \
-    file://docs/webcontrol/userguide/screenshots/attribute_table.png \
-    file://docs/webcontrol/userguide/monitoring_attribute_values.rst \
+    file://docs/webcontrol/userguide/screenshots/PANDA-new-link.png \
     file://docs/webcontrol/userguide/contents.rst \
+    file://docs/webcontrol/userguide/understanding_attribute_state.rst \
+    file://docs/webcontrol/userguide/quick-start.rst \
+    file://docs/webcontrol/malcolm-logo.ico \
     file://docs/webcontrol/copy_screenshots_from_e2e.js \
-    file://docs/webcontrol/conf.py \
-    file://docs/webcontrol/malcolm-logo.svg \
-    file://docs/_static/css/custom.css \
-    file://docs/tutorials/manual-build.rst \
-    file://docs/tutorials.rst \
-    file://docs/how-to/quickstart.rst \
-    file://docs/how-to/build.rst \
-    file://docs/how-to/packages.rst \
-    file://docs/how-to.rst \
-    file://docs/explanations/boot-process.rst \
-    file://docs/explanations.rst \
-    file://docs/reference/opkg.rst \
-    file://docs/reference.rst \
-    file://docs/conf.py \
-    file://docs/images/PandA-logo-for-black-background.svg \
-    file://docs/images/favicon.ico \
-    file://docs/index.rst \
+    file://docs/webcontrol/_templates/page.html \
+    file://docs/webcontrol/_templates/layout.html \
+    file://docs/webcontrol/_static/theme_overrides.css \
 "
 S = "${WORKDIR}"
 
@@ -132,7 +152,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
     install -m 0755 ${WORKDIR}/panda-webcontrol-wrapper ${D}/${bindir}
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
-    mkdir -p ${D}/opt/etc/www ${D}/opt/share/www/panda-webcontrol
+    mkdir -p ${D}/opt/etc/www
     install -m 0644 ${WORKDIR}/panda-webcontrol.nav.html ${D}/opt/etc/www
     install -m 0644 ${WORKDIR}/meta-panda.docs.html ${D}/opt/etc/www
     export VERSION=${PV}
