@@ -41,13 +41,13 @@ jobs:
           cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.bin boot/
           cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.scr boot/
           cp -f build/tmp/deploy/images/${{ matrix.machine }}/target-defs boot/
-          tar cvzf boot-${{ matrix.machine }}.tar.gz boot/*
+          tar cvzf ${{ github.workspace }}/boot-${{ matrix.machine }}-${{ github.ref_name }}.tar.gz boot/*
 
       - name: Upload boot
         uses: actions/upload-artifact@v4
         with:
-          name: boot-${{ matrix.machine }}
-          path: ${KAS_WORK_DIR}/boot*.tar.gz
+          name: boot-${{ matrix.machine }}-${{ github.ref_name }}
+          path: boot-${{ matrix.machine }}-${{ github.ref_name }}.tar.gz
           if-no-files-found: error
 
       - name: build sdk
