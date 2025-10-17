@@ -33,5 +33,5 @@ ROOTFS_POSTPROCESS_COMMAND += "rm_boot_directory;"
 rm_boot_directory() {
   rm -rf ${IMAGE_ROOTFS}/boot/*
 }
-TOOLCHAIN_OUTPUTNAME = "pandablocks-sdk-${MACHINE}"
-TOOLCHAIN_TARGET_TASK += "kernel-devsrc"
+
+require panda-image-sdk.inc
