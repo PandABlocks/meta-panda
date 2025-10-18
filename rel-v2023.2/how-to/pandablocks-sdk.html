@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Run in a container &mdash; meta-panda  documentation</title>
+  <title>Pandablocks SDK &mdash; meta-panda  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,8 +24,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Updating a PandA via web interface" href="web-interface.html" />
-    <link rel="prev" title="Updating a PandA via SSH" href="remote.html" /> 
+    <link rel="next" title="Getting a PandA on the network" href="quickstart.html" />
+    <link rel="prev" title="IPK Packages (opkg)" href="packages.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,13 +54,13 @@
 <li class="toctree-l2"><a class="reference internal" href="build.html">Building the panda image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="make-release.html">Make a release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="packages.html">IPK Packages (opkg)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pandablocks-sdk.html">Pandablocks SDK</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Getting a PandA on the network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="remote.html">Updating a PandA via SSH</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Run in a container</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#starting-the-container">Starting the container</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pandablocks SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-build-the-pandablocks-server-using-pandablocks-sdk">How to build the PandABlocks-server using Pandablocks SDK?</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Getting a PandA on the network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote.html">Updating a PandA via SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run-container.html">Run in a container</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web-interface.html">Updating a PandA via web interface</a></li>
 </ul>
 </li>
@@ -94,9 +94,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../how-to.html">How-to Guides</a></li>
-      <li class="breadcrumb-item active">Run in a container</li>
+      <li class="breadcrumb-item active">Pandablocks SDK</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/how-to/run-container.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/how-to/pandablocks-sdk.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -104,37 +104,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="run-in-a-container">
-<h1>Run in a container<a class="headerlink" href="#run-in-a-container" title="Permalink to this heading"></a></h1>
-<p>A PandA Development container is available from on <a class="reference external" href="https://ghcr.io/pandablocks/pandablocks-dev-container">Github Container reistry</a>.</p>
-<div class="section" id="starting-the-container">
-<h2>Starting the container<a class="headerlink" href="#starting-the-container" title="Permalink to this heading"></a></h2>
-<p>To pull the container from github container registry</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker pull ghcr.io/pandablocks/pandablocks-dev-container:latest
+  <div class="section" id="pandablocks-sdk">
+<h1>Pandablocks SDK<a class="headerlink" href="#pandablocks-sdk" title="Permalink to this heading"></a></h1>
+<p>A docker image is provided for each machine called panda-sdk-{machine}, for
+example <code class="docutils literal notranslate"><span class="pre">pandablocks-sdk-pandabox</span></code>, this contains the SDK built by
+yocto to be able to build binaries compatible with the panda linux system
+outside of yocto, this is used only for testing purposes.</p>
+<p>Additionally, the sdk installer is also provided to use it in the host directly.</p>
+<div class="section" id="how-to-build-the-pandablocks-server-using-pandablocks-sdk">
+<h2>How to build the PandABlocks-server using Pandablocks SDK?<a class="headerlink" href="#how-to-build-the-pandablocks-server-using-pandablocks-sdk" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Load the build environment:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.<span class="w"> </span>/sdk/environment-*
 </pre></div>
 </div>
-<p>To get a released version, use a numbered release instead of <code class="docutils literal notranslate"><span class="pre">latest</span></code>.</p>
-<p>Create three directories:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REPO_DIR</span></code>, containing all the PandA repositories</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VIVADO_DIR</span></code>, containing a Vivado installation</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BUILD_DIR</span></code>, an empty directory</p></li>
-</ul>
-<p>The above directories will be mounted as volumes to the container as it is run with the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--net<span class="o">=</span>host<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>REPO_DIR:/repos:Z<span class="w"> </span>-v<span class="w"> </span>BUILD_DIR:/build:Z<span class="w"> </span>-v<span class="w"> </span>VIVADO_DIR:/scratch/Xilinx<span class="w"> </span>ghcr.io/pandablocks/pandablocks-dev-container<span class="w"> </span>/bin/bash
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">/repos</span></code>, <code class="docutils literal notranslate"><span class="pre">/build</span></code>, and <code class="docutils literal notranslate"><span class="pre">/scratch/Xilinx</span></code> paths describe the container directories at which the mounts occur.</p>
-<p>In each repo you will need to:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>CONFIG.example<span class="w"> </span>CONFIG
+<ol class="arabic simple" start="2">
+<li><p>Create a CONFIG file, e.g.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">KERNEL_DIR</span><span class="o">=</span>/sdk/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/src/kernel
+<span class="nv">PYTHON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>python3
+<span class="nv">SPHINX_BUILD</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="k">$(</span>PYTHON<span class="k">)</span><span class="w"> </span>-m<span class="w"> </span>sphinx
+<span class="nv">PLATFORM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>zynq
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For the Vivado installation the container path will need to match your local system.
-i.e. if it is located in /FPGA/Xilinx you will use VIVADO_DIR:/FPGA/Xilinx
-and you will then need to edit CONFIG as appropriate.</p>
+<p>KERNEL_DIR is set to the path of the kernel sources included in the sdk.</p>
 </div>
+<ol class="arabic simple" start="3">
+<li><p>Make the server</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CROSS_COMPILE</span><span class="o">=</span><span class="w"> </span>make<span class="w"> </span>server
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CROSS_COMPILE is empty so that CC provided by the build environment is
+used.</p>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Make the driver</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>driver
+</pre></div>
+</div>
+<p>Now you can use the build results to test in a panda.</p>
 </div>
 </div>
 
@@ -142,8 +157,8 @@ and you will then need to edit CONFIG as appropriate.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="remote.html" class="btn btn-neutral float-left" title="Updating a PandA via SSH" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="web-interface.html" class="btn btn-neutral float-right" title="Updating a PandA via web interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="packages.html" class="btn btn-neutral float-left" title="IPK Packages (opkg)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Getting a PandA on the network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
