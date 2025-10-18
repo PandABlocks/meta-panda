@@ -21,6 +21,7 @@ There are two ways to maintain installed software:
 
 2. Alternatively files can be copied directly to PandA and installed via a script, for example:
 
-.. code::
+.. code-block:: bash
+
     scp panda-fpga_version.ipk root@panda:/tmp
     ssh root@panda opkg install /tmp/panda-fpga_version.ipk
