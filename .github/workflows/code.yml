@@ -14,3 +14,6 @@ jobs:
   # Make Boot files
   make_boot:
     uses: ./.github/workflows/_make_boot.yml
+  make_image:
+    needs: make_boot
+    uses: ./.github/workflows/_make_image.yml

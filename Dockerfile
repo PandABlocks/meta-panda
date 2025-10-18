@@ -47,7 +47,7 @@ RUN yum -y upgrade && yum -y install \
 RUN update-alternatives --set python /usr/bin/python3.12
 RUN update-alternatives --set python3 /usr/bin/python3.12
 
-COPY .github/scripts /scripts
+COPY meta-panda/.github/scripts /scripts
 
 RUN yum -y group install "Development Tools"
 RUN bash scripts/GNU-toolchain.sh
