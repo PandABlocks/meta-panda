@@ -13,12 +13,14 @@ How to build the panda server using the panda sdk?
 
 1. Load the build environment:
 
-.. code::
+.. code-block:: bash
+
    . /sdk/environment-*
 
 2. Create a CONFIG file, e.g.
 
-.. code::
+.. code-block:: bash
+
     KERNEL_DIR=/sdk/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/src/kernel
     PYTHON = python3
     SPHINX_BUILD =  $(PYTHON) -m sphinx
@@ -29,7 +31,8 @@ How to build the panda server using the panda sdk?
 
 3. Make the server
 
-.. code::
+.. code-block:: bash
+
    CROSS_COMPILE= make server
 
 .. note::
@@ -38,7 +41,8 @@ How to build the panda server using the panda sdk?
 
 4. Make the driver
 
-.. code::
+.. code-block:: bash
+
    make driver
 
 Now you can use the build results to test in a panda.

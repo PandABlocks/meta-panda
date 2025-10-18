@@ -116,9 +116,18 @@ outside of yocto, this is used only for testing purposes.</p>
 <ol class="arabic simple">
 <li><p>Load the build environment:</p></li>
 </ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.<span class="w"> </span>/sdk/environment-*
+</pre></div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>Create a CONFIG file, e.g.</p></li>
 </ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">KERNEL_DIR</span><span class="o">=</span>/sdk/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/src/kernel
+<span class="nv">PYTHON</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>python3
+<span class="nv">SPHINX_BUILD</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="k">$(</span>PYTHON<span class="k">)</span><span class="w"> </span>-m<span class="w"> </span>sphinx
+<span class="nv">PLATFORM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>zynq
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>KERNEL_DIR is set to the path of the kernel sources included in the sdk.</p>
@@ -126,6 +135,9 @@ outside of yocto, this is used only for testing purposes.</p>
 <ol class="arabic simple" start="3">
 <li><p>Make the server</p></li>
 </ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CROSS_COMPILE</span><span class="o">=</span><span class="w"> </span>make<span class="w"> </span>server
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>CROSS_COMPILE is empty so that CC provided by the build environment is
@@ -134,6 +146,9 @@ used.</p>
 <ol class="arabic simple" start="4">
 <li><p>Make the driver</p></li>
 </ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>driver
+</pre></div>
+</div>
 <p>Now you can use the build results to test in a panda.</p>
 </div>
 </div>
