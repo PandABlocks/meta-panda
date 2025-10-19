@@ -1,66 +1,38 @@
 on:
   workflow_call:
+    inputs:
+      machine:
+        required: true
+        type: string
 env:
-  KAS_WORK_DIR: ${{ github.workspace }}
+  KAS_MACHINE: ${{ inputs.machine }}
 jobs:
   make_boot:
-    strategy:
-      fail-fast: false
-      matrix:
-        machine:
-          - pandabox
     runs-on:
       group: iris_runners
     container:
       image: ghcr.io/siemens/kas/kas:4.7
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
-          path: meta-panda
           fetch-depth: 0
 
-      - name: Check cash
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ env.KAS_WORK_DIR }}/build/sstate-cache
-          key: kas-${{ matrix.machine }}-${{ hashFiles('meta-panda/kas.yml') }}
-          restore-keys: |
-            kas-${{ matrix.machine }}
-
-      - name: build and gather
-        id: build
+      - name: Build and gather
         run: |
-          export KAS_MACHINE=${{ matrix.machine }}
-          kas build meta-panda/kas.yml
-          cd ${KAS_WORK_DIR}
+          kas build kas.yml
           mkdir boot
-          cp -Lf build/tmp/deploy/images/${{ matrix.machine }}/fitImage-petalinux-initramfs-image-${{ matrix.machine }}-${{ matrix.machine }} boot/image.ub
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/rootfs.squashfs boot/
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.bin boot/
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/boot.scr boot/
-          cp -f build/tmp/deploy/images/${{ matrix.machine }}/target-defs boot/
-          tar cvzf ${{ github.workspace }}/boot-${{ matrix.machine }}-${{ github.ref_name }}.tar.gz boot/*
+          cp -Lf build/tmp/deploy/images/${{ inputs.machine }}/fitImage-petalinux-initramfs-image-${{ inputs.machine }}-${{ inputs.machine }} boot/image.ub
+          cp -f build/tmp/deploy/images/${{ inputs.machine }}/rootfs.squashfs boot/
+          cp -f build/tmp/deploy/images/${{ inputs.machine }}/boot.bin boot/
+          cp -f build/tmp/deploy/images/${{ inputs.machine }}/boot.scr boot/
+          cp -f build/tmp/deploy/images/${{ inputs.machine }}/target-defs boot/
+          cd boot
+          tar cvzf ../boot-${{ inputs.machine }}-${{ github.ref_name }}.tar.gz *
 
       - name: Upload boot
         uses: actions/upload-artifact@v4
         with:
-          name: boot-${{ matrix.machine }}-${{ github.ref_name }}
-          path: boot-${{ matrix.machine }}-${{ github.ref_name }}.tar.gz
-          if-no-files-found: error
-
-      - name: build sdk
-        id: build-sdk
-        run: |
-          export KAS_MACHINE=${{ matrix.machine }}
-          cd meta-panda
-          kas build -c populate_sdk kas.yml
-          mv ${KAS_WORK_DIR}/build/tmp/deploy/sdk/pandablocks-sdk-${{ matrix.machine }}.sh ${{ github.workspace }}/
-
-      - name: Upload sdk
-        uses: actions/upload-artifact@v4
-        with:
-          name: sdk-${{ matrix.machine }}
-          path: pandablocks-sdk-${{ matrix.machine }}.sh
+          name: boot
+          path: ${{ github.workspace }}/boot-${{ inputs.machine }}-${{ github.ref_name }}.tar.gz
           if-no-files-found: error

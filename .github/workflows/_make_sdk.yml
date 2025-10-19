@@ -1,0 +1,46 @@
+on:
+  workflow_call:
+    inputs:
+      machine:
+        required: true
+        type: string
+jobs:
+  make_sdk:
+    runs-on:
+      group: iris_runners
+    container:
+      image: ghcr.io/siemens/kas/kas:4.8
+    env:
+      KAS_WORK_DIR: ${{ github.workspace }}
+      KAS_MACHINE: ${{ inputs.machine }}
+    steps:
+      - name: Remove old build
+        run: |
+          rm  -rf ${KAS_WORK_DIR}/*
+          mkdir ${KAS_WORK_DIR}/build
+
+      - name: Checkout Source
+        uses: actions/checkout@v5
+        with:
+          path: meta-panda
+          fetch-depth: 0
+
+      - name: Check cash
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.KAS_WORK_DIR }}/build/sstate-cache
+          key: kas-sdk-${{ inputs.machine }}-${{ hashFiles('meta-panda/kas.yml') }}
+          restore-keys: |
+            kas-sdk-${{ inputs.machine }}
+
+      - name: build sdk
+        run: |
+          kas build -c populate_sdk meta-panda/kas.yml
+
+      - name: Upload sdk
+        uses: actions/upload-artifact@v4
+        with:
+          name: pandablocks-sdk-${{ inputs.machine }}
+          path: ${{ env.KAS_WORK_DIR }}/build/tmp/deploy/sdk/pandablocks-sdk-${{ inputs.machine }}.sh
+          if-no-files-found: error

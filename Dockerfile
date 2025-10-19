@@ -119,7 +119,7 @@ RUN cd "$RUNNER_ASSETS_DIR" \
 # TODO: can we cache the sdk and reuse when panda-image-sdk.inc doesn't change?
 #COPY recipes-core/images/panda-image-sdk.inc /panda-image-sdk.inc
 COPY pandablocks-sdk-${MACHINE}.sh /sdk.sh
-RUN /sdk.sh -y -d /sdk/
+RUN bash /sdk.sh -y -d /sdk/
 
 # Preparation for the kernel to be able to build the panda driver
 # the sed command is a workaround for the prepare target getting stuck in an

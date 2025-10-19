@@ -11,10 +11,10 @@ local_conf_header:
   licenses: |
     LICENSE_FLAGS_ACCEPTED = " xilinx"
   parallel: |
-    BB_NUMBER_THREADS = " 4"
-    PARALLEL_MAKE = "-j 4"
-  less-space: |
-    INHERIT += "rm_work"
+    BB_NUMBER_THREADS = " 6"
+    PARALLEL_MAKE = "-j 6"
+  #less-space: |
+  #  INHERIT += "rm_work"
   for-populate-sdk: |
     XZ_THREADS = "4"
 repos:

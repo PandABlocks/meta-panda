@@ -8,12 +8,21 @@ on:
   push:
     tags:
       - '*'
-    branches: ['rel-*']
+    branches: [rel-*]
 
 jobs:
-  # Make Boot files
   make_boot:
+    strategy:
+      fail-fast: false
+      matrix:
+        machine:
+          - pandabox
+          - pandabox2
+          - pandabrick
     uses: ./.github/workflows/_make_boot.yml
-  make_image:
+    with:
+      machine: ${{ matrix.machine }}
+
+  release:
     needs: make_boot
-    uses: ./.github/workflows/_make_image.yml
+    uses: ./.github/workflows/_release.yml

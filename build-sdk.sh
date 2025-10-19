@@ -4,6 +4,7 @@ META_DIR="$(pwd)"
 
 export KAS_MACHINE=${1}
 export KAS_WORK_DIR=${2:-$PWD}
+export KAS_IMAGE_VERSION="4.8"
 if [ -z "${KAS_MACHINE}" ]; then
     echo "Usage: $0 <machine> [<work_dir>]"
     exit 1
