@@ -117,7 +117,8 @@
 <p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">venv</span> <span class="pre">&amp;&amp;</span> <span class="pre">.</span> <span class="pre">venv/bin/activate</span> <span class="pre">&amp;&amp;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">kas</span></code></p>
 </li>
 <li><p>Build the panda image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kas</span><span class="o">-</span><span class="n">container</span> <span class="n">build</span> <span class="o">./</span><span class="n">kas</span><span class="o">.</span><span class="n">yml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">KAS_IMAGE_VERSION</span><span class="o">=</span><span class="s2">&quot;4.8&quot;</span>
+<span class="n">kas</span><span class="o">-</span><span class="n">container</span> <span class="n">build</span> <span class="o">./</span><span class="n">kas</span><span class="o">.</span><span class="n">yml</span>
 </pre></div>
 </div>
 </li>
