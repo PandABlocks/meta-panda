@@ -14,6 +14,7 @@ Building the panda image
 
 3. Build the panda image::
 
+    export KAS_IMAGE_VERSION="4.8"
     kas-container build ./kas.yml
 
 Environment variable ``KAS_MACHINE`` can be set to build for a different machine
