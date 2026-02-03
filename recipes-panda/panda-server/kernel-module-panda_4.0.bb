@@ -8,10 +8,10 @@ DEPENDS = "python3"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " \
-    git://github.com/PandABlocks/PandABlocks-server;branch=master;protocol=https \
+    git://github.com/PandABlocks/PandABlocks-server;branch=main;protocol=https \
     file://CONFIG_driver \
 "
-SRCREV = "d5a8f9cbc3aa32f2d2109fad0ca9bd86052603d7"
+SRCREV = "2a34851b2d1f13d64f92540b5f03a98e21b00222"
 S = "${WORKDIR}/git"
 MAKE_TARGETS = "driver"
 MODULES_MODULE_SYMVERS_LOCATION = "build/driver"

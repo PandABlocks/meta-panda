@@ -3,15 +3,14 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += " \
-    git://github.com/PandABlocks/PandABlocks-server;branch=master;protocol=https \
+    git://github.com/PandABlocks/PandABlocks-server;branch=main;protocol=https \
     file://CONFIG_server \
-    file://0002-extension-server-notify-systemd.patch \
     file://panda-server.service \
     file://panda-extension-server.service \
     file://panda-server-wrapper \
     file://panda-extension-server-wrapper \
 "
-SRCREV = "d5a8f9cbc3aa32f2d2109fad0ca9bd86052603d7"
+SRCREV = "2a34851b2d1f13d64f92540b5f03a98e21b00222"
 S = "${WORKDIR}/git"
 
 inherit python3native
