@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Updating a PandA via SSH &mdash; meta-panda  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run in a container" href="run-container.html" />
+    <link rel="prev" title="Getting a PandA on the network" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            meta-panda
+              <img src="../_static/PandA-logo-for-black-background.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Linux System Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../how-to.html">How-to Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="build.html">Building the panda image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="make-release.html">Make a release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packages.html">IPK Packages (opkg)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandablocks-sdk.html">Pandablocks SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Getting a PandA on the network</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Updating a PandA via SSH</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#updating-the-rootfs">Updating the rootfs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-24v-eeprom">Update 24V eeprom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="run-container.html">Run in a container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-interface.html">Updating a PandA via web interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../explanations.html">Explanations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Webcontrol Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/user_interface_overview.html">User Interface Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/working_with_a_design.html">Working With a Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/monitoring_attribute_values.html">Monitoring Attribute Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/understanding_attribute_state.html">Understanding Attribute State</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../webcontrol/userguide/glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">meta-panda</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../how-to.html">How-to Guides</a></li>
+      <li class="breadcrumb-item active">Updating a PandA via SSH</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/how-to/remote.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="updating-a-panda-via-ssh">
+<span id="ssh-doc"></span><h1>Updating a PandA via SSH<a class="headerlink" href="#updating-a-panda-via-ssh" title="Permalink to this heading"></a></h1>
+<p>The Admin interface of the PandA can be used to update the firmware as detailed
+in the _web_doc, but sometimes it is necessary to update a number of
+PandAs at once. The SSH interface can be used to do this.</p>
+<p>To gain access over SSH, either add an <code class="docutils literal notranslate"><span class="pre">authorized_keys</span></code> file to the SD card,
+or load it from USB via the Admin interface.</p>
+<p>It is then possible to log in remotely and perform operations on the PandA.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>PandA only has a single user; root, and remote access is done as this user.
+Root has privileges to break the system, so be careful when running the
+commands below.</p>
+</div>
+<div class="section" id="updating-the-rootfs">
+<h2>Updating the rootfs<a class="headerlink" href="#updating-the-rootfs" title="Permalink to this heading"></a></h2>
+<p>Download a new <code class="docutils literal notranslate"><span class="pre">boot-{MACHINE}.tar.gz</span></code> file from <a class="reference external" href="https://github.com/PandABlocks/meta-panda/releases">GitHub</a> and extract it somewhere. You
+can then:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh root@my_panda_ip rm /boot/rootfs.squashfs
+$ scp boot-{MACHINE}/* root@my_panda_ip:/boot
+$ ssh root@my_panda_ip sync
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Within /boot you should find::</dt><dd><ul class="simple">
+<li><p>boot.bin</p></li>
+<li><p>boot.scr</p></li>
+<li><p>Image</p></li>
+<li><p>rootfs.squashfs</p></li>
+<li><p>target-defs</p></li>
+</ul>
+</dd>
+</dl>
+<p>You can power cycle the box and it will install the new rootfs.</p>
+</div>
+<div class="section" id="update-24v-eeprom">
+<h2>Update 24V eeprom<a class="headerlink" href="#update-24v-eeprom" title="Permalink to this heading"></a></h2>
+<p>PandA 3.0 requires an update to the EEPROM of 24Vio FMC cards to do this:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Find the right ipmi_definition file according the the product and revision (the one for <a class="reference external" href="https://github.com/PandABlocks/PandABlocks-FPGA/blob/master/modules/fmc_24vio/ipmi_definition.ini">FMC24V</a> is under its module folder)</p></li>
+<li><p>Copy it to panda</p></li>
+<li><p>Run /opt/bin/write_eeprom &lt;path-to-ipmi-definition&gt;</p></li>
+<li><p>After writing, the script will read the EEPROM to confirm the content matches</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Getting a PandA on the network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="run-container.html" class="btn btn-neutral float-right" title="Run in a container" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Diamond Light Source.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
