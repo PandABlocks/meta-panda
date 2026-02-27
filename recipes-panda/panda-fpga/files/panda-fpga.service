@@ -6,6 +6,7 @@ Type=oneshot
 RemainAfterExit=true
 ExecStart=/usr/bin/panda-load-firmware
 ExecStartPost=/sbin/modprobe panda
+ExecStop=/sbin/rmmod panda
 
 [Install]
 WantedBy=sysinit.target

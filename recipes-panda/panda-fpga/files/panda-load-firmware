@@ -72,10 +72,20 @@ if lsmod | grep -q '^panda\>'; then
 fi
 
 # If FMC passes then load the carrier firmware
-fpgautil -b $fpga_dir/panda_top.bin || fail "Failed to program FPGA"
+# we don't use fpgautil because it doesn't return a proper error code, and also
+# because it temporarily takes some disk space that could potentially cause
+# issues
+#fpgautil -b $fpga_dir/panda_top.bin || fail "Failed to program FPGA"
+echo 0 > /sys/class/fpga_manager/fpga0/flags
+mkdir -p /lib/firmware
+ln -sf $fpga_dir/panda_top.bin /lib/firmware/panda_top.bin
+echo panda_top.bin > /sys/class/fpga_manager/fpga0/firmware ||
+    fail "Failed to load FPGA firmware"
 
 # Finally load the slow FPGA
 if [[ -n $PANDABOX ]]; then
     /usr/bin/panda-slow-load < /opt/share/panda-slowfpga/slow_top.bin ||
         fail "Failed to load slow FPGA"
 fi
+
+exit 0
