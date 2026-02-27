@@ -41,7 +41,7 @@ EOF
 
 create_changes_image()
 {
-    dd if=/dev/zero of=/boot/changes.ext4 count=64 bs=1M
+    dd if=/dev/zero of=/boot/changes.ext4 count=80 bs=1M
     # The options are needed to prevent an error at mount time because of
     # unsupported WRITE_ZEROES operation by underlying fat32 system
     mkfs.ext4 -E lazy_itable_init=0,lazy_journal_init=0 -F /boot/changes.ext4
