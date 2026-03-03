@@ -1,0 +1,48 @@
+Pandablocks SDK
+===============
+
+A docker image is provided for each machine called panda-sdk-{machine}, for
+example ``pandablocks-sdk-pandabox``, this contains the SDK built by
+yocto to be able to build binaries compatible with the panda linux system
+outside of yocto, this is used only for testing purposes.
+
+Additionally, the sdk installer is also provided to use it in the host directly.
+
+How to build the PandABlocks-server using Pandablocks SDK?
+----------------------------------------------------------
+
+1. Load the build environment:
+
+.. code-block:: bash
+
+   . /sdk/environment-*
+
+2. Create a CONFIG file, e.g.
+
+.. code-block:: bash
+
+    KERNEL_DIR=/sdk/sysroots/cortexa9t2hf-neon-xilinx-linux-gnueabi/usr/src/kernel
+    PYTHON = python3
+    SPHINX_BUILD =  $(PYTHON) -m sphinx
+    PLATFORM = zynq
+
+.. note::
+   KERNEL_DIR is set to the path of the kernel sources included in the sdk.
+
+3. Make the server
+
+.. code-block:: bash
+
+   CROSS_COMPILE= make server
+
+.. note::
+   CROSS_COMPILE is empty so that CC provided by the build environment is
+   used.
+
+4. Make the driver
+
+.. code-block:: bash
+
+   make driver
+
+Now you can use the build results to test in a panda.
