@@ -35,7 +35,7 @@ for config in /mnt/*/panda-config.txt; do
     fi
 done
 
-echo "$CONFIG_FILE" >/tmp/config_file
+echo "$CONFIG_FILE" >/var/run/config_file
 
 # Returns the corresponding config file entry, or an empty string if not
 # present.

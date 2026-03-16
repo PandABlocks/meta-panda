@@ -251,7 +251,7 @@ class CommandHandler(RequestHandler):
     @add_get_page("system/network")
     def get_network_config(self):
         """Show Network Configuration"""
-        boot_config = open('/tmp/config_file').read()[:-1]
+        boot_config = open('/var/run/config_file').read()[:-1]
         self.p("Configuration loaded from " + tt(boot_config))
         self.h2("Configuration in " + tt("/boot/config.txt"))
         self.list_file('/boot/config.txt')
