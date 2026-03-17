@@ -11,6 +11,7 @@ SRC_URI += " \
     file://panda-extension-server-wrapper \
 "
 SRCREV = "2a34851b2d1f13d64f92540b5f03a98e21b00222"
+PV = "4.1+git${SRCPV}"
 S = "${WORKDIR}/git"
 
 inherit python3native
