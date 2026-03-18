@@ -304,13 +304,12 @@ class CommandHandler(RequestHandler):
         self.ensure_trailing_slash()
         self.write("<p>")
         self.write("Updated rootfs images can be installed by placing the "
-                   "boot.zip (or rootfs.squashfs from within it) from the ")
-        link = "https://github.com/PandABlocks/PandABlocks-rootfs/releases"
+                   "boot.tar.gz from the ")
+        link = "https://github.com/PandABlocks/meta-panda/releases"
         self.popup(link, "rootfs release")
         self.write(" onto the USB stick, and navigating to it below:")
         self.write("</p>")
-        root, glob_list = glob_dir('*.zip', *path_suffix)
-        glob_list += glob_dir(ROOTFS_FILENAME, *path_suffix)[1]
+        root, glob_list = glob_dir('*.tar.gz', *path_suffix)
         if glob_list:
             self.h2("Available in %s:" % tt(root))
             self.t("form_select.html", label="Replace rootfs on next reboot",
@@ -422,19 +421,18 @@ class CommandHandler(RequestHandler):
         path_suffix += (new_rootfs,)
         source_path = os.path.join(MNT, *path_suffix)
         to_copy = {}
-        if source_path.endswith(".zip"):
-            # Unpack the boot.zip
-            if os.path.exists(ROOTFS_TMP):
-                shutil.rmtree(ROOTFS_TMP)
-            os.makedirs(ROOTFS_TMP)
-            self.p("Unzipping %s..." % tt(source_path))
-            yield self.run_command('unzip', '-d', ROOTFS_TMP, source_path)
-            for f in os.listdir(ROOTFS_TMP):
-                if f != "config.txt":
-                    to_copy[os.path.join("/boot", f)] = os.path.join(ROOTFS_TMP, f)
-        else:
-            # This is an rootfs.squashfs
-            to_copy[ROOTFS_PATH] = source_path
+
+        # Unpack the boot.tar.gz
+        if os.path.exists(ROOTFS_TMP):
+            shutil.rmtree(ROOTFS_TMP)
+        os.makedirs(ROOTFS_TMP)
+        self.p("Unpacking %s..." % tt(source_path))
+        yield self.run_command(
+            "tar", "-x", "-z", "-f", source_path, '-C', ROOTFS_TMP)
+        for f in os.listdir(ROOTFS_TMP):
+            if f != "config.txt":
+                to_copy[os.path.join("/boot", f)] = os.path.join(ROOTFS_TMP, f)
+
         # Remove old backups
         yield self.run_command("rm", "-f", ROOTFS_OLD)
         self.p("Checking new rootfs version...")
