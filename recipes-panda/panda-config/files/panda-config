@@ -21,6 +21,7 @@ get_mac_address() { :; }
 # Make sure all USB device nodes were created
 udevadm settle
 for dev in /dev/sd*[0-9]; do
+    [ -b $dev ] || continue
     name=${dev:5:4}
     mkdir -p /mnt/$name
     mount $dev /mnt/$name
