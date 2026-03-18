@@ -34,6 +34,7 @@ ROOTFS_TMP = "/tmp/rootfs"
 ROOTFS_FILENAME = 'rootfs.squashfs'
 ROOTFS_PATH = f'/boot/{ROOTFS_FILENAME}'
 CHANGES_PATH = '/boot/changes.ext4'
+CHANGES_MOUNT_POINT = '/tmp/.changes/upper'
 
 # Add mimetype for SVG
 mimetypes.types_map[".svg"] = 'image/svg+xml'
@@ -206,6 +207,26 @@ class CommandHandler(RequestHandler):
             self.write("</ul>")
         return dirs
 
+    def navigate_changes_dir(self, *path_suffix):
+        root = os.path.join(CHANGES_MOUNT_POINT, *path_suffix)
+        dirs = ['../']
+        others = []
+        for f in os.listdir(root):
+            if os.path.isdir(os.path.join(root, f)):
+                dirs.append(f + "/")
+            else:
+                others.append(f)
+
+        self.h2("Files in changes layer:")
+        self.write("<ul>")
+        for d in sorted(dirs):
+            self.write('<li><a href="%s">%s</a></li>' % (d, d))
+
+        for f in sorted(others):
+            self.write('<li>%s</li>' % f)
+
+        self.write("</ul>")
+
     def list_file(self, fname):
         self.write('<div class="shadow command">')
         with open(fname) as f:
@@ -317,6 +338,14 @@ class CommandHandler(RequestHandler):
         dirs = self.list_dir(*path_suffix)
         if not dirs and not glob_list:
             self.p('No rootfs to install or sub-directories to browse')
+
+    @add_get_page("packages/changes_layer")
+    def get_changes_layer(self, *path_suffix):
+        """Show Changes Layer"""
+        self.ensure_trailing_slash()
+        self.navigate_changes_dir(*path_suffix)
+        self.t('button.html', label='Delete changes layer and reboot',
+               path='system/remove_changes_reboot_rootfs')
 
     @add_get_page("ssh/list")
     def get_ssh_list(self):
@@ -477,12 +506,7 @@ class CommandHandler(RequestHandler):
         """Removing changes layer, Rebooting System to Install Rootfs"""
         ensure_usb_key_inserted()
         yield self.run_command("rm", "-f", CHANGES_PATH)
-        yield self.run_command("rm", "-f", ROOTFS_OLD)
-        yield self.sync()
-        self.p("Rebooting now, please wait. "
-               "This page will refresh in 60 seconds...")
-        self.write('<meta http-equiv="refresh" content="60;url=/admin.html">')
-        yield self.run_command('reboot')
+        yield self.post_reboot_rootfs()
 
     @add_post_page("system/reboot_rootfs")
     def post_reboot_rootfs(self):
