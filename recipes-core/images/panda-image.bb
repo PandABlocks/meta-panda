@@ -14,6 +14,7 @@ IMAGE_INSTALL = " \
     panda-web-admin \
     bridge-utils \
     fpga-manager-script \
+    git-revision-file \
     htop \
     iperf3 \
     i2c-tools \

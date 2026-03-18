@@ -231,7 +231,7 @@ class CommandHandler(RequestHandler):
     def get_admin(self):
         """Administration"""
         self.h2("Version information")
-        self.list_file('/etc/os-release')
+        self.list_file('/etc/git-revision')
         self.p("Use the side-bar on the left to access the Admin functions")
 
     @add_get_page("system/restart")
