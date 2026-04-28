@@ -8,6 +8,7 @@ Type=notify
 NotifyAccess=all
 ExecStart=/usr/bin/panda-extension-server-wrapper
 Restart=on-success
+Environment=PYTHONUNBUFFERED=1
 
 [Install]
 WantedBy=multi-user.target
