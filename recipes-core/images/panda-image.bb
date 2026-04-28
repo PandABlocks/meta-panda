@@ -22,6 +22,7 @@ IMAGE_INSTALL = " \
     mtd-utils \
     pciutils \
     perf \
+    stress-ng \
     squashfs-tools \
     sysstat \
     tcf-agent \
