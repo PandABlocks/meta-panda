@@ -21,6 +21,7 @@ IMAGE_INSTALL = " \
     linux-xlnx-udev-rules \
     mtd-utils \
     pciutils \
+    python3-pycairo \
     perf \
     stress-ng \
     squashfs-tools \
