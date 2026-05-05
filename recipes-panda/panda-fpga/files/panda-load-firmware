@@ -34,6 +34,8 @@ select_fpga_flavor() {
             fpga_dir=$app_dir
             echo "Configured FPGA folder: $fpga_dir"
     else
+        [ -e /boot/target-defs ] && source /boot/target-defs
+        [[ -n "$FMC_I2C_CHANNEL" ]] && i2cset -y 0 0x70 $((1<<"$FMC_I2C_CHANNEL")) c
         ipmi_path=$(pandai2c-cli select /opt/share/*/ipmi.ini)
         if [[ -n "$ipmi_path" ]]; then
             fpga_dir="$(dirname "$ipmi_path")"
