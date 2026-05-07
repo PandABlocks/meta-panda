@@ -3,6 +3,8 @@ inherit plnx-image
 
 IMAGE_NAME = "rootfs"
 IMAGE_NAME_SUFFIX = ""
+DISTRO_FEATURES:remove = "x11"
+IMAGE_FEATURES:remove = "splash"
 IMAGE_INSTALL = " \
     packagegroup-core-boot \
     ${CORE_IMAGE_EXTRA_INSTALL} \

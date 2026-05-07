@@ -1,0 +1,24 @@
+From df100d98ef8b90c6a81ee2ea483bb039ed8b5337 Mon Sep 17 00:00:00 2001
+From: kas User <kas@example.com>
+Date: Fri, 8 May 2026 15:57:42 +0000
+Subject: [PATCH] Hack for RHEL not allowing to mmap low addresses
+
+---
+ linux-user/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/linux-user/main.c b/linux-user/main.c
+index e44bdb17b8..16a6c10e0d 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -73,8 +73,8 @@ static const char *cpu_model;
+ static const char *cpu_type;
+ static const char *seed_optarg;
+ unsigned long mmap_min_addr;
+-uintptr_t guest_base;
+-bool have_guest_base;
++uintptr_t guest_base = 0x800000;
++bool have_guest_base = true;
+ 
+ /*
+  * Used to implement backwards-compatibility for the `-strace`, and
