@@ -19,6 +19,8 @@ RDEPENDS:${PN}:append:pandabox = " \
 
 RDEPENDS:${PN}:append:pandabox2 = " \
     panda-fpga-pandabox2-no-fmc \
+    panda-fpga-pandabox2-fmc-acq430 \
+    panda-fpga-pandabox2-fmc-lback-sfp-sync \
 "
 
 RDEPENDS:${PN}:append:pandabrick = " \
