@@ -10,11 +10,8 @@ PV = "${AUTOREV}"
 
 do_configure[nostamp] = "1"
 
-python do_configure() {
-    full_path = d.expand("${S}/${REVISION_INFO_FILE}")
-
-    with open(full_path, 'w') as file:
-        file.write(get_layer_revs(d).split()[2])
+do_configure() {
+    git -C ${THISDIR} describe --abbrev=7 --dirty --always --tags > ${S}/${REVISION_INFO_FILE}
 }
 
 do_install() {
@@ -22,4 +19,4 @@ do_install() {
     install -m 0644 ${S}/${REVISION_INFO_FILE} ${D}${sysconfdir}
 }
 
-FILES_${PN} = "${sysconfdir}"
+FILES:${PN} = "${sysconfdir}"
