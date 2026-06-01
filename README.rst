@@ -4,9 +4,9 @@ meta-panda
 The layer meta-panda contains yocto recipes and configuration for building the
 linux system running in PandA.
 
-- The machines provided are: `pandabox` and `xu5-st1`.
-- The distro provided is `panda-petalinux`.
-- The image provided is `panda-image`.
+- The machines provided are: ``pandabox``, ``pandabox2`` and ``pandabrick``.
+- The distro provided is ``panda-petalinux``.
+- The image provided is ``panda-image``.
 
 ============== ===================================================
 Source code    https://github.com/PandABlocks/meta-panda

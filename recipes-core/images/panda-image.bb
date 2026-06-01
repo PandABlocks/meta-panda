@@ -14,6 +14,7 @@ IMAGE_INSTALL = " \
     panda-config \
     panda-server \
     panda-web-admin \
+    panda-webcontrol \
     bridge-utils \
     fpga-manager-script \
     git-revision-file \
