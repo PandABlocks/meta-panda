@@ -1,0 +1,63 @@
+variables:
+  # Adds timestamp to job logs. Using to debug where it is spending all its time.
+  FF_TIMESTAMPS: true
+  KUBERNETES_MEMORY_LIMIT: 65Gi
+  KUBERNETES_CPU_LIMIT: 14
+  GIT_SUBMODULE_STRATEGY: recursive
+
+default:
+  image: ghcr.io/siemens/kas/kas:4.8
+  tags:
+    - pollux-dev
+
+build:
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "gh-pages"'
+  variables:
+    DL_DIR: '/dls_sw/work/targetOS/panda-downloads'
+    CACHE_DIR: '/dls_sw/work/targetOS/panda-cache'
+  parallel:
+    matrix:
+      - KAS_MACHINE:
+        - pandabox
+        - pandabox2
+        - pandabrick
+  script:
+    - export SSTATE_TAR="$CACHE_DIR/sstate-cache-$KAS_MACHINE-$(sha256sum kas.yml | cut -d ' ' -f 1).tar.gz"
+    - if [ -f "$SSTATE_TAR" ]; then mkdir -p build/sstate-cache; tar -xzf "$SSTATE_TAR" -C build/sstate-cache; fi
+    - kas build kas.yml
+    - mkdir boot
+    - cp -Lf build/tmp/deploy/images/$KAS_MACHINE/fitImage-petalinux-initramfs-image-$KAS_MACHINE-$KAS_MACHINE boot/image.ub
+    - cp -f build/tmp/deploy/images/$KAS_MACHINE/rootfs.squashfs boot/
+    - cp -f build/tmp/deploy/images/$KAS_MACHINE/boot.bin boot/
+    - cp -f build/tmp/deploy/images/$KAS_MACHINE/boot.scr boot/
+    - cp -f build/tmp/deploy/images/$KAS_MACHINE/target-defs boot/
+    - tar -czf boot-$KAS_MACHINE-$CI_COMMIT_REF_NAME.tar.gz -C boot .
+    - if [ ! -f "$SSTATE_TAR" ]; then tar -czf "$SSTATE_TAR" -C build/sstate-cache .; fi
+    - |
+      if [ "$KAS_MACHINE" = "pandabox" ]; then
+        ./build-legacyupgrader.sh boot-$KAS_MACHINE-$CI_COMMIT_REF_NAME.tar.gz legacyupgrader@$KAS_MACHINE-$CI_COMMIT_REF_NAME.zpg
+      fi
+  artifacts:
+    name: boot-$KAS_MACHINE-$CI_COMMIT_REF_NAME
+    paths:
+      - 'boot*.tar.gz'
+      - 'legacyupgrader*.zpg'
+
+release-all:
+  image: gitlab/glab:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  variables:
+    KUBERNETES_MEMORY_LIMIT: 4Gi
+    KUBERNETES_CPU_LIMIT: 2
+    RELEASE_DIR: '/dls_sw/work/targetOS/panda-releases/$CI_COMMIT_REF_NAME'
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - mkdir -p $RELEASE_DIR
+    - cp -f *.tar.gz $RELEASE_DIR/
+    - cp -f *.zpg $RELEASE_DIR/
+    - glab auth login --hostname gitlab.diamond.ac.uk --job-token $CI_JOB_TOKEN
+    - glab release create $CI_COMMIT_TAG ./*.tar.gz
