@@ -22,15 +22,16 @@ select_fpga_flavor() {
     # Make sure last selection is not leaked
     rm -f /opt/share/panda-fpga
     [ -f /boot/no-fpga ] && fail "FPGA loading disabled by file /boot/no-fpga"
-    local available=($(find /opt/share/ -name 'panda-fpga-*' | grep -v slowfpga))
     # Select the appropriate FPGA bitstream in the following order:
-    # if config.txt specifies a valid one, use it, otherwise use selection
-    # based on ipmi.ini files
+    # if config.txt specifies a valid one, use it, otherwise select based on
+    # ipmi.ini files
     local app=$(parse_config APP)
     local lower_app="${app,,}"
     local sane_app="${lower_app//_/-}"
     local app_dir="/opt/share/panda-fpga-${sane_app}"
     if [[ -n $app && -d $app_dir ]]; then
+            pandai2c-cli check "$app_dir/ipmi.ini" ||
+                fail "APP $app specified in config.txt but ipmi.ini check failed"
             fpga_dir=$app_dir
             echo "Configured FPGA folder: $fpga_dir"
     else

@@ -63,14 +63,6 @@ def check(args):
     # We expect the EEPROM to be present.  First try to read it.
     try:
         image = eeprom.read_eeprom()
-    except OSError as e:
-        # No such device or address (i.e. no FMC EEPROM detected)
-        if e.errno == errno.ENXIO:
-            print('FMC was expected but none detected')
-            sys.exit(1)
-        else:
-            print('Unable to read FMC EEPROM:', e)
-            sys.exit(1)
     except Exception as e:
         print('Unable to read FMC EEPROM:', e)
         sys.exit(1)
