@@ -109,43 +109,37 @@ def dump(args):
 
 def select(args):
     ini_paths = args.ini_paths
+    try:
+        eeprom_ini = parse_ipmi.parse(eeprom.read_eeprom())
+    except TimeoutError:
+        log.info('EEPROM read timeout, assuming no FMC fitted')
+        eeprom_ini = None
+
     ignore_ones = []
     fmc_ones = []
     for ini_path in ini_paths:
         ini = ini_file.load_ini_file(ini_path)
         if ini.get('.', {}).get('eeprom') == 'ignore':
-            ignore_ones.append((ini_path, ini))
-        else:
-            fmc_ones.append((ini_path, ini))
-
-    # If there are no FMC images, select the first with eeprom='ignore'
-    if not fmc_ones:
-        log.info('No FMC options, selecting first non-FMC one')
-        print(ignore_ones[0][0])
-        sys.exit(0)
-
-    try:
-        ipmi = parse_ipmi.parse(eeprom.read_eeprom())
-    except TimeoutError:
-        log.info('EEPROM read timeout, assuming no FMC fitted')
-        ipmi = None
-
-    if ipmi:
-        # Iterate over all FMC ini files until
-        for ini_path, ini in fmc_ones:
+            ignore_ones.append(ini_path)
+        elif eeprom_ini is not None:
             try:
-                ini_file.compare_ini(ini, ipmi, ignore=['.'])
-                print(ini_path)
-                sys.exit(0)
+                ini_file.compare_ini(ini, eeprom_ini, ignore=['.'])
+                fmc_ones.append(ini_path)
             except ini_file.CompareFail:
                 pass
 
-    # At this point, we can choose only from the ignore ones
-    if not ignore_ones:
-        log.error('Could not find an valid selection')
-        sys.exit(1)
+    for matches in (fmc_ones, ignore_ones):
+        if len(matches) > 1:
+            log.error('Multiple matches found, unable to select one:')
+            for match in matches:
+                log.error('  %s', match)
+            sys.exit(1)
+        elif len(matches) == 1:
+            print(matches[0])
+            sys.exit(0)
 
-    print(ignore_ones[0][0])
+    log.error('Could not find an valid selection')
+    sys.exit(1)
 
 
 def write(args):
