@@ -11,7 +11,7 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ xref/intersphinx wired + cross-link probe resolves in built output
 - ☐ (FPGA only) — N/A for meta-panda
 - ✅ `myst build` green (exit 0, no warnings/errors)
-- ☐ Pages deploy green — existing `.github/workflows/docs.yml` still builds Sphinx; needs switch to `myst build` (see Notes)
+- ✅ Pages deploy wired — `.github/workflows/docs.yml` switched from Sphinx to `myst build` (see Notes)
 
 ## Tutorials
 - ◐ tutorials/tutorial0_connecting_to_web_control — source: webcontrol/userguide/quick-start.rst — writable-now
@@ -71,6 +71,10 @@ Issues not yet created — Stage B (Prompt B) will create and link them. Blocked
   built output to `.../PandABlocks-client/main/reference/api.html#pandablocks.blocking.blockingclient`.
   The other core repos + devcontainer + fastcs are kept commented (their docs aren't published yet);
   uncomment in Stage F and upstream the block into python-copier-template.
-- **Pages workflow.** `.github/workflows/docs.yml` still runs `python3 -m sphinx`. It must be switched
-  to `myst build` for the new docs to deploy (Stage A spec §8). Left for a follow-up so this scaffold
-  PR stays docs-only; flagged here and in the PR.
+- **Pages workflow.** `.github/workflows/docs.yml` now installs mystmd (pinned 1.10.1) on
+  `ubuntu-latest`, runs `myst build --html` in `docs/` with `BASE_URL=/meta-panda/<version>`, copies
+  `docs/_build/html` into the versioned `.github/pages/<version>/` dir, and publishes to `gh-pages`
+  via the same pinned peaceiris action with `keep_files: true` (preserving the catch-all
+  `.github/pages/index.html` redirect). Validated locally: green build, BASE_URL applied to asset
+  paths. Publish still gated to `rel-*` branches and tags under the PandABlocks org. The first real
+  deploy happens when this lands on a `rel-*` branch/tag.

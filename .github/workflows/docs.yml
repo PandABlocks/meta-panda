@@ -7,42 +7,51 @@ on:
 jobs:
   make_docs:
     runs-on: ubuntu-latest
-    container:
-      # TODO: use panda sdk image when available
-      image: ghcr.io/pandablocks/pandablocks-dev-container:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-      volumes:
-        - ${{ github.workspace }}:/repos
-        - ${{ github.workspace }}/build:/build
 
     steps:
-      # Git repositories
+      # Git repository
       - name: Checkout Source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          path: meta-panda
           # require history to get back to last tag for version number of branches
           fetch-depth: 0
 
-      # Build docs
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install MyST
+        # Pin to the version the scaffold was validated against.
+        run: npm install -g mystmd@1.10.1
+
+      - name: Determine version
+        id: version
+        # e.g. rel-v2023.2 or a tag
+        run: echo "version=${GITHUB_REF##*/}" >> "$GITHUB_OUTPUT"
+
+      # Build docs. BASE_URL makes asset/links resolve under the versioned
+      # GitHub Pages sub-path (https://pandablocks.github.io/meta-panda/<version>/).
       - name: Make docs
+        env:
+          BASE_URL: /meta-panda/${{ steps.version.outputs.version }}
         run: |
-          cd meta-panda
-          python3 -m sphinx -M html docs /build/
+          cd docs
+          myst build --html
 
       - name: Move to versioned directory
-        # e.g. master or 0.1.2
-        run: mv /build/html "meta-panda/.github/pages/${GITHUB_REF##*/}"
+        run: |
+          dest=".github/pages/${{ steps.version.outputs.version }}"
+          mkdir -p "$dest"
+          cp -r docs/_build/html/. "$dest/"
 
       - name: Publish Docs to gh-pages
-        # Only master and tags are published
+        # Only rel- branches and tags are published
         if: "${{ github.repository_owner == 'PandABlocks' && (startsWith(github.ref, 'refs/heads/rel-') || startsWith(github.ref, 'refs/tags')) }}"
         # We pin to the SHA, not the tag, for security reasons.
         # https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
         uses: peaceiris/actions-gh-pages@bbdfb200618d235585ad98e965f4aafc39b4c501  # v3.7.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: meta-panda/.github/pages
+          publish_dir: .github/pages
           keep_files: true
