@@ -14,9 +14,9 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ Pages deploy wired — `.github/workflows/docs.yml` switched from Sphinx to `myst build` (see Notes)
 
 ## Tutorials
-- ◐ tutorials/tutorial0_connecting_to_web_control — source: webcontrol/userguide/quick-start.rst — writable-now
-- ◐ tutorials/tutorial1_blinking_leds — source: tutorials/tutorial1_blinking_leds.rst — writable-now
-- ◐ tutorials/tutorial2_position_capture — source: tutorials/tutorial2_position_capture.rst — writable-now
+- ✅ tutorials/tutorial0_connecting_to_web_control — source: webcontrol/userguide/quick-start.rst — converted
+- ✅ tutorials/tutorial1_blinking_leds — source: tutorials/tutorial1_blinking_leds.rst — converted
+- ✅ tutorials/tutorial2_position_capture — source: tutorials/tutorial2_position_capture.rst — converted
 - ⛔ tutorials/tutorial3_position_compare — source: tutorials/tutorial3_position_compare.rst (stub) — blocked: capture
 - ⛔ tutorials/tutorial4_snake_scan — source: tutorials/tutorial4_snake_scan.rst (stub) — blocked: capture
 
