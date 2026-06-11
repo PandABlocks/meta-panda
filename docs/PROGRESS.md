@@ -71,10 +71,14 @@ Issues not yet created — Stage B (Prompt B) will create and link them. Blocked
   built output to `.../PandABlocks-client/main/reference/api.html#pandablocks.blocking.blockingclient`.
   The other core repos + devcontainer + fastcs are kept commented (their docs aren't published yet);
   uncomment in Stage F and upstream the block into python-copier-template.
-- **Pages workflow.** `.github/workflows/docs.yml` now installs mystmd (pinned 1.10.1) on
-  `ubuntu-latest`, runs `myst build --html` in `docs/` with `BASE_URL=/meta-panda/<version>`, copies
-  `docs/_build/html` into the versioned `.github/pages/<version>/` dir, and publishes to `gh-pages`
-  via the same pinned peaceiris action with `keep_files: true` (preserving the catch-all
-  `.github/pages/index.html` redirect). Validated locally: green build, BASE_URL applied to asset
-  paths. Publish still gated to `rel-*` branches and tags under the PandABlocks org. The first real
-  deploy happens when this lands on a `rel-*` branch/tag.
+- **Pages workflow.** `.github/workflows/docs.yml` is modelled on the python-copier-template-example
+  `_docs.yml` (checkout@v5, sanitized `DOCS_VERSION`, `upload-artifact@v4` of `docs/_build` as `docs`,
+  move to versioned `.github/pages/<version>/`, `make_switcher.py` → `switcher.json`, publish via
+  peaceiris v4.0.0 pinned SHA with `keep_files: true`). Adaptations from the template: (1) build uses
+  npm + mystmd (`myst build --html`) instead of `uv run tox -e docs` since meta-panda is a Yocto layer,
+  not a Python/uv project; (2) `BASE_URL=/meta-panda/<version>` is set so assets resolve under the
+  versioned Pages sub-path (the template's in-progress mystmd migration doesn't set it yet). Root
+  branch is now **`main`**: publish is gated to `github.ref_name == 'main' || ref_type == 'tag'`, and
+  `.github/pages/index.html` redirects to `./main/index.html`. Validated locally end-to-end with
+  `DOCS_VERSION=main`. The version switcher is generated but wiring it into the theme is the deferred
+  R5 (versioned docs) item.
