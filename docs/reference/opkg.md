@@ -1,11 +1,14 @@
 # opkg quick reference
 
-:::{admonition} 🚧 TODO — documentation stub
-:class: note
+[opkg](https://openwrt.org/docs/guide-user/additional-software/opkg) is the
+package manager used on PandA.
 
-This page is a Stage A scaffold stub and has not yet been written.
+| Command | Description |
+|---|---|
+| `opkg list-installed` | List all installed packages |
+| `opkg install <package> ...` | Install or replace named packages |
+| `opkg remove <package> ...` | Remove named packages |
+| `opkg files <package> ...` | Show files belonging to named packages |
+| `opkg help` | Show all available options |
 
-**Status:** writable-now
-
-**Source:** reference/opkg.rst
-:::
+For a step-by-step guide to installing packages see {doc}`../how-to/packages`.

@@ -37,11 +37,11 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ how-to/contribute — content merge from github.io + xref/intersphinx setup documented
 
 ## Reference
-- ◐ reference/opkg — source: reference/opkg.rst — writable-now
+- ✅ reference/opkg — converted from reference/opkg.rst
 - ⛔ reference/changes — source: github.io migration_guide.rst + release_compatibility.rst — blocked: verify (3.0->4.0)
-- ◐ reference/machine-targets — source: NEW (Interview6 §A) — partial (PandABrick = verify)
-- ◐ reference/glossary — source: webcontrol glossary.rst + FPGA glossary.rst — writable-now (canonical merge)
-- ◐ reference/troubleshooting — source: quickstart.rst FAQ (7 Qs) — writable-now (seed)
+- ✅ reference/machine-targets — NEW from Interview6 §A; PandABrick verify noted
+- ✅ reference/glossary — canonical merge of webcontrol + FPGA glossaries; MyST {glossary} directive
+- ✅ reference/troubleshooting — seeded from quickstart.rst FAQ (7 Qs); boot.txt→config.txt fixed
 
 ## Explanations
 - ◐ explanations/boot-process — source: explanations/boot-process.rst — writable-now
