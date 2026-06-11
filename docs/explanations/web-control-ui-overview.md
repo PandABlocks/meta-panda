@@ -18,7 +18,7 @@ Web control UI components
 |---|---|
 | **Navigation bar** | Breadcrumb trail showing your current position within the Design, starting from the selected {term}`Root Block`.  Use it to move between nested levels. |
 | **Left-hand panel** | Information about the {term}`Parent Block` currently in focus. |
-| **Central panel** | Details of the selected {term}`Attribute` or the {term}`Layout View` if **Layout** is selected. |
+| **Central panel** | Details of the selected {term}`Attribute` or the {term}`Layout` view if **Layout** is selected. |
 | **Right-hand panel** | Detailed information about the {term}`Block`, {term}`Attribute` or {term}`Link` currently in focus. |
 
 :::{tip}
