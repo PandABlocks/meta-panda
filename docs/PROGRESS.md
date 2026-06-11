@@ -28,8 +28,8 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ how-to/packages — source: how-to/packages.rst — converted
 - ✅ how-to/upgrade-via-ssh — source: how-to/remote.rst — pre-5.0 + post-5.0 covered; 24V EEPROM DLS-only noted; gap audit verify noted
 - ✅ how-to/upgrade-via-web-admin — source: how-to/web-interface.rst — pre-5.0 zpg path + fresh SD card install added; zpg filename verify noted
-- ◐ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — SKIP (Prompt E)
-- ◐ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — SKIP (Prompt E split)
+- ✅ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — converted (Prompt E); attribute widgets folded in; 4 widget subsections (View/Edit, Dropdown, Text Input, Checkbox) + trailing sentence kept as blocked: capture stub w/ issue link
+- ✅ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — split out (Prompt E); Saving a Design + Opening an Existing Design
 - ✅ how-to/monitor-attribute-values — source: webcontrol/userguide/monitoring_attribute_values.rst — converted
 - ✅ how-to/integrate-with-a-panda — source: NEW (Interview5; client + fastcs) — skeleton written; xref probe preserved
 - ✅ how-to/test-firmware-changes — source: NEW (Interview5 §1-2) — authored
