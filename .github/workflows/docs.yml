@@ -55,7 +55,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: docs
-          path: docs/_build
+          # Only the rendered site, not docs/_build/{templates,cache,site} — the
+          # template (downloaded book-theme node sources) is ~135 MB of build-time
+          # cache and bloats the zip ~7x (51 MB -> ~7 MB) with nothing deployable.
+          path: docs/_build/html
 
       - name: Move to versioned directory
         run: mv docs/_build/html .github/pages/$DOCS_VERSION
