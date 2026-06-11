@@ -1,11 +1,62 @@
 # Manually build the PandA image
 
-:::{admonition} 🚧 TODO — documentation stub
-:class: note
-
-This page is a Stage A scaffold stub and has not yet been written.
-
-**Status:** writable-now (post-5.0 branch = blocked: verify)
-
-**Source:** tutorials/manual-build.rst — fix manifest URL -> Xilinx/yocto-manifests, branch rel-v2023.2
+:::{note}
+This page describes a manual Yocto build without `kas-container`.  For the
+recommended approach see {doc}`build`.
 :::
+
+The steps below can be run inside a Docker container (e.g. the `kas` image) if
+the Yocto host dependencies are not available on your system.
+
+## Steps
+
+1. Initialise the Yocto source tree using `repo` and the Xilinx manifest:
+
+   ```bash
+   BRANCH="rel-v2023.2"
+   repo init -u https://github.com/Xilinx/yocto-manifests.git -b $BRANCH
+   repo sync
+   ```
+
+   :::{note}
+   `rel-v2023.2` is the manifest branch used for current PandA 5.x builds.
+   <!-- verify: confirm the correct branch for post-5.0 releases -->
+   :::
+
+2. Load the Yocto build environment, passing the build directory as argument:
+
+   ```bash
+   . setupsdk build
+   ```
+
+3. Add the `meta-panda` layer:
+
+   ```bash
+   git clone https://github.com/PandABlocks/meta-panda ../sources/meta-panda
+   bitbake-layers add-layer ../sources/meta-panda
+   ```
+
+4. In `conf/local.conf` set:
+
+   ```makefile
+   MACHINE = "pandabox"   # or e.g. "xu5-st1"
+   DISTRO  = "panda-petalinux"
+   ```
+
+5. Build the image:
+
+   ```bash
+   bitbake panda-image
+   ```
+
+6. Collect the output files:
+
+   ```bash
+   mkdir boot
+   cp -Lf tmp/deploy/images/pandabox/fitImage-petalinux-initramfs-image-pandabox-pandabox \
+       boot/image.ub
+   cp -f tmp/deploy/images/pandabox/{rootfs.squashfs,boot.bin,boot.scr,target-defs} boot/
+   zip boot-pandabox.zip boot/*
+   ```
+
+See {doc}`build` for a description of each output file.

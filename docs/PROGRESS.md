@@ -21,20 +21,20 @@ Page list expanded from `06-source-provenance-map.md`.
 - ⛔ tutorials/tutorial4_snake_scan — source: tutorials/tutorial4_snake_scan.rst (stub) — blocked: capture
 
 ## How-to
-- ◐ how-to/quickstart — source: how-to/quickstart.rst + rootfs quickstart.md — writable-now
-- ◐ how-to/build — source: how-to/build.rst + run-container.rst (KAS) — writable-now (KAS_IMAGE_VERSION = verify)
-- ◐ how-to/manual-build — source: tutorials/manual-build.rst — writable-now (post-5.0 branch = verify)
-- ◐ how-to/make-release — source: how-to/make-release.rst — writable-now
-- ◐ how-to/packages — source: how-to/packages.rst — writable-now
-- ◐ how-to/upgrade-via-ssh — source: how-to/remote.rst — writable-now (gap audit = verify)
-- ◐ how-to/upgrade-via-web-admin — source: how-to/web-interface.rst — partial (zpg filename = verify)
-- ◐ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — writable-now (widget screenshots = capture) [Prompt E]
-- ◐ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — writable-now [Prompt E split]
-- ◐ how-to/monitor-attribute-values — source: webcontrol/userguide/monitoring_attribute_values.rst — writable-now
-- ◐ how-to/integrate-with-a-panda — source: NEW (Interview5; client + fastcs) — writable-now (skeleton). Holds the Stage A xref probe.
-- ◐ how-to/test-firmware-changes — source: NEW (Interview5 §1-2) — writable-now
-- ◐ how-to/choose-fpga-bitstream — source: NEW (Interview5 §10; Interview3 §4) — writable-now
-- ✅ how-to/contribute — source: `{include} .github/CONTRIBUTING.md` — scaffold include resolves (content merge later)
+- ✅ how-to/quickstart — source: how-to/quickstart.rst + rootfs quickstart.md — merged; boot.txt→config.txt fixed; FAQ moved to reference/troubleshooting
+- ✅ how-to/build — source: how-to/build.rst + run-container.rst (KAS) — merged; KAS_IMAGE_VERSION verify note added
+- ✅ how-to/manual-build — source: tutorials/manual-build.rst — manifest URL fixed (Xilinx/yocto-manifests); post-5.0 branch verify noted
+- ✅ how-to/make-release — source: how-to/make-release.rst — releases link fixed → meta-panda
+- ✅ how-to/packages — source: how-to/packages.rst — converted
+- ✅ how-to/upgrade-via-ssh — source: how-to/remote.rst — pre-5.0 + post-5.0 covered; 24V EEPROM DLS-only noted; gap audit verify noted
+- ✅ how-to/upgrade-via-web-admin — source: how-to/web-interface.rst — pre-5.0 zpg path + fresh SD card install added; zpg filename verify noted
+- ◐ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — SKIP (Prompt E)
+- ◐ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — SKIP (Prompt E split)
+- ✅ how-to/monitor-attribute-values — source: webcontrol/userguide/monitoring_attribute_values.rst — converted
+- ✅ how-to/integrate-with-a-panda — source: NEW (Interview5; client + fastcs) — skeleton written; xref probe preserved
+- ✅ how-to/test-firmware-changes — source: NEW (Interview5 §1-2) — authored
+- ✅ how-to/choose-fpga-bitstream — source: NEW (Interview5 §10; Interview3 §4) — authored
+- ✅ how-to/contribute — content merge from github.io + xref/intersphinx setup documented
 
 ## Reference
 - ◐ reference/opkg — source: reference/opkg.rst — writable-now
