@@ -44,12 +44,12 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ reference/troubleshooting — seeded from quickstart.rst FAQ (7 Qs); boot.txt→config.txt fixed
 
 ## Explanations
-- ◐ explanations/boot-process — source: explanations/boot-process.rst — writable-now
-- ◐ explanations/architecture — source: NEW (Interview1) — writable-now (skeleton)
-- ⛔ explanations/hardware-targets — source: NEW (Interview6 §A) — blocked: author
-- ◐ explanations/web-control-ui-overview — source: webcontrol/userguide/user_interface_overview.rst — writable-now
-- ◐ explanations/understanding-attribute-state — source: webcontrol/userguide/understanding_attribute_state.rst — writable-now (8 icons via Prompt C)
-- ✅ explanations/decisions + decisions/0001,0002,COPYME — kept byte-for-byte from skeleton (ADR migration of 0002-switched-to-pip-skeleton is a later `move` task)
+- ✅ explanations/boot-process — converted from explanations/boot-process.rst
+- ✅ explanations/architecture — skeleton authored from Interview1; TCP/client/EPICS/data flow
+- ⛔ explanations/hardware-targets — blocked: author
+- ✅ explanations/web-control-ui-overview — converted from user_interface_overview.rst; screenshots reused
+- ✅ explanations/understanding-attribute-state — 8 states described; 5 existing PNG icons referenced from _legacy_rst; 3 missing icons (Processing, Update Error, Invalid) pending Prompt C SVGs
+- ✅ explanations/decisions + decisions/0001,0002,COPYME — kept from scaffold (no change)
 
 ## Blocked (issues raised)
 Issues not yet created — Stage B (Prompt B) will create and link them. Blocked pages:
