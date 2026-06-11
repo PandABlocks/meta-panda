@@ -1,2 +1,5 @@
 build/
 sources/
+
+# MyST build output
+docs/_build/

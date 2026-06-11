@@ -1,0 +1,81 @@
+version: 1
+project:
+  title: meta-panda
+  github: https://github.com/PandABlocks/meta-panda
+  # Cross-repository references (mystmd xref + Sphinx intersphinx).
+  # PROTOTYPE for upstreaming into the DLS python-copier-template (Stage A spec §6).
+  # The three core repos + devcontainer are mystmd projects (resolved via their
+  # published myst.xref.json); PandABlocks-client and fastcs-PandABlocks are Sphinx
+  # projects (resolved via their objects.inv). URLs for not-yet-published sites will
+  # warn until those repos deploy their docs branches.
+  references:
+    # PandABlocks-client (Sphinx) is deployed today — used by the Stage A xref probe
+    # in how-to/integrate-with-a-panda. Resolves via its objects.inv.
+    PandABlocks-client: https://pandablocks.github.io/PandABlocks-client/main
+    # The remaining targets are not deployed yet, so their inventories cannot be
+    # fetched at build time. They are kept here (commented) as the complete prototype
+    # wiring to uncomment in Stage F once each repo's `docs` branch publishes, and to
+    # upstream into the python-copier-template. Keys/format are settled; only the
+    # live fetch is pending.
+    # PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA
+    # PandABlocks-server: https://pandablocks.github.io/PandABlocks-server
+    # PandABlocks-devcontainer: https://pandablocks.github.io/PandABlocks-devcontainer
+    # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/main
+  toc:
+    - file: index.md
+    - file: tutorials.md
+      children:
+        - file: tutorials/tutorial0_connecting_to_web_control.md
+        - file: tutorials/tutorial1_blinking_leds.md
+        - file: tutorials/tutorial2_position_capture.md
+        - file: tutorials/tutorial3_position_compare.md
+        - file: tutorials/tutorial4_snake_scan.md
+    - file: how-to.md
+      children:
+        - file: how-to/quickstart.md
+        - file: how-to/build.md
+        - file: how-to/manual-build.md
+        - file: how-to/make-release.md
+        - file: how-to/packages.md
+        - file: how-to/upgrade-via-ssh.md
+        - file: how-to/upgrade-via-web-admin.md
+        - file: how-to/use-web-control-to-set-up-a-panda.md
+        - file: how-to/save-restore-design.md
+        - file: how-to/monitor-attribute-values.md
+        - file: how-to/integrate-with-a-panda.md
+        - file: how-to/test-firmware-changes.md
+        - file: how-to/choose-fpga-bitstream.md
+        - file: how-to/contribute.md
+    - file: explanations.md
+      children:
+        - file: explanations/boot-process.md
+        - file: explanations/architecture.md
+        - file: explanations/hardware-targets.md
+        - file: explanations/web-control-ui-overview.md
+        - file: explanations/understanding-attribute-state.md
+        - file: explanations/decisions.md
+          children:
+            - pattern: explanations/decisions/*.md
+    - file: reference.md
+      children:
+        - file: reference/opkg.md
+        - file: reference/changes.md
+        - file: reference/machine-targets.md
+        - file: reference/glossary.md
+        - file: reference/troubleshooting.md
+        - url: https://github.com/PandABlocks/meta-panda/releases
+          title: Release Notes
+site:
+  template: book-theme
+  nav:
+    - title: Tutorials
+      url: /tutorials
+    - title: How-to Guides
+      url: /how-to
+    - title: Explanations
+      url: /explanations
+    - title: Reference
+      url: /reference
+  options:
+    logo: images/PandA-logo-for-black-background.svg
+    github_url: https://github.com/PandABlocks/meta-panda
