@@ -17,7 +17,7 @@ project:
     # wiring to uncomment in Stage F once each repo's `docs` branch publishes, and to
     # upstream into the python-copier-template. Keys/format are settled; only the
     # live fetch is pending.
-    # PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA
+    # PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA/main
     # PandABlocks-server: https://pandablocks.github.io/PandABlocks-server
     # PandABlocks-devcontainer: https://pandablocks.github.io/PandABlocks-devcontainer
     # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/main
