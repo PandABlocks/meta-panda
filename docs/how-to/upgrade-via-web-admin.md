@@ -37,7 +37,7 @@ Pre-5.0 PandAs use a legacy zpkg-based firmware format.  To upgrade to a
 
 1. Download the legacy-updater package for your machine type from
    [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases).
-   <!-- verify: confirm zpg filename convention for the legacy updater -->
+   <!-- verify: PandABlocks/meta-panda#17 — confirm zpg filename pattern -->
 2. Copy the updater package to a USB stick.
 3. Insert the USB stick and follow the post-5.0 web-admin flow above,
    selecting the legacy-updater file instead.

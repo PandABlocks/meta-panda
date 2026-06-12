@@ -8,7 +8,7 @@ manual builds) or via `KAS_MACHINE` (for kas builds).
 |---|---|---|
 | `pandabox` | PandABox (default) | Zynq 7030; joint DLS/SOLEIL hardware; [Open Hardware](https://www.ohwr.org/projects/pandabox/wiki) |
 | `pandabox2` | PandABox 2 | Successor to PandABox |
-| `pandabrick` | PandABrick | <!-- verify: notes/details for pandabox2 and pandabrick --> |
+| `pandabrick` | PandABrick | <!-- verify: PandABlocks/meta-panda#15 — hardware details for pandabox2/pandabrick --> |
 | `xu5-st1` | ZynqMP-based target (XU5 SoM) | Development only |
 | `zedboard` | Zedboard | Development/testing platform |
 

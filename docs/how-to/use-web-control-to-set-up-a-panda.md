@@ -129,8 +129,7 @@ input widgets — View/Edit button, Dropdown list, Text input, and Checkbox.
 The four attribute input widgets (**View/Edit button**, **Dropdown list**,
 **Text input** and **Checkbox**) need fresh screenshots before this subsection
 can be written, and the source text for *Text input* is truncated mid-sentence
-in the original. A GitHub issue covering the widget screenshots and the
-trailing sentence will be created in Stage B (Prompt B) and linked here.
+in the original. Tracked in [PandABlocks/meta-panda#13](https://github.com/PandABlocks/meta-panda/issues/13).
 
 In brief, until then:
 

@@ -53,11 +53,21 @@ Page list expanded from `06-source-provenance-map.md`.
 
 ## Blocked (issues raised)
 Issues not yet created — Stage B (Prompt B) will create and link them. Blocked pages:
-- ⛔ tutorials/tutorial3_position_compare — issue #TBD — human-capture
-- ⛔ tutorials/tutorial4_snake_scan — issue #TBD — human-capture
-- ⛔ reference/changes — issue #TBD — verify (3.0->4.0)
-- ⛔ explanations/hardware-targets — issue #TBD — author
-- ⛔ how-to/use-web-control-to-set-up-a-panda (4 widget screenshots + trailing sentence) — issue #TBD — capture
+- ⛔ tutorials/tutorial3_position_compare — issue #12 — human-capture
+- ⛔ tutorials/tutorial4_snake_scan — issue #12 — human-capture
+- ⛔ reference/changes — issue #14 — verify (3.0->4.0)
+- ⛔ explanations/hardware-targets — issue #19 — author
+- ⛔ how-to/use-web-control-to-set-up-a-panda (widget screenshots + trailing sentence) — issue #13 — human-capture
+
+- ⛔ reference/machine-targets (hardware details) — issue #15 — verify
+
+- ⛔ how-to/build (KAS_IMAGE_VERSION) — issue #16 — verify
+
+- ⛔ how-to/upgrade-via-web-admin (zpg filename) — issue #17 — verify
+
+- ⛔ how-to/manual-build (Xilinx branch post-5.0) — issue #18 — verify
+
+- ⛔ infrastructure: versioned docs / version switcher (R5) — issue #20 — infrastructure
 
 ## Notes
 - **Legacy sources preserved.** The original Sphinx/RST tree was moved to `docs/_legacy_rst/`

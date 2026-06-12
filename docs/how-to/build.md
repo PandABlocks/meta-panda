@@ -33,7 +33,7 @@
    :::{note}
    `KAS_IMAGE_VERSION` pins the version of the build container.  Check the
    `meta-panda` release notes or the `kas.yml` file for the value appropriate
-   to the version you are building. <!-- verify: confirm current value -->
+   to the version you are building. <!-- verify: PandABlocks/meta-panda#16 — confirm KAS_IMAGE_VERSION values -->
    :::
 
    To target a different machine set `KAS_MACHINE`, e.g.:

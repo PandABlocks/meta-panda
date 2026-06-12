@@ -20,7 +20,7 @@ the Yocto host dependencies are not available on your system.
 
    :::{note}
    `rel-v2023.2` is the manifest branch used for current PandA 5.x builds.
-   <!-- verify: confirm the correct branch for post-5.0 releases -->
+   <!-- verify: PandABlocks/meta-panda#18 — confirm Xilinx manifest branch for post-5.0 -->
    :::
 
 2. Load the Yocto build environment, passing the build directory as argument:
