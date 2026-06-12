@@ -48,7 +48,7 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ explanations/architecture — skeleton authored from Interview1; TCP/client/EPICS/data flow
 - ⛔ explanations/hardware-targets — blocked: author
 - ✅ explanations/web-control-ui-overview — converted from user_interface_overview.rst; screenshots reused
-- ✅ explanations/understanding-attribute-state — 8 states described; 5 existing PNG icons referenced from _legacy_rst; 3 missing icons (Processing, Update Error, Invalid) pending Prompt C SVGs
+- ✅ explanations/understanding-attribute-state — 8 states described; all 8 state icons recreated as standalone SVGs in `images/attribute-state/` (material-style glyphs in the colour spec) and wired in (Prompt C done; no malcolm reference in docs)
 - ✅ explanations/decisions + decisions/0001,0002,COPYME — kept from scaffold (no change)
 
 ## Blocked (issues raised)
