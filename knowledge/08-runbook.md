@@ -15,7 +15,7 @@ it's a sibling checkout (or symlink `knowledge/` into each repo if you prefer).
 ---
 
 ## One-time setup (you)
-1. Create the `docs` branch in `meta-panda`, `PandABlocks-FPGA`, `PandABlocks-server`. **Create the new `PandABlocks-devcontainer` repo** and a `docs` branch there too.
+1. Create the `docs` branch in `meta-panda`, `PandABlocks-FPGA`, `PandABlocks-server`. *(Superseded 2026-06: no separate PandABlocks-devcontainer repo — each repo carries its own `.devcontainer/` + Dockerfile.)*
 2. Put all knowledge files in `meta-panda/knowledge/`; extract `docs.zip` to `meta-panda/knowledge/docs-skeleton/`.
 3. Have a GitHub PAT ready (scopes: repo, issues) for Stage B; authenticate `gh` in that terminal.
 4. Two decisions are yours (not blockers): confirm whether all **8** attribute-state icons need distinct glyphs or some collapse; and (optional) whether you have a preference on the FPGA module-docs surfacing or the xref keys, else let CC prototype and report.
@@ -91,6 +91,6 @@ SPECIFICS: {SPECIFICS}
 
 ## PROMPT F — Final cross-repo verification  ·  model: Opus  ·  run from any repo
 ```
-Final cross-repo verification of the docs `docs` branches. Confirm: every repo's `myst build` is green; xref links resolve across meta-panda / PandABlocks-FPGA / PandABlocks-server / PandABlocks-devcontainer in BUILT output; intersphinx links into PandABlocks-client and fastcs-PandABlocks resolve; GitHub Pages deploys green per repo; PandABlocks-rootfs Pages is disabled; PandABlocks.github.io serves the single catch-all redirect to meta-panda.
+Final cross-repo verification of the docs `docs` branches. Confirm: every repo's `myst build` is green; xref links resolve across meta-panda / PandABlocks-FPGA / PandABlocks-server in BUILT output; intersphinx links into PandABlocks-client and fastcs-PandABlocks resolve; GitHub Pages deploys green per repo; PandABlocks-rootfs Pages is disabled; PandABlocks.github.io serves the single catch-all redirect to meta-panda.
 Fix what you can; file issues for the rest. Capture the working xref/intersphinx config as a diff suitable for upstreaming into the python-copier-template. Summarise final status against /workspaces/meta-panda/knowledge/03-target-doc-map.md.
 ```
