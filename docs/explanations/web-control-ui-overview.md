@@ -8,7 +8,7 @@ configuring and managing PandA block connections.
 The interface has four core components whose content changes dynamically
 depending on the current activity:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/images/ui_schematic.png
+```{figure} ../images/webcontrol/ui_schematic.png
 :align: center
 
 Web control UI components
@@ -35,7 +35,7 @@ The Layout view lets you create, modify and manage the overall {term}`Design`.
 Open it by clicking **View** or **Edit** next to the *Layout* attribute on any
 Parent Block.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-layout-spread-out.png
+```{figure} ../images/webcontrol/PANDA-layout-spread-out.png
 :align: center
 
 Example Layout view — PANDA system with CLOCKS block selected
@@ -63,7 +63,7 @@ The **central panel** shows the attribute's value over time as either:
   {doc}`../how-to/monitor-attribute-values` for chart controls.
 - **Table** — a time-ordered list of value changes.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/attribute_view_chart.png
+```{figure} ../images/webcontrol/attribute_view_chart.png
 :align: center
 
 Attribute view — example plot for a continuously updated attribute
@@ -80,7 +80,7 @@ In complex designs you may want to monitor several blocks at once.  Click the
 pop icon in the top-left corner of any Block Information Panel to open it in
 its own independent window.  Multiple panels can be popped simultaneously.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/window_popping_output.svg
+```{figure} ../images/webcontrol/window_popping_output.svg
 :align: center
 
 Three Child Blocks (CLOCKS, COUNTER1, BITS) popped into independent windows

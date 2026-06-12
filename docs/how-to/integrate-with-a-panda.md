@@ -17,8 +17,10 @@ Connect to port 8888 to send commands and read responses:
 nc <panda-hostname> 8888
 ```
 
-See the [PandABlocks-server reference](../reference/opkg.md) for the command
-syntax.
+See the
+[PandABlocks-server commands reference](https://pandablocks.github.io/PandABlocks-server/main/reference/commands.html)
+for the command syntax.
+<!-- Stage F: swap to xref once the server key is uncommented in myst.yml -->.
 
 Connect to port 8889 for the data capture stream:
 

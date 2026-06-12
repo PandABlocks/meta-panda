@@ -20,12 +20,12 @@ recommend you do so regularly.
    design you wish to save.
 2. Navigate to the *Save* attribute group at the bottom of the left-hand panel.
    Expand it if necessary.
-3. Enter a descriptive name for the design in the *Design* field. This name is
-   used later to identify the design.
+3. Enter a descriptive name for the design in the *Design Name* field. This
+   name is used later to identify the design.
 
    :::{tip}
    To save the design with the same name as the currently open design, leave the
-   *Filename* field blank.
+   *Design Name* field blank.
    :::
 
 4. Select the **Save** button. The information icon to the left of the button

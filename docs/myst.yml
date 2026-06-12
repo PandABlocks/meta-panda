@@ -4,8 +4,8 @@ project:
   github: https://github.com/PandABlocks/meta-panda
   # Cross-repository references (mystmd xref + Sphinx intersphinx).
   # PROTOTYPE for upstreaming into the DLS python-copier-template (Stage A spec §6).
-  # The three core repos + devcontainer are mystmd projects (resolved via their
-  # published myst.xref.json); PandABlocks-client and fastcs-PandABlocks are Sphinx
+  # The three core repos are mystmd projects (resolved via their published
+  # myst.xref.json); PandABlocks-client and fastcs-PandABlocks are Sphinx
   # projects (resolved via their objects.inv). URLs for not-yet-published sites will
   # warn until those repos deploy their docs branches.
   references:
@@ -19,7 +19,6 @@ project:
     # live fetch is pending.
     # PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA/main
     # PandABlocks-server: https://pandablocks.github.io/PandABlocks-server
-    # PandABlocks-devcontainer: https://pandablocks.github.io/PandABlocks-devcontainer
     # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/main
   toc:
     - file: index.md
@@ -32,19 +31,22 @@ project:
         - file: tutorials/tutorial4_snake_scan.md
     - file: how-to.md
       children:
+        # Using a PandA
         - file: how-to/quickstart.md
-        - file: how-to/build.md
-        - file: how-to/manual-build.md
-        - file: how-to/make-release.md
-        - file: how-to/packages.md
-        - file: how-to/upgrade-via-ssh.md
-        - file: how-to/upgrade-via-web-admin.md
         - file: how-to/use-web-control-to-set-up-a-panda.md
         - file: how-to/save-restore-design.md
         - file: how-to/monitor-attribute-values.md
         - file: how-to/integrate-with-a-panda.md
-        - file: how-to/test-firmware-changes.md
+        # Administering a PandA
+        - file: how-to/upgrade-via-web-admin.md
+        - file: how-to/upgrade-via-ssh.md
+        - file: how-to/packages.md
         - file: how-to/choose-fpga-bitstream.md
+        # Developing for a PandA
+        - file: how-to/build.md
+        - file: how-to/manual-build.md
+        - file: how-to/test-firmware-changes.md
+        - file: how-to/make-release.md
         - file: how-to/contribute.md
     - file: explanations.md
       children:

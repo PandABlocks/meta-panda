@@ -22,7 +22,7 @@ The web control renders every attribute type as a chart:
 
 Hover over the chart to reveal the menu bar:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/chart_options.png
+```{figure} ../images/webcontrol/chart_options.png
 :align: center
 
 Chart controls toolbar
@@ -76,7 +76,7 @@ change and shows:
 - The new attribute value
 - The attribute alarm status
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/attribute_value_table.png
+```{figure} ../images/webcontrol/attribute_value_table.png
 :align: center
 
 Attribute values presented in a numerical table

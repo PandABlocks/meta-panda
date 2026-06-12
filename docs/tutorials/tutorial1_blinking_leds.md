@@ -32,7 +32,7 @@ output LEDs turn on sequentially, then turn off in reverse order.
 
 ## How the design works
 
-The **CLOCKS** block generates a 50% duty-cycle pulse train with a 1 s period.
+The **CLOCK1** block generates a 50% duty-cycle pulse train with a 1 s period.
 **PULSE1–4** each take this as an input trigger and produce a pulse with a
 different width and delay.  The PULSE blocks act as a delay line, queuing pulses
 until each delay expires.
@@ -49,7 +49,7 @@ beyond the period the block drops the pulse instead of merging it, reporting the
 drop in the **Dropped** field.
 :::
 
-You can also click the **CLOCKS** block to adjust the input pulse period.
+You can also click the **CLOCK1** block to adjust the input pulse period.
 
 To explore further, try wiring pulse outputs to different TTLOUT blocks:
 click the Palette icon, drag a **TTLOUT** block onto the canvas, then connect a

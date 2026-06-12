@@ -10,6 +10,12 @@ be ready for the hands-on tutorials that follow.
 - A PandA that is powered on and connected to your network.
 - Its IP address or hostname (e.g. `192.168.0.100` or `my-panda`).
 
+:::{tip}
+If your PandA is not on the network yet — fresh out of the box — start
+with {doc}`../how-to/quickstart` to prepare an SD card and find it on the
+network, then come back here.
+:::
+
 ## Steps
 
 ### 1. Open the web control
@@ -23,7 +29,7 @@ http://<panda-hostname>/
 where `<panda-hostname>` is the IP address or hostname of your PandA.
 You will see the initial screen:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/starting-ui.png
+```{figure} ../images/webcontrol/starting-ui.png
 :align: center
 
 The initial web control screen
@@ -34,7 +40,7 @@ The initial web control screen
 The drop-down at the top of the page lists the root blocks available on
 your PandA.  Click it and choose **PANDA**:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/block-list.png
+```{figure} ../images/webcontrol/block-list.png
 :align: center
 
 Selecting the PANDA root block
@@ -45,7 +51,7 @@ Selecting the PANDA root block
 After selecting PANDA, the left-hand panel loads that block's details —
 attributes, groups, and methods:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-block-details.png
+```{figure} ../images/webcontrol/PANDA-block-details.png
 :align: center
 
 Details for the PANDA block
@@ -56,13 +62,13 @@ Details for the PANDA block
 Scroll down in the left-hand panel until you see the **Layout** attribute.
 Click **Edit** to open the block layout in the centre panel:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/layout-button.png
+```{figure} ../images/webcontrol/layout-button.png
 :align: center
 
 Click **Edit** in the Layout attribute row to open the layout panel
 ```
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-layout.png
+```{figure} ../images/webcontrol/PANDA-layout.png
 :align: center
 
 The layout panel showing the functional blocks of the PandA
@@ -74,7 +80,7 @@ Drag blocks to new positions to suit your preference.
 A brief spinner indicates that the updated position is being saved to the
 hardware:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-layout-spread-out.png
+```{figure} ../images/webcontrol/PANDA-layout-spread-out.png
 :align: center
 
 Blocks dragged to new positions; clicking a block loads its details in the right-hand panel
@@ -88,7 +94,7 @@ Clicking any block in the layout loads its details in the right-hand panel
 Click a port on one block and drag to a compatible port on another block
 to create a signal link:
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-new-link.png
+```{figure} ../images/webcontrol/PANDA-new-link.png
 :align: center
 
 Dragging between two ports to create a new link

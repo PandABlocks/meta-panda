@@ -28,13 +28,12 @@ For example, to link to the `BlockingClient` API in `PandABlocks-client`:
 | `PandABlocks-client` | `PandABlocks-client` | Sphinx (`objects.inv`) |
 | `PandABlocks-FPGA` | `PandABlocks-FPGA` | MyST (`myst.xref.json`) |
 | `PandABlocks-server` | `PandABlocks-server` | MyST (`myst.xref.json`) |
-| `PandABlocks-devcontainer` | `PandABlocks-devcontainer` | MyST (`myst.xref.json`) |
 | `fastcs-PandABlocks` | `fastcs-PandABlocks` | Sphinx (`objects.inv`) |
 
-The `PandABlocks-FPGA`, `PandABlocks-server`, `PandABlocks-devcontainer` and
-`fastcs-PandABlocks` entries are present in `myst.yml` but commented out until
-those repos publish their `docs` branches.  Uncomment the relevant line once the
-target site is live (Stage F).
+The `PandABlocks-FPGA`, `PandABlocks-server` and `fastcs-PandABlocks` entries
+are present in `myst.yml` but commented out until those repos publish their
+`docs` branches.  Uncomment the relevant line once the target site is live
+(Stage F).
 
 ### Upstreaming to the copier template
 

@@ -32,7 +32,7 @@ The `/boot` directory on the PandA should contain:
 
 - `boot.bin`
 - `boot.scr`
-- `Image`
+- `image.ub`
 - `rootfs.squashfs`
 - `target-defs`
 

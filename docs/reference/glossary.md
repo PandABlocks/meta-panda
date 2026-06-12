@@ -7,8 +7,8 @@ as the canonical reference; all other repos link to this page.
 ```{glossary}
 App
 : An `.ini` file that specifies the type and number of {term}`Block` instances
-  to build together into an FPGA image (a {term}`Zpkg` or `.ipk` package
-  loadable on a PandABlocks device).
+  to build together into an FPGA image (an `.ipk` package — or, pre-5.0, a
+  legacy {term}`Zpkg` — loadable on a PandABlocks device).
 
 Attribute
 : A property of a {term}`Block`.  Attributes are divided into four categories:

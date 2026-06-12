@@ -251,7 +251,7 @@ not atomic. During this time the
 replaces the information icon; its reversion is the only reliable indication
 that the value has been recorded and is now in use.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/images/attribute_lifecycle.svg
+```{figure} ../images/webcontrol/attribute_lifecycle.svg
 :align: center
 
 Attribute change lifecycle workflow
@@ -280,7 +280,7 @@ These values are presented as an Attribute Table, generated dynamically from the
 attribute's specification within its block. For details of a specific table,
 refer to the technical documentation of its block.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/attribute_table.png
+```{figure} ../images/webcontrol/attribute_table.png
 :align: center
 
 Example Attribute Table associated with a complex attribute
@@ -321,17 +321,14 @@ While {term}`Attribute`s define a block's *behaviour*, {term}`Method`s define
 the *actions* it can perform. A method is represented as a button labelled with
 the action it performs, executed only when the button is pressed.
 
-A method may require input parameters. For example, the *Save* method on a
-{term}`Parent Block` requires the name of the file to save the design to. Method
-parameters:
+There is currently a single method: *Save* on the {term}`Parent Block`, which
+requires the name of the file to save the design to as its input parameter.
+Method parameters:
 
 - Can be edited directly in the {term}`Block Information Panel`.
 - Exist in *local* state until the method's button is pressed.
 - Are properties of their method rather than entities in their own right; they
   are never recorded on the server or saved in the persistent design.
-
-A full list of each block's methods and their parameters is in the documentation
-for that block.
 
 ### Obtain information about method execution
 
@@ -353,8 +350,6 @@ documentation. Ports are colour-coded by the type of information they carry:
 |---|---|
 | Boolean | Blue |
 | Int32 | Orange |
-| Motor | Pink |
-| NDArray | Brown |
 
 Information is transferred from a source port to a sink port via a
 {term}`Link` — see [Linking blocks](#linking-blocks) below.
@@ -375,7 +370,7 @@ type. A block's ports and their specification are defined in its documentation.
 3. Release the mouse button. If the link constraints below are respected, the
    link is displayed in the Layout.
 
-```{figure} ../_legacy_rst/webcontrol/userguide/screenshots/PANDA-new-link.png
+```{figure} ../images/webcontrol/PANDA-new-link.png
 :align: center
 
 Creating a link between two blocks
