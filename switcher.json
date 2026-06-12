@@ -1,5 +1,9 @@
 [
   {
+    "version": "main",
+    "url": "https://PandABlocks.github.io/meta-panda/main/"
+  },
+  {
     "version": "4.2b1",
     "url": "https://PandABlocks.github.io/meta-panda/4.2b1/"
   },
@@ -58,9 +62,5 @@
   {
     "version": "docs",
     "url": "https://PandABlocks.github.io/meta-panda/docs/"
-  },
-  {
-    "version": "rel-v2023.2",
-    "url": "https://PandABlocks.github.io/meta-panda/rel-v2023.2/"
   }
 ]
