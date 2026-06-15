@@ -27,9 +27,8 @@ RDEPENDS:${PN}:append:pandabrick = " \
     panda-fpga-pandabrick \
 "
 
-RDEPENDS:${PN}:append:xu5-st1 = " \
-    panda-fpga-xu5-st1-no-fmc \
-    panda-fpga-xu5-st1-fmc-acq430 \
+RDEPENDS:${PN}:append:xu5 = " \
+    panda-fpga-xu5-no-fmc \
 "
 
 RDEPENDS:${PN}:append:zedboard = " \

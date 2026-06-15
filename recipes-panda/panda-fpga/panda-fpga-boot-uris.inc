@@ -8,8 +8,8 @@ SRC_URI[pandabox2-boot.sha256sum] = "aeb1908a2ff2a729c8e0e32113b4f7dc1b34d359768
 SRC_URI:pandabrick = "https://gitlab.diamond.ac.uk/controls/hardware/PandABlocks-FPGA/-/releases/4.2b1/downloads/panda-fpga-boot_pandabrick-4.2b1_all.ipk;name=pandabrick-boot"
 SRC_URI[pandabrick-boot.sha256sum] = "180ea84d49f9fbb73669b58ce446968cbc0d30a8107bf550aefe12fa615d45f0"
 # XU5 SoC on a ST1 board
-SRC_URI:xu5-st1 = "https://github.com/PandABlocks/PandABlocks-FPGA/releases/download/4.1/panda-fpga-boot_xu5-st1-4.1_all.ipk;name=xu5-st1-boot"
-SRC_URI[xu5-st1-boot.sha256sum] = "6c00f8f8ea0aedfe06869d5e1c8fcf653539fd97669010513975721345d3a9d7"
+SRC_URI:xu5 = "https://github.com/PandABlocks/meta-panda/releases/download/4.2b1/panda-fpga-boot_xu5-4.1-29-g950117b-dirty_all.ipk;name=xu5-boot"
+SRC_URI[xu5-boot.sha256sum] = "e1c7cc941447266f69529486ae1a6c7ae6526349874b1452c4f20d77a2336dba"
 # Zedboard
-SRC_URI:zedboard = "https://github.com/PandABlocks/meta-panda/releases/download/4.0alpha1/panda-fpga-boot_zedboard-4.1b1-2-g16147d6-dirty_all.ipk;name=zedboard-boot"
-SRC_URI[zedboard-boot.sha256sum] = "ddadc3ac919e1be545f8447f27f91a98af8893f165bd89b1686f2ef6037a8ee7"
+SRC_URI:zedboard = "https://github.com/PandABlocks/meta-panda/releases/download/4.2b1/panda-fpga-boot_zedboard-4.1-29-g950117b-dirty_all.ipk;name=zedboard-boot"
+SRC_URI[zedboard-boot.sha256sum] = "484b0e73adc4e772b7d8c284b947fd0e8d49a66a93b594fa129e944a44689d71"
