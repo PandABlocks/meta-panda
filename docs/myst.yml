@@ -47,6 +47,7 @@ project:
         # Developing for a PandA
         - file: how-to/build.md
         - file: how-to/manual-build.md
+        - file: how-to/working-in-a-container.md
         - file: how-to/test-firmware-changes.md
         - file: how-to/make-release.md
         - file: how-to/contribute.md
