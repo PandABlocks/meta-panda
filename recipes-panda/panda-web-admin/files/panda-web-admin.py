@@ -154,6 +154,8 @@ class CommandHandler(RequestHandler):
                 self.write('</div>')
                 sub_process.stdout.close()
 
+        return (yield sub_process.wait_for_exit(False)) == 0
+
     @coroutine
     def sync(self):
         self.p('Writing state to disk...')
@@ -166,12 +168,18 @@ class CommandHandler(RequestHandler):
         if packages:
             package_strings = ", ".join(tt(x) for x in packages)
             self.p("About to %s %s..." % (action, package_strings))
-            yield self.run_command("opkg", action, *packages)
-            yield self.sync()
-            self.p("Package %s operation complete." % action)
-            self.maybe_scroll_to_bottom()
+            ok = yield self.run_command("opkg", action, *packages)
+            if ok:
+                yield self.sync()
+                self.p("Package %s operation complete." % action)
+                self.maybe_scroll_to_bottom()
+            else:
+                self.p("Package %s operation failed." % action)
+
+            return ok
         else:
             self.p("Nothing to %s." % action)
+            return False
 
     def list_package_instructions(self):
         self.p("Packages have file extension .ipk and are downloaded from a "
@@ -429,7 +437,11 @@ class CommandHandler(RequestHandler):
         root = os.path.join(MNT, *path_suffix)
         packages = [os.path.join(root, f) for f in self.get_arguments('value')]
         packages.sort()
-        yield self.opkg("install", *packages)
+        ok = yield self.opkg("install", *packages)
+        is_fpga = any(path.split('/')[-1].startswith('panda-fpga')
+                        for path in packages)
+        if is_fpga and ok:
+            yield self.post_restart()
 
     @coroutine
     def revert_rootfs_files(self):
