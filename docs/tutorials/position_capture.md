@@ -1,4 +1,4 @@
-# Tutorial 2: Position Capture
+# Tutorial 3: Position Capture
 
 This tutorial introduces the Position Capture (PCAP) interface of PandABlocks:
 how to provide trigger and gate signals that control when data is captured, and
@@ -6,7 +6,7 @@ how to receive and interpret the captured stream.
 
 ## Prerequisites
 
-- Completed {doc}`tutorial1_blinking_leds` or comfortable with the web control
+- Completed {doc}`tutorial_blinking_leds` or comfortable with the web control
   layout view.
 - `nc` (netcat) or any TCP client available on your workstation.
 

@@ -1,4 +1,4 @@
-# Snake Scan
+# Tutorial 5: Snake Scan
 
 :::{admonition} 🚧 TODO — documentation stub
 :class: warning

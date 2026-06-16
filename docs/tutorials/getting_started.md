@@ -1,33 +1,36 @@
-# Tutorial 0: Connecting to the PandA Web Control
+# Tutorial 0: Getting Started
 
-In this tutorial you will navigate to the PandA web control interface,
-explore the block list, view block details, and open the layout panel.
-By the end you will know how the main areas of the UI fit together and
-be ready for the hands-on tutorials that follow.
+In this tutorial you will setup your PandA; configure it so you can find it on the network, understand the web interface, and upgrade to the latest firmware.
 
 ## Prerequisites
 
 - A PandA that is powered on and connected to your network.
-- Its IP address or hostname (e.g. `192.168.0.100` or `my-panda`).
 
-:::{tip}
-If your PandA is not on the network yet — fresh out of the box — start
-with {doc}`../how-to/quickstart` to prepare an SD card and find it on the
-network, then come back here.
-:::
+## Getting on the network
 
-## Steps
+By default the PandA uses DHCP — no configuration needed. Simply connect it
+to your network and power it on.
 
-### 1. Open the web control
+If you need a static IP instead, see {doc}`setup-without-dhcp`.
 
-In a browser navigate to:
+Once it has an address, confirm it's reachable by navigating to:
 
 ```
 http://<panda-hostname>/
 ```
 
-where `<panda-hostname>` is the IP address or hostname of your PandA.
-You will see the initial screen:
+where `<panda-hostname>` is the IP address or hostname of your PandA, you should see the PandA web interface home page.
+
+## Web interface overview
+
+The home page has four sections:
+
+- **Home** — summary of the web interface sections
+- **Docs** — hardware, firmware and software documentation
+- **Control** — the web control; wire functional blocks together, set parameters,
+  save and load designs (requires the web-control package to be installed)
+- **Admin** — install packages from USB, manage SSH keys, and other remote
+  administration
 
 ```{figure} ../images/webcontrol/starting-ui.png
 :align: center
@@ -35,78 +38,28 @@ You will see the initial screen:
 The initial web control screen
 ```
 
-### 2. Select the PANDA block
+## Upgrading the firmware
 
-The drop-down at the top of the page lists the root blocks available on
-your PandA.  Click it and choose **PANDA**:
+Make sure your PandA has the latest firmware. From the web admin page:
 
-```{figure} ../images/webcontrol/block-list.png
-:align: center
+1. Click **Admin** in the bottom banner.
+2. Check your current version under **Version Information**.
+3. Follow the relevant guide for your version:
+   - If your firmware is **pre-5.0** — see {doc}`legacy-upgrade`.
+   - If your firmware is **5.0 or later** and you want to upgrade via the web
+     admin interface — see {doc}`upgrade-via-web-admin`.
+   - If your firmware is **5.0  or later** and you want to upgrade via SSH —
+     see {doc}`upgrade-via-ssh`.
 
-Selecting the PANDA root block
-```
+## Troubleshooting
 
-### 3. View the block details
-
-After selecting PANDA, the left-hand panel loads that block's details —
-attributes, groups, and methods:
-
-```{figure} ../images/webcontrol/PANDA-block-details.png
-:align: center
-
-Details for the PANDA block
-```
-
-### 4. Open the layout
-
-Scroll down in the left-hand panel until you see the **Layout** attribute.
-Click **Edit** to open the block layout in the centre panel:
-
-```{figure} ../images/webcontrol/layout-button.png
-:align: center
-
-Click **Edit** in the Layout attribute row to open the layout panel
-```
-
-```{figure} ../images/webcontrol/PANDA-layout.png
-:align: center
-
-The layout panel showing the functional blocks of the PandA
-```
-
-### 5. Rearrange blocks
-
-Drag blocks to new positions to suit your preference.
-A brief spinner indicates that the updated position is being saved to the
-hardware:
-
-```{figure} ../images/webcontrol/PANDA-layout-spread-out.png
-:align: center
-
-Blocks dragged to new positions; clicking a block loads its details in the right-hand panel
-```
-
-Clicking any block in the layout loads its details in the right-hand panel
-(the *child block* view).
-
-### 6. Wire two blocks together
-
-Click a port on one block and drag to a compatible port on another block
-to create a signal link:
-
-```{figure} ../images/webcontrol/PANDA-new-link.png
-:align: center
-
-Dragging between two ports to create a new link
-```
-
-Blocks can be wired in any combination to build up more complex
-signal-processing designs.
+See {doc}`../reference/troubleshooting` for answers to common questions such as
+configuring a static IP, disabling subnet validation, recovering from a
+corrupted SD card, and overriding the FPGA bitstream variant.
 
 ## Next steps
 
-You now know how to reach the web control, inspect block attributes, and
-connect blocks together in the layout view.  Continue with:
+You have now setup your PandA and upgraded to the latest firmware. Continue with:
 
-- {doc}`tutorial1_blinking_leds` — drive some output bits and see real
+- {doc}`connecting_to_web_control` — drive some output bits and see real
   hardware changes.
