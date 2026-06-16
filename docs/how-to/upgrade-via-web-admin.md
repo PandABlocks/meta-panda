@@ -1,4 +1,4 @@
-# Upgrading a PandA via the web admin interface
+# Upgrading a PandA via the web admin interface (5.0 or later to 5.x)
 
 The Web Admin interface lets you upgrade a PandA using only a browser and a
 USB stick — no SSH or network file transfer required.
@@ -9,7 +9,7 @@ USB stick — no SSH or network file transfer required.
 - The new firmware archive downloaded from
   [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases).
 
-## Post-5.0 upgrade (opkg / `.ipk`)
+## Upgrade procedure (opkg / `.ipk`)
 
 1. Download the `boot-{MACHINE}.tar.gz` archive for your machine type.
    There is no need to unzip it.
@@ -32,15 +32,9 @@ to do this is offered as part of the rootfs install flow.
 
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
-Pre-5.0 PandAs use a legacy zpkg-based firmware format.  To upgrade to a
-5.x release:
-
-1. Download the legacy-updater package for your machine type from
-   [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases).
-   <!-- verify: PandABlocks/meta-panda#17 — confirm zpg filename pattern -->
-2. Copy the updater package to a USB stick.
-3. Insert the USB stick and follow the post-5.0 web-admin flow above,
-   selecting the legacy-updater file instead.
+If your PandA is running a pre-5.0 release (zpkg-based), follow the
+legacy upgrade path ({doc}`legacy-upgrade`) to move to a
+5.x base image.
 
 ## Fresh SD card install
 

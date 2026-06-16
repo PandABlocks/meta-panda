@@ -1,4 +1,4 @@
-# Upgrading a PandA over SSH
+# Upgrading a PandA over SSH (5.0 or later to 5.x)
 
 SSH access lets you upgrade a PandA without physical access, and is
 particularly useful for upgrading multiple PandAs in one scripted pass.
@@ -16,7 +16,7 @@ A PandA has only a single `root` user.  Remote operations run as root and can
 break the system if commands are wrong — take care.
 :::
 
-## Post-5.0 upgrade (opkg / `.ipk`)
+## Upgrade procedure (opkg / `.ipk`)
 
 Download the `boot-{MACHINE}.tar.gz` release archive from
 [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases) and
@@ -43,7 +43,7 @@ Power-cycle the PandA; it will install the new rootfs on next boot.
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
 If your PandA is running a pre-5.0 release (zpkg-based), follow the
-web-admin upgrade path first ({doc}`upgrade-via-web-admin`) to move to a
+legacy upgrade path first ({doc}`legacy-upgrade`) to move to a
 5.x base image before attempting SSH-based updates.
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)
