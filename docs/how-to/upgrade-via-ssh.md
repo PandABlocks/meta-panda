@@ -8,7 +8,7 @@ particularly useful for upgrading multiple PandAs in one scripted pass.
 SSH must be authorised on the PandA.  You can either:
 
 - Place an `authorized_keys` file on the SD card before first boot, or
-- Load SSH keys from a USB stick via the Web Admin interface
+- Load SSH keys from `authorized_keys` file on a USB stick via the Web Admin interface
   (**SSH Keys → Append SSH keys from USB**).
 
 :::{warning}
@@ -16,7 +16,7 @@ A PandA has only a single `root` user.  Remote operations run as root and can
 break the system if commands are wrong — take care.
 :::
 
-## Post-5.0 upgrade (opkg / `.ipk`)
+## Upgrading the PandA
 
 Download the `boot-{MACHINE}.tar.gz` release archive from
 [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases) and
@@ -37,14 +37,6 @@ The `/boot` directory on the PandA should contain:
 - `target-defs`
 
 Power-cycle the PandA; it will install the new rootfs on next boot.
-
-<!-- verify: audit for any further content gaps in the post-5.0 path -->
-
-## Pre-5.0 to 5.x upgrade (zpkg → opkg)
-
-If your PandA is running a pre-5.0 release (zpkg-based), follow the
-web-admin upgrade path first ({doc}`upgrade-via-web-admin`) to move to a
-5.x base image before attempting SSH-based updates.
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)
 
