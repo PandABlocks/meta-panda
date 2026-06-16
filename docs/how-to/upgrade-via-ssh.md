@@ -23,9 +23,9 @@ Download the `boot-{MACHINE}.tar.gz` release archive from
 extract it locally.  Then copy the files to the PandA and reboot:
 
 ```bash
-ssh root@<panda-hostname> rm /boot/rootfs.squashfs
+ssh root@<panda-hostname> rm -f /boot/rootfs.squashfs
 scp boot-{MACHINE}/* root@<panda-hostname>:/boot
-ssh root@<panda-hostname> sync
+ssh root@<panda-hostname> 'sync; reboot'
 ```
 
 The `/boot` directory on the PandA should contain:
@@ -36,9 +36,6 @@ The `/boot` directory on the PandA should contain:
 - `rootfs.squashfs`
 - `target-defs`
 
-Power-cycle the PandA; it will install the new rootfs on next boot.
-
-<!-- verify: audit for any further content gaps in the post-5.0 path -->
 
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
@@ -70,7 +67,7 @@ hardware metadata.  This is a permanent, one-time write:
 3. Write the EEPROM:
 
    ```bash
-   ssh root@<panda-hostname> /opt/bin/write_eeprom /tmp/ipmi_definition.ini
+   ssh root@<panda-hostname> pandai2c-cli write /tmp/ipmi_definition.ini
    ```
 
    The script reads back the EEPROM after writing to confirm the content

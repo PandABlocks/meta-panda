@@ -92,7 +92,7 @@ The Web Admin page provides the following functions:
 
 - **System**
   - Reboot / Restart
-  - Show `/var/log/messages`
+  - Show logs
   - Show Network Configuration
 - **Packages**
   - List Installed Packages

@@ -39,7 +39,7 @@ the Yocto host dependencies are not available on your system.
 4. In `conf/local.conf` set:
 
    ```makefile
-   MACHINE = "pandabox"   # or e.g. "xu5-st1"
+   MACHINE = "pandabox"   # or e.g. "xu5
    DISTRO  = "panda-petalinux"
    ```
 

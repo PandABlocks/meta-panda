@@ -24,11 +24,9 @@ USB stick — no SSH or network file transfer required.
 
 :::{note}
 If you are installing a major rootfs upgrade it is recommended to uninstall
-all installed zpkgs/ipkgs **before** upgrading.  From PandA v4.0 an option
-to do this is offered as part of the rootfs install flow.
+all installed zpkgs/ipkgs **before** upgrading. An option to do this is offered
+as part of the rootfs install flow.
 :::
-
-9. Power-cycle the PandA; it will apply the new rootfs on next boot.
 
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
