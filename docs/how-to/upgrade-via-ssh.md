@@ -16,7 +16,7 @@ A PandA has only a single `root` user.  Remote operations run as root and can
 break the system if commands are wrong — take care.
 :::
 
-## Upgrading the PandA
+## Upgrading the PandA post 5.0 (opkg / `.ipk`)
 
 Download the `boot-{MACHINE}.tar.gz` release archive from
 [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases) and
@@ -37,6 +37,15 @@ The `/boot` directory on the PandA should contain:
 - `target-defs`
 
 Power-cycle the PandA; it will install the new rootfs on next boot.
+
+## Pre-5.0 to 5.x upgrade (zpkg → opkg)
+
+1. Delete old conflicting files: 
+   ```bash
+   ssh root@<panda-hostname> 
+   rm -f  /boot/uImage /boot/uinitramfs /boot/devicetree.db
+   ```
+2. Follow **Upgrading the PandA post 5.0**
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)
 
