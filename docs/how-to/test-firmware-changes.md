@@ -23,7 +23,16 @@ for the full test flow.
 To test changes against real hardware, use the Yocto `devtool` workflow inside
 the `kas` build container:
 
-1. Open a shell in the `kas` container (see {doc}`build`).
+1. Open a shell in the `kas` container:
+
+   ```bash
+   KAS_MACHINE=<machine> kas-container --ssh-agent shell kas.yml
+   ```
+
+:::{note}
+Make sure there is disk space for the build files, an alternative build path
+can be specified with the environment variable KAS\_WORK\_DIR.
+:::
 
 2. Use `devtool` to build an updated package in the Yocto workspace:
 
@@ -31,20 +40,19 @@ the `kas` build container:
    devtool modify <recipe-name>
    # make your changes in the workspace source tree
    devtool build <recipe-name>
-   devtool build-image panda-image
    ```
 
 3. Deploy the built `.ipk` to the PandA:
 
    ```bash
-   scp tmp/deploy/ipk/<arch>/<package>.ipk root@<panda-hostname>:/tmp/
-   ssh root@<panda-hostname> opkg install /tmp/<package>.ipk
+   devtool deploy-target <recipe-name> root@<panda-hostname>
    ```
 
 4. Restart the relevant service on the PandA:
 
    ```bash
-   ssh root@<panda-hostname> systemctl restart pandablocks-server
+   ssh root@<panda-hostname> systemctl daemon-reload
+   ssh root@<panda-hostname> systemctl restart <service-name>
    ```
 
 5. Test your changes on the live hardware.
@@ -61,9 +69,13 @@ To test a custom FPGA bitstream:
 
    ```bash
    scp panda-fpga_<version>.ipk root@<panda-hostname>:/tmp/
-   ssh root@<panda-hostname> opkg install /tmp/panda-fpga_<version>.ipk
+   ssh root@<panda-hostname> opkg install --force-reinstall /tmp/panda-fpga_<version>.ipk
    ```
 
 3. Override the active bitstream if needed — see {doc}`choose-fpga-bitstream`.
 
-4. Reboot the PandA to load the new bitstream.
+4. Restart the relevant service:
+
+   ```bash
+   ssh root@<panda-hostname> systemctl restart panda-fpga
+   ```
