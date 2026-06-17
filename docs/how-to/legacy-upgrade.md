@@ -21,4 +21,4 @@ Pre-5.0 PandAs use a legacy zpkg-based firmware format. To upgrade to a
 6. Note the current version shown in the Admin tab landing page.
 7. Under **Admin Commands → Packages**, click **Install Packages from USB**.
 8. Select the `legacyupgrader@pandabox-{VERSION}.zpg` file from the list, click install, and wait for the installaton to finish.
-9. Power-cycle the PandA; it will apply the new firmware on next boot.
+9. Under **Admin Commands → System → Reboot/Restart**, click **Reboot Now** to restart the PandA; it will apply the new firmware on next boot.

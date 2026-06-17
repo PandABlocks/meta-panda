@@ -28,7 +28,7 @@ all installed zpkgs/ipkgs **before** upgrading.  From PandA v4.0 an option
 to do this is offered as part of the rootfs install flow.
 :::
 
-9. Power-cycle the PandA; it will apply the new rootfs on next boot.
+9. Under **Admin Commands → System → Reboot/Restart**, click **Reboot Now** to restart the PandA; it will apply the new rootfs on next boot.
 
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
