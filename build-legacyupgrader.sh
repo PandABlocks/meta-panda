@@ -22,6 +22,8 @@ cat <<- 'EOF' > "$temp_dir/etc/rc.d/S01-legacyupgrader.sh"
     #!/bin/sh
     rm -f /boot/uImage /boot/uinitramfs /boot/devicetree.dtb
     cp -f /opt/boot/* /boot/
+    mkdir -p /boot/state/designs
+    cp -rf /opt/share/designs/* /boot/state/designs/
     sync
     reboot
 EOF
