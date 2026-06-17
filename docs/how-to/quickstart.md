@@ -73,39 +73,3 @@ HOSTNAME = mypanda
 To make the USB settings permanent, use the **Show Network Configuration**
 function in the Web Admin interface (described below), which writes the settings
 back to `config.txt` on the SD card.
-
-## Web interface
-
-Once a PandA is on the network, navigate to its IP address or hostname in a
-browser.  The home page provides links to:
-
-- **Home** — summary of the web interface sections
-- **Docs** — hardware, firmware and software documentation
-- **Control** — the web control; wire functional blocks together, set parameters,
-  save and load designs (requires the web-control package to be installed)
-- **Admin** — install packages from USB, manage SSH keys, and other remote
-  administration
-
-## Web Admin
-
-The Web Admin page provides the following functions:
-
-- **System**
-  - Reboot / Restart
-  - Show `/var/log/messages`
-  - Show Network Configuration
-- **Packages**
-  - List Installed Packages
-  - Install Packages from USB
-  - Install Rootfs from USB
-- **SSH Keys**
-  - Show Authorised SSH Keys
-  - Append SSH keys from USB
-
-Visit the relevant Web Admin page for instructions on each operation.
-
-## Troubleshooting
-
-See {doc}`../reference/troubleshooting` for answers to common questions such as
-configuring a static IP, disabling subnet validation, recovering from a
-corrupted SD card, and overriding the FPGA bitstream variant.
