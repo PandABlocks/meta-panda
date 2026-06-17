@@ -36,7 +36,7 @@ The `/boot` directory on the PandA should contain:
 - `rootfs.squashfs`
 - `target-defs`
 
-Power-cycle the PandA; it will install the new rootfs on next boot.
+Under **Admin Commands → System → Reboot/Restart**, click **Reboot Now** to restart the PandA; it will apply the new rootfs on next boot.
 
 <!-- verify: audit for any further content gaps in the post-5.0 path -->
 
