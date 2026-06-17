@@ -16,11 +16,12 @@ A PandA has only a single `root` user.  Remote operations run as root and can
 break the system if commands are wrong — take care.
 :::
 
-## Upgrading the PandA post 5.0 (opkg / `.ipk`)
+## 5.0 or later to 5.x (opkg / `.ipk`)
 
-Download the `boot-{MACHINE}.tar.gz` release archive from
+1. Download the `boot-{MACHINE}.tar.gz` release archive from
 [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases) and
-extract it locally.  Then copy the files to the PandA and reboot:
+extract it locally.  
+2. Then copy the files to the PandA and reboot:
 
 ```bash
 ssh root@<panda-hostname> rm -f /boot/rootfs.squashfs
@@ -36,16 +37,16 @@ The `/boot` directory on the PandA should contain:
 - `rootfs.squashfs`
 - `target-defs`
 
-Power-cycle the PandA; it will install the new rootfs on next boot.
+3. Under **Admin Commands → System → Reboot/Restart**, click **Reboot Now** to restart the PandA; it will apply the new rootfs on next boot.
 
-## Pre-5.0 to 5.x upgrade (zpkg → opkg)
+## Pre-5.0 to 5.x (zpkg → opkg)
 
 1. Delete old conflicting files: 
    ```bash
    ssh root@<panda-hostname> 
    rm -f  /boot/uImage /boot/uinitramfs /boot/devicetree.db
    ```
-2. Follow **Upgrading the PandA post 5.0**
+2. Follow the instructions under **5.0 or later to 5.x**
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)
 

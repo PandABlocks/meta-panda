@@ -24,11 +24,12 @@ project:
     - file: index.md
     - file: tutorials.md
       children:
-        - file: tutorials/tutorial0_connecting_to_web_control.md
-        - file: tutorials/tutorial1_blinking_leds.md
-        - file: tutorials/tutorial2_position_capture.md
-        - file: tutorials/tutorial3_position_compare.md
-        - file: tutorials/tutorial4_snake_scan.md
+        - file: tutorials/getting_started.md
+        - file: tutorials/connecting_to_web_control.md
+        - file: tutorials/blinking_leds.md
+        - file: tutorials/position_capture.md
+        - file: tutorials/position_compare.md
+        - file: tutorials/snake_scan.md
     - file: how-to.md
       children:
         # Using a PandA

@@ -1,4 +1,4 @@
-# Tutorial 0: Connecting to the PandA Web Control
+# Tutorial 1: Connecting to the PandA Web Control
 
 In this tutorial you will navigate to the PandA web control interface,
 explore the block list, view block details, and open the layout panel.
@@ -7,16 +7,8 @@ be ready for the hands-on tutorials that follow.
 
 ## Prerequisites
 
-- A PandA that is powered on and connected to your network.
+- PandA is setup and have completed {doc}`getting_started`.
 - Its IP address or hostname (e.g. `192.168.0.100` or `my-panda`).
-
-:::{tip}
-If your PandA is not on the network yet — fresh out of the box — start
-with {doc}`../how-to/quickstart` to prepare an SD card and find it on the
-network, then come back here.
-:::
-
-## Steps
 
 ### 1. Open the web control
 
@@ -108,5 +100,5 @@ signal-processing designs.
 You now know how to reach the web control, inspect block attributes, and
 connect blocks together in the layout view.  Continue with:
 
-- {doc}`tutorial1_blinking_leds` — drive some output bits and see real
+- {doc}`blinking_leds` — drive some output bits and see real
   hardware changes.

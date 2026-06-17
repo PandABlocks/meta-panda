@@ -1,4 +1,6 @@
-# How to get a PandA on the network
+# How to get a PandA on the network without DHCP
+
+> **No configuration needed for DHCP** — just plug in and boot.
 
 The SD card inside a PandA contains a `config.txt` file that controls networking
 and other boot-time settings.  Below is the default file with all options
