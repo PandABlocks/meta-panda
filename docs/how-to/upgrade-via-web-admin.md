@@ -33,7 +33,7 @@ to do this is offered as part of the rootfs install flow.
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
 If your PandA is running a pre-5.0 release (zpkg-based), follow the
-legacy upgrade path ({doc}`legacy-upgrade`) to move to a
+legacy upgrade path ([](legacy-upgrade.md)) to move to a
 5.x base image.
 
 ## Fresh SD card install
