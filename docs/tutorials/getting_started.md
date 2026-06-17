@@ -44,12 +44,9 @@ Make sure your PandA has the latest firmware. From the web admin page:
 
 1. Click **Admin** in the bottom banner.
 2. Check your current version under **Version Information**.
-3. Follow the relevant guide for your version:
-   - If your firmware is **pre-5.0** — see [](../how-to/legacy-upgrade.md).
-   - If your firmware is **5.0 or later** and you want to upgrade via the web
-     admin interface — see [](../how-to/upgrade-via-web-admin.md).
-   - If your firmware is **5.0  or later** and you want to upgrade via SSH —
-     see [](../how-to/upgrade-via-ssh.md).
+3. If your PandA needs upgrading you can do so with one of the following guides. Make sure to check whether you are need to follow instructions under **pre-5.0 to 5.x** or **5.0 or later to 5.x**:
+   - If you want to upgrade via the web admin interface — see [](../how-to/upgrade-via-web-admin.md).
+   - If you want to upgrade via SSH — see [](../how-to/upgrade-via-ssh.md).
 
 ## Troubleshooting
 
