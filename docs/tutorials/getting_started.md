@@ -11,7 +11,7 @@ In this tutorial you will setup your PandA; configure it so you can find it on t
 By default the PandA uses DHCP — no configuration needed. Simply connect it
 to your network and power it on.
 
-If you need a static IP instead, see {doc}`setup-without-dhcp`.
+If you need a static IP instead, see [](../how-to/setup-without-dhcp.md).
 
 Once it has an address, confirm it's reachable by navigating to:
 
@@ -45,15 +45,15 @@ Make sure your PandA has the latest firmware. From the web admin page:
 1. Click **Admin** in the bottom banner.
 2. Check your current version under **Version Information**.
 3. Follow the relevant guide for your version:
-   - If your firmware is **pre-5.0** — see {doc}`how-to/legacy-upgrade`.
+   - If your firmware is **pre-5.0** — see [](../how-to/legacy-upgrade.md).
    - If your firmware is **5.0 or later** and you want to upgrade via the web
-     admin interface — see {doc}`upgrade-via-web-admin`.
+     admin interface — see [](../how-to/upgrade-via-web-admin.md).
    - If your firmware is **5.0  or later** and you want to upgrade via SSH —
-     see {doc}`upgrade-via-ssh`.
+     see [](../how-to/upgrade-via-ssh.md).
 
 ## Troubleshooting
 
-See {doc}`../reference/troubleshooting` for answers to common questions such as
+See [](../reference/troubleshooting.md) for answers to common questions such as
 configuring a static IP, disabling subnet validation, recovering from a
 corrupted SD card, and overriding the FPGA bitstream variant.
 
@@ -61,5 +61,5 @@ corrupted SD card, and overriding the FPGA bitstream variant.
 
 You have now setup your PandA and upgraded to the latest firmware. Continue with:
 
-- {doc}`connecting_to_web_control` — drive some output bits and see real
+- [](../how-to/connecting_to_web_control.md) — drive some output bits and see real
   hardware changes.
