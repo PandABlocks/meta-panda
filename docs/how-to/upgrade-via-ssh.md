@@ -8,7 +8,7 @@ particularly useful for upgrading multiple PandAs in one scripted pass.
 SSH must be authorised on the PandA.  You can either:
 
 - Place an `authorized_keys` file on the SD card before first boot, or
-- Load SSH keys from a USB stick via the Web Admin interface
+- Load SSH keys from `authorized_keys` file on a USB stick via the Web Admin interface
   (**SSH Keys → Append SSH keys from USB**).
 
 :::{warning}
@@ -16,16 +16,17 @@ A PandA has only a single `root` user.  Remote operations run as root and can
 break the system if commands are wrong — take care.
 :::
 
-## Post-5.0 upgrade (opkg / `.ipk`)
+## 5.0 or later to 5.x (opkg / `.ipk`)
 
-Download the `boot-{MACHINE}.tar.gz` release archive from
+1. Download the `boot-{MACHINE}.tar.gz` release archive from
 [GitHub Releases](https://github.com/PandABlocks/meta-panda/releases) and
-extract it locally.  Then copy the files to the PandA and reboot:
+extract it locally.  
+2. Then copy the files to the PandA and reboot:
 
 ```bash
-ssh root@<panda-hostname> rm /boot/rootfs.squashfs
+ssh root@<panda-hostname> rm -f /boot/rootfs.squashfs
 scp boot-{MACHINE}/* root@<panda-hostname>:/boot
-ssh root@<panda-hostname> sync
+ssh root@<panda-hostname> 'sync; reboot'
 ```
 
 The `/boot` directory on the PandA should contain:
@@ -36,15 +37,16 @@ The `/boot` directory on the PandA should contain:
 - `rootfs.squashfs`
 - `target-defs`
 
-Power-cycle the PandA; it will install the new rootfs on next boot.
+3. Under **Admin Commands → System → Reboot/Restart**, click **Reboot Now** to restart the PandA; it will apply the new rootfs on next boot.
 
-<!-- verify: audit for any further content gaps in the post-5.0 path -->
+## Pre-5.0 to 5.x (zpkg → opkg)
 
-## Pre-5.0 to 5.x upgrade (zpkg → opkg)
-
-If your PandA is running a pre-5.0 release (zpkg-based), follow the
-web-admin upgrade path first ([](upgrade-via-web-admin.md)) to move to a
-5.x base image before attempting SSH-based updates.
+1. Delete old conflicting files: 
+   ```bash
+   ssh root@<panda-hostname> 
+   rm -f  /boot/uImage /boot/uinitramfs /boot/devicetree.db
+   ```
+2. Follow the instructions under **5.0 or later to 5.x**
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)
 
@@ -70,7 +72,7 @@ hardware metadata.  This is a permanent, one-time write:
 3. Write the EEPROM:
 
    ```bash
-   ssh root@<panda-hostname> /opt/bin/write_eeprom /tmp/ipmi_definition.ini
+   ssh root@<panda-hostname> pandai2c-cli write /tmp/ipmi_definition.ini
    ```
 
    The script reads back the EEPROM after writing to confirm the content

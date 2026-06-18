@@ -1,4 +1,4 @@
-# Tutorial 2: Position Capture
+# Tutorial 3: Position Capture
 
 This tutorial introduces the Position Capture (PCAP) interface of PandABlocks:
 how to provide trigger and gate signals that control when data is captured, and
@@ -6,7 +6,7 @@ how to receive and interpret the captured stream.
 
 ## Prerequisites
 
-- Completed [](tutorial1_blinking_leds.md) or comfortable with the web control
+- Completed {doc}`tutorial_blinking_leds` or comfortable with the web control
   layout view.
 - `nc` (netcat) or any TCP client available on your workstation.
 
@@ -220,6 +220,6 @@ position over a detector frame.
 You have used the PCAP interface to capture position data with different capture
 modes (Value, Diff, Min/Max/Mean), and received the ASCII stream over TCP.
 
-The next tutorial ([](tutorial3_position_compare.md)) covers position compare —
+The next tutorial ({doc}`tutorial3_position_compare`) covers position compare —
 generating triggers automatically when an encoder reaches a set of target
 positions.

@@ -1,4 +1,4 @@
-# Position Compare
+# Tutorial 4: Position Compare
 
 :::{admonition} 🚧 TODO — documentation stub
 :class: warning
