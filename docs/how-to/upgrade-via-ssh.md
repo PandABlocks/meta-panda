@@ -43,7 +43,7 @@ Power-cycle the PandA; it will install the new rootfs on next boot.
 ## Pre-5.0 to 5.x upgrade (zpkg → opkg)
 
 If your PandA is running a pre-5.0 release (zpkg-based), follow the
-web-admin upgrade path first ({doc}`upgrade-via-web-admin`) to move to a
+web-admin upgrade path first ([](upgrade-via-web-admin.md)) to move to a
 5.x base image before attempting SSH-based updates.
 
 ## Update the 24V FMC EEPROM (DLS-specific, one-time)

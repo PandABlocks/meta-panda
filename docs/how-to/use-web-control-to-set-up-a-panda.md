@@ -108,7 +108,7 @@ right-hand panel. It displays:
 - The fully qualified path to the attribute, uniquely identifying it within the
   design.
 - Basic metadata: its type, a brief description, and whether it is writeable.
-- The {doc}`attribute state <../explanations/understanding-attribute-state>`,
+- The [attribute state](../explanations/understanding-attribute-state.md),
   including the severity of any issue and any corresponding message.
 - Timestamp details showing when the attribute was last updated.
 

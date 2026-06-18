@@ -20,4 +20,4 @@ The generally supported machines are `pandabox`, `pandabox2` and `pandabrick`;
 :::
 
 Per-target hardware descriptions (SoC, expansion connectors, FMC slots,
-notable capabilities) are in {doc}`../explanations/hardware-targets`.
+notable capabilities) are in [](../explanations/hardware-targets.md).

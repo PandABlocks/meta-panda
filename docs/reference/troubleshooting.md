@@ -14,7 +14,7 @@ GATEWAY = 192.168.0.254
 HOSTNAME = mypanda
 ```
 
-See {doc}`../how-to/quickstart` for the full `config.txt` format and the USB
+See [](../how-to/quickstart.md) for the full `config.txt` format and the USB
 override mechanism (no SD card access required).
 
 ### How do I disable subnet validation in the web control?
@@ -63,5 +63,5 @@ APP = pandabox-fmc-acq430
 ```
 
 This takes effect only if the corresponding FPGA variant package is installed.
-See {doc}`../how-to/choose-fpga-bitstream` for the full bitstream selection
+See [](../how-to/choose-fpga-bitstream.md) for the full bitstream selection
 mechanism.

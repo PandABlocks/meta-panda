@@ -60,7 +60,7 @@ either panel:
 The **central panel** shows the attribute's value over time as either:
 
 - **Plot** — an interactive line chart (pan, zoom, export).  See
-  {doc}`../how-to/monitor-attribute-values` for chart controls.
+  [](../how-to/monitor-attribute-values.md) for chart controls.
 - **Table** — a time-ordered list of value changes.
 
 ```{figure} ../images/webcontrol/attribute_view_chart.png

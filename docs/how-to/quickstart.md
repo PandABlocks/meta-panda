@@ -106,6 +106,6 @@ Visit the relevant Web Admin page for instructions on each operation.
 
 ## Troubleshooting
 
-See {doc}`../reference/troubleshooting` for answers to common questions such as
+See [](../reference/troubleshooting.md) for answers to common questions such as
 configuring a static IP, disabling subnet validation, recovering from a
 corrupted SD card, and overriding the FPGA bitstream variant.

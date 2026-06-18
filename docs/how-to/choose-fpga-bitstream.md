@@ -38,7 +38,7 @@ To override without opening the PandA, add `APP=<variant>` to
 APP = pandabox-fmc-acq430
 ```
 
-See {doc}`quickstart` for full details of the USB override mechanism.
+See [](quickstart.md) for full details of the USB override mechanism.
 
 ## Installing a new bitstream package
 

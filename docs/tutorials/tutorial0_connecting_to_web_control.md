@@ -12,7 +12,7 @@ be ready for the hands-on tutorials that follow.
 
 :::{tip}
 If your PandA is not on the network yet — fresh out of the box — start
-with {doc}`../how-to/quickstart` to prepare an SD card and find it on the
+with [](../how-to/quickstart.md) to prepare an SD card and find it on the
 network, then come back here.
 :::
 
@@ -108,5 +108,5 @@ signal-processing designs.
 You now know how to reach the web control, inspect block attributes, and
 connect blocks together in the layout view.  Continue with:
 
-- {doc}`tutorial1_blinking_leds` — drive some output bits and see real
+- [](tutorial1_blinking_leds.md) — drive some output bits and see real
   hardware changes.

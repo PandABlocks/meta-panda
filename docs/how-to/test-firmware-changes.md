@@ -23,7 +23,7 @@ for the full test flow.
 To test changes against real hardware, use the Yocto `devtool` workflow inside
 the `kas` build container:
 
-1. Open a shell in the `kas` container (see {doc}`build`).
+1. Open a shell in the `kas` container (see [](build.md)).
 
 2. Use `devtool` to build an updated package in the Yocto workspace:
 
@@ -64,6 +64,6 @@ To test a custom FPGA bitstream:
    ssh root@<panda-hostname> opkg install /tmp/panda-fpga_<version>.ipk
    ```
 
-3. Override the active bitstream if needed — see {doc}`choose-fpga-bitstream`.
+3. Override the active bitstream if needed — see [](choose-fpga-bitstream.md).
 
 4. Reboot the PandA to load the new bitstream.

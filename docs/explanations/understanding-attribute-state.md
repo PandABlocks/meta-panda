@@ -118,11 +118,11 @@ Within Block Information Panels, the state icon appears to the left of each
 attribute name.
 
 When viewing historical data in the
-{doc}`attribute value table <../how-to/monitor-attribute-values>`,
+[attribute value table](../how-to/monitor-attribute-values.md),
 the corresponding icon is shown against each row.
 
 When viewing historical data in the
-{doc}`attribute chart <../how-to/monitor-attribute-values>`,
+[attribute chart](../how-to/monitor-attribute-values.md),
 the line colour reflects the alarm state.
 
 :::{note}

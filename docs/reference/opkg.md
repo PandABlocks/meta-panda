@@ -11,4 +11,4 @@ package manager used on PandA.
 | `opkg files <package> ...` | Show files belonging to named packages |
 | `opkg help` | Show all available options |
 
-For a step-by-step guide to installing packages see {doc}`../how-to/packages`.
+For a step-by-step guide to installing packages see [](../how-to/packages.md).

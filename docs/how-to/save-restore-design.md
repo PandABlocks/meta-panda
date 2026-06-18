@@ -3,7 +3,7 @@
 A {term}`Design` can be saved to a {term}`Parent Block` and reopened later. This
 page covers saving the current design and opening an existing one. To build or
 edit a design, see
-{doc}`use-web-control-to-set-up-a-panda`.
+[](use-web-control-to-set-up-a-panda.md).
 
 :::{tip}
 Saving a design saves only attributes already in the **server** state — locally

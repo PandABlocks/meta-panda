@@ -2,7 +2,7 @@
 
 :::{note}
 This page describes a manual Yocto build without `kas-container`.  For the
-recommended approach see {doc}`build`.
+recommended approach see [](build.md).
 :::
 
 The steps below can be run inside a Docker container (e.g. the `kas` image) if
@@ -59,4 +59,4 @@ the Yocto host dependencies are not available on your system.
    zip boot-pandabox.zip boot/*
    ```
 
-See {doc}`build` for a description of each output file.
+See [](build.md) for a description of each output file.
