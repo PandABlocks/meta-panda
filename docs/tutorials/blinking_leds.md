@@ -6,7 +6,7 @@ so that different LEDs flash at different rates.
 ## Prerequisites
 
 - A PandA powered on and reachable in your browser
-  (see {doc}`connecting_to_web_control`).
+  (see [](connecting_to_web_control.md)).
 - The `template_tutorial1_leds` design saved on your PandA (pre-loaded on all
   standard PandA images).
 
@@ -78,5 +78,5 @@ short pulses are visible.  Front-panel LEDs behave similarly, capped at 10 Hz.
 You have loaded a saved design, inspected block parameters, and seen bit outputs
 connected to hardware TTL outputs via TTLOUT blocks.
 
-Continue with {doc}`position_capture` to learn about position outputs
+Continue with [](position_capture.md) to learn about position outputs
 and data capture.

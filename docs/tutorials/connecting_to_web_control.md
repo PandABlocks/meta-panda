@@ -7,7 +7,7 @@ be ready for the hands-on tutorials that follow.
 
 ## Prerequisites
 
-- PandA is setup and have completed {doc}`getting_started`.
+- PandA is setup and have completed [](getting_started.md).
 - Its IP address or hostname (e.g. `192.168.0.100` or `my-panda`).
 
 ### 1. Open the web control
@@ -100,5 +100,5 @@ signal-processing designs.
 You now know how to reach the web control, inspect block attributes, and
 connect blocks together in the layout view.  Continue with:
 
-- {doc}`blinking_leds` — drive some output bits and see real
+- [](blinking_leds.md) — drive some output bits and see real
   hardware changes.

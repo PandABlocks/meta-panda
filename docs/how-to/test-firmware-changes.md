@@ -72,7 +72,7 @@ To test a custom FPGA bitstream:
    ssh root@<panda-hostname> opkg install --force-reinstall /tmp/panda-fpga_<version>.ipk
    ```
 
-3. Override the active bitstream if needed — see {doc}`choose-fpga-bitstream`.
+3. Override the active bitstream if needed — see [](choose-fpga-bitstream.md).
 
 4. Restart the relevant service:
 

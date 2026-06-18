@@ -29,7 +29,10 @@ jobs:
 
       # meta-panda is a Yocto layer, not a Python/uv project, so we install
       # mystmd directly with npm rather than via `uv run tox -e docs`. The build
-      # command itself (`cd docs && myst build --html`) matches the template.
+      # command itself (`cd docs && myst build --html --strict`) matches the
+      # template. --strict makes the build exit non-zero on any error-severity
+      # message (e.g. an unresolved cross-repo xref), failing CI rather than
+      # publishing broken links.
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -50,7 +53,7 @@ jobs:
           BASE_URL: /meta-panda/${{ env.DOCS_VERSION }}
         run: |
           cd docs
-          myst build --html
+          myst build --html --strict
 
       # Drop the ~135 MB templates/ dir (downloaded book-theme node sources, a
       # build-time cache) before uploading. We keep docs/_build as the artifact

@@ -6,7 +6,7 @@ how to receive and interpret the captured stream.
 
 ## Prerequisites
 
-- Completed {doc}`blinking_leds` or comfortable with the web control
+- Completed [](blinking_leds.md) or comfortable with the web control
   layout view.
 - `nc` (netcat) or any TCP client available on your workstation.
 
@@ -220,6 +220,6 @@ position over a detector frame.
 You have used the PCAP interface to capture position data with different capture
 modes (Value, Diff, Min/Max/Mean), and received the ASCII stream over TCP.
 
-The next tutorial ({doc}`position_compare`) covers position compare —
+The next tutorial ([](position_compare.md)) covers position compare —
 generating triggers automatically when an encoder reaches a set of target
 positions.
