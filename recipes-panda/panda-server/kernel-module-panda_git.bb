@@ -11,7 +11,7 @@ SRC_URI:append = " \
     git://github.com/PandABlocks/PandABlocks-server;branch=main;protocol=https \
     file://CONFIG_driver \
 "
-SRCREV = "2a34851b2d1f13d64f92540b5f03a98e21b00222"
+SRCREV = "61ffc333cd3b8dbb4d8202e8275aeb1b85ab7312"
 PV = "4.1+git${SRCPV}"
 S = "${WORKDIR}/git"
 MAKE_TARGETS = "driver"
