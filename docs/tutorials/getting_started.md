@@ -58,5 +58,5 @@ corrupted SD card, and overriding the FPGA bitstream variant.
 
 You have now setup your PandA and upgraded to the latest firmware. Continue with:
 
-- [](../how-to/connecting_to_web_control.md) — drive some output bits and see real
+- [](connecting_to_web_control.md) — drive some output bits and see real
   hardware changes.

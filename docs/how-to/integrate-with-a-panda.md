@@ -29,7 +29,7 @@ nc <panda-hostname> 8889
 
 Press Return; you will see `OK`.  After arming PCAP (in the web control or
 via port 8888), data streams until you disarm.  See
-[Tutorial 2](../tutorials/tutorial2_position_capture.md) for a worked example.
+[Tutorial 2](../tutorials/position_capture.md) for a worked example.
 
 ## Python client (`PandABlocks-client`)
 

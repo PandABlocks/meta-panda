@@ -34,7 +34,7 @@ project:
     - file: how-to.md
       children:
         # Using a PandA
-        - file: how-to/quickstart.md
+        - file: how-to/setup-without-dhcp.md
         - file: how-to/use-web-control-to-set-up-a-panda.md
         - file: how-to/save-restore-design.md
         - file: how-to/monitor-attribute-values.md

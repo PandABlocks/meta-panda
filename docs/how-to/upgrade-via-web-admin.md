@@ -55,5 +55,5 @@ install from a fresh SD card:
 2. Extract the archive and copy all files to a freshly formatted SD card
    (FAT32).
 3. Optionally add a `config.txt` with network settings
-   (see [](quickstart.md)).
+   (see [](setup-without-dhcp.md)).
 4. Insert the SD card into the PandA and power on.

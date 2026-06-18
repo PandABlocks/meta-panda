@@ -14,7 +14,7 @@ GATEWAY = 192.168.0.254
 HOSTNAME = mypanda
 ```
 
-See [](../how-to/quickstart.md) for the full `config.txt` format and the USB
+See [](../how-to/setup-without-dhcp.md) for the full `config.txt` format and the USB
 override mechanism (no SD card access required).
 
 ### How do I disable subnet validation in the web control?
