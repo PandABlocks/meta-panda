@@ -29,6 +29,9 @@
     <loc>http://localhost:3000/how-to</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/how-to/setup-without-dhcp</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/how-to/use-web-control-to-set-up-a-panda</loc>
   </url>
   <url>
