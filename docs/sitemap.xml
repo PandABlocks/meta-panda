@@ -8,108 +8,108 @@
     <loc>http://localhost:3000/tutorials</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/getting-started</loc>
+    <loc>http://localhost:3000/tutorials/getting-started</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/connecting-to-web-control</loc>
+    <loc>http://localhost:3000/tutorials/connecting-to-web-control</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/blinking-leds</loc>
+    <loc>http://localhost:3000/tutorials/blinking-leds</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/position-capture</loc>
+    <loc>http://localhost:3000/tutorials/position-capture</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/position-compare</loc>
+    <loc>http://localhost:3000/tutorials/position-compare</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/snake-scan</loc>
+    <loc>http://localhost:3000/tutorials/snake-scan</loc>
   </url>
   <url>
     <loc>http://localhost:3000/how-to</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/use-web-control-to-set-up-a-panda</loc>
+    <loc>http://localhost:3000/how-to/use-web-control-to-set-up-a-panda</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/save-restore-design</loc>
+    <loc>http://localhost:3000/how-to/save-restore-design</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/monitor-attribute-values</loc>
+    <loc>http://localhost:3000/how-to/monitor-attribute-values</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/integrate-with-a-panda</loc>
+    <loc>http://localhost:3000/how-to/integrate-with-a-panda</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/upgrade-via-web-admin</loc>
+    <loc>http://localhost:3000/how-to/upgrade-via-web-admin</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/upgrade-via-ssh</loc>
+    <loc>http://localhost:3000/how-to/upgrade-via-ssh</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/packages</loc>
+    <loc>http://localhost:3000/how-to/packages</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/choose-fpga-bitstream</loc>
+    <loc>http://localhost:3000/how-to/choose-fpga-bitstream</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/build</loc>
+    <loc>http://localhost:3000/how-to/build</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/manual-build</loc>
+    <loc>http://localhost:3000/how-to/manual-build</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/test-firmware-changes</loc>
+    <loc>http://localhost:3000/how-to/test-firmware-changes</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/make-release</loc>
+    <loc>http://localhost:3000/how-to/make-release</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/contribute</loc>
+    <loc>http://localhost:3000/how-to/contribute</loc>
   </url>
   <url>
     <loc>http://localhost:3000/explanations</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/boot-process</loc>
+    <loc>http://localhost:3000/explanations/boot-process</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/architecture</loc>
+    <loc>http://localhost:3000/explanations/architecture</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/hardware-targets</loc>
+    <loc>http://localhost:3000/explanations/hardware-targets</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/web-control-ui-overview</loc>
+    <loc>http://localhost:3000/explanations/web-control-ui-overview</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/understanding-attribute-state</loc>
+    <loc>http://localhost:3000/explanations/understanding-attribute-state</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/decisions</loc>
+    <loc>http://localhost:3000/explanations/decisions</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/record-architecture-decisions</loc>
+    <loc>http://localhost:3000/explanations/decisions/record-architecture-decisions</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/switched-to-python-copier-template</loc>
+    <loc>http://localhost:3000/explanations/decisions/switched-to-python-copier-template</loc>
   </url>
   <url>
     <loc>http://localhost:3000/reference</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/opkg</loc>
+    <loc>http://localhost:3000/reference/opkg</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/changes</loc>
+    <loc>http://localhost:3000/reference/changes</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/machine-targets</loc>
+    <loc>http://localhost:3000/reference/machine-targets</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/glossary</loc>
+    <loc>http://localhost:3000/reference/glossary</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/troubleshooting</loc>
+    <loc>http://localhost:3000/reference/troubleshooting</loc>
   </url>
 </urlset>
