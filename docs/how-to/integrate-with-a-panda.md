@@ -18,9 +18,8 @@ nc <panda-hostname> 8888
 ```
 
 See the
-[PandABlocks-server commands reference](https://pandablocks.github.io/PandABlocks-server/main/reference/commands.html)
+[PandABlocks-server commands reference](xref:PandABlocks-server/reference/commands)
 for the command syntax.
-<!-- Stage F: swap to xref once the server key is uncommented in myst.yml -->.
 
 Connect to port 8889 for the data capture stream:
 
@@ -34,7 +33,7 @@ via port 8888), data streams until you disarm.  See
 
 ## Python client (`PandABlocks-client`)
 
-[PandABlocks-client](https://pandablocks.github.io/PandABlocks-client/main/)
+[PandABlocks-client](xref:PandABlocks-client)
 provides both a blocking and an asyncio client.
 
 Install:
@@ -59,7 +58,7 @@ with BlockingClient("my-panda") as client:
 
 PandABlocks-client includes helpers to read the binary capture stream and
 write it to HDF5 or convert it to numpy arrays.  See the
-[PandABlocks-client documentation](https://pandablocks.github.io/PandABlocks-client/main/)
+[PandABlocks-client documentation](xref:PandABlocks-client)
 for the `PcapHdf5Writer` and related utilities.
 
 ## EPICS and Tango via `fastcs-PandABlocks`

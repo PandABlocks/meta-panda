@@ -28,16 +28,16 @@ Several client layers build on the TCP interface:
 | Layer | Repo | Use case |
 |---|---|---|
 | Direct TCP | — | Low-level scripting, quick checks |
-| Python client | [PandABlocks-client](https://pandablocks.github.io/PandABlocks-client/main/) | Python applications; preferred for new integrations |
+| Python client | [PandABlocks-client](xref:PandABlocks-client) | Python applications; preferred for new integrations |
 | EPICS / Tango | [fastcs-PandABlocks](https://github.com/DiamondLightSource/fastcs-PandABlocks) | Control-system integrations |
 
-See {doc}`../how-to/integrate-with-a-panda` for step-by-step instructions.
+See [](../how-to/integrate-with-a-panda.md) for step-by-step instructions.
 
 ### Firmware build (meta-panda)
 
 The Yocto layer in this repository assembles the firmware image: it pulls the
 rootfs, server, FPGA bitstreams and web-control packages together into a
-bootable SD card image (see {doc}`../how-to/build`).
+bootable SD card image (see [](../how-to/build.md)).
 
 ## Data flow
 
@@ -63,5 +63,5 @@ PandABlocks-client.
 ## Hardware targets
 
 PandABlocks firmware runs on several Zynq-based hardware platforms — see
-{doc}`hardware-targets` for per-target descriptions and
-{doc}`../reference/machine-targets` for the `MACHINE` build strings.
+[](hardware-targets.md) for per-target descriptions and
+[](../reference/machine-targets.md) for the `MACHINE` build strings.

@@ -12,14 +12,15 @@ project:
     # PandABlocks-client (Sphinx) is deployed today — used by the Stage A xref probe
     # in how-to/integrate-with-a-panda. Resolves via its objects.inv.
     PandABlocks-client: https://pandablocks.github.io/PandABlocks-client/main
-    # The remaining targets are not deployed yet, so their inventories cannot be
-    # fetched at build time. They are kept here (commented) as the complete prototype
-    # wiring to uncomment in Stage F once each repo's `docs` branch publishes, and to
-    # upstream into the python-copier-template. Keys/format are settled; only the
-    # live fetch is pending.
-    # PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA/main
-    # PandABlocks-server: https://pandablocks.github.io/PandABlocks-server
-    # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/main
+    # The sibling MyST repos are mid-docs-migration: each base points at the repo's
+    # `docs`-branch build and the inventory is fetched from `<repo>/docs/myst.xref.json`
+    # (and `<repo>/docs/objects.inv`). These only resolve once each repo's `docs`
+    # branch has been pushed with folder-hierarchy URLs (`site.options.folders: true`).
+    # Switch the bases to `<repo>/stable` once releases + the switcher action land.
+    PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA/docs
+    PandABlocks-server: https://pandablocks.github.io/PandABlocks-server/docs
+    # Not deployed yet — kept commented (interim /docs target; -> /stable later).
+    # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/docs
   toc:
     - file: index.md
     - file: tutorials.md
@@ -79,5 +80,8 @@ site:
     - title: Reference
       url: /reference
   options:
+    # Output page URLs by folder, e.g. /how-to/quickstart rather than the default
+    # flattened /quickstart. Keeps cross-repo xref target paths folder-qualified.
+    folders: true
     logo: images/PandA-logo-for-black-background.svg
     github_url: https://github.com/PandABlocks/meta-panda
