@@ -3,37 +3,10 @@
 
 ## Cross-repository references
 
-This project uses [MyST](https://mystmd.org/) for documentation.  Cross-links
-to other PandABlocks repos (and to `PandABlocks-client` / `fastcs-PandABlocks`)
-are configured in `docs/myst.yml` under `project.references`.
-
-### Adding a cross-link
-
-To link to a page in another PandABlocks repo:
-
-```markdown
-[link text](xref:<repo-key>#<target-id>)
-```
-
-For example, to link to the `BlockingClient` API in `PandABlocks-client`:
-
-```markdown
-[`BlockingClient`](xref:PandABlocks-client#pandablocks.blocking.BlockingClient)
-```
-
-### Available reference targets
-
-| Key | Repo | Type |
-|---|---|---|
-| `PandABlocks-client` | `PandABlocks-client` | Sphinx (`objects.inv`) |
-| `PandABlocks-FPGA` | `PandABlocks-FPGA` | MyST (`myst.xref.json`) |
-| `PandABlocks-server` | `PandABlocks-server` | MyST (`myst.xref.json`) |
-| `fastcs-PandABlocks` | `fastcs-PandABlocks` | Sphinx (`objects.inv`) |
-
-The `PandABlocks-FPGA`, `PandABlocks-server` and `fastcs-PandABlocks` entries
-are present in `myst.yml` but commented out until those repos publish their
-`docs` branches.  Uncomment the relevant line once the target site is live
-(Stage F).
+PandABlocks docs cross-link to the other repos with MyST `xref:` links,
+configured in `docs/myst.yml` under `project.references`. For the link syntax,
+when to use each target type, and the list of available reference targets, see
+the [documentation standards reference](/reference/documentation-standards.md).
 
 ### Upstreaming to the copier template
 

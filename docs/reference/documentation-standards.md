@@ -2,9 +2,10 @@
 
 Conventions for authoring the PandABlocks MyST documentation. These apply to
 this repository and to the sibling repos (`PandABlocks-server`,
-`PandABlocks-FPGA`); cross-repo wiring is configured in each repo's
-`docs/myst.yml`, and adding a new cross-link is covered in
-[](/how-to/contribute.md).
+`PandABlocks-FPGA`). Cross-repo links are configured in each repo's
+`docs/myst.yml` under `project.references` (see
+[](#configured-cross-repo-targets)); the contributor workflow for that block is
+in [](/how-to/contribute.md).
 
 ## Linking
 
@@ -77,6 +78,21 @@ inherits no useful text.
 - Sphinx targets (`PandABlocks-client`, `fastcs-PandABlocks`) are addressed by
   inventory object/label name, not by page path; `xref:repo` alone links to the
   project root.
+
+### Configured cross-repo targets
+
+The `repo` keys available from this repository, as configured in
+`docs/myst.yml` under `project.references`:
+
+| Key | Repo | Inventory |
+|---|---|---|
+| `PandABlocks-client` | `PandABlocks-client` | Sphinx (`objects.inv`) |
+| `PandABlocks-FPGA` | `PandABlocks-FPGA` | MyST (`myst.xref.json`) |
+| `PandABlocks-server` | `PandABlocks-server` | MyST (`myst.xref.json`) |
+| `fastcs-PandABlocks` | `fastcs-PandABlocks` | Sphinx (`objects.inv`) |
+
+`fastcs-PandABlocks` is present in `myst.yml` but commented out until that repo
+publishes its `docs` branch; uncomment it once the target site is live.
 
 ## Enforcement
 
