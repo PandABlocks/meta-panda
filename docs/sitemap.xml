@@ -115,4 +115,7 @@
   <url>
     <loc>http://localhost:3000/reference/troubleshooting</loc>
   </url>
+  <url>
+    <loc>http://localhost:3000/reference/documentation-standards</loc>
+  </url>
 </urlset>
