@@ -5,7 +5,9 @@ FROM ghcr.io/siemens/kas/kas:4.8 AS developer
 
 USER root
 
-# Add any system dependencies for the developer environment here
-# RUN apt-get update -y && apt-get install -y --no-install-recommends \
-#     some-tool \
-#     && apt-get clean
+# Add any system dependencies for the developer environment here.
+# npm provides npx, used by `make docs` to run mystmd on demand for the docs build.
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    make \
+    npm \
+    && apt-get clean
