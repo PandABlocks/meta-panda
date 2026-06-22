@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//workspaces/**)",
+      "Bash(find / -maxdepth 5 -type d \\\\\\( -name \"PandABlocks-FPGA\" -o -name \"PandABlocks-server\" -o -name \"PandABlocks-rootfs\" -o -name \"PandABlocks.github.io\" \\\\\\))"
+    ]
+  }
+}
