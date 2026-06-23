@@ -80,4 +80,4 @@ Copy these files to the SD card and insert it in the target; the system will
 boot normally.  On the first boot of a pandabox you will be prompted for a MAC
 address.
 
-To build the FPGA bitstream that can be used to make the firmware, see [PandABlocks-FPGA documentation](https://pandablocks.github.io/PandABlocks-FPGA/docs/)
+To build the FPGA app that can be used to make the firmware, see [PandABlocks-FPGA documentation](https://pandablocks.github.io/PandABlocks-FPGA/docs/)
