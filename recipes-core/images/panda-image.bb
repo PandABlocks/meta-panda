@@ -22,6 +22,7 @@ IMAGE_INSTALL = " \
     iperf3 \
     i2c-tools \
     linux-xlnx-udev-rules \
+    lsof \
     mtd-utils \
     pciutils \
     perf \
