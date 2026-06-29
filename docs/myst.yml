@@ -57,6 +57,7 @@ project:
         - file: how-to/upgrade-via-web-admin.md
         - file: how-to/upgrade-via-ssh.md
         - file: how-to/packages.md
+        - file: how-to/remove-webcontrol.md
         - file: how-to/choose-fpga-bitstream.md
         # Developing for a PandA
         - file: how-to/build.md
