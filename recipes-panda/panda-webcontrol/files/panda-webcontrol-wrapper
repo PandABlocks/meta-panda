@@ -5,7 +5,7 @@ mkdir -p "$designsdir" "$optionsdir"
 /usr/bin/panda-webcontrol.py \
     --admindir /usr/share/web-admin/templates \
     --configdir "$designsdir" \
-    --templatedesigns /opt/share/panda-fpga/template_designs \
+    --templatedesigns /usr/share/webcontrol/template_designs \
     --templatedir /usr/share/web-admin/templates \
     --optionsdir "$optionsdir" \
     --etcdir /opt/etc/www

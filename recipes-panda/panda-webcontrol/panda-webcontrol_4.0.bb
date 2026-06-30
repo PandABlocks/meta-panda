@@ -8,6 +8,8 @@ SRC_URI = " \
     file://panda-webcontrol-wrapper \
     file://panda-webcontrol.py \
     file://panda-webcontrol.nav.html \
+    file://template_designs/template_tutorial1_leds.json \
+    file://template_designs/template_tutorial2_pcap.json \
 "
 
 S = "${WORKDIR}"
@@ -33,6 +35,8 @@ do_install() {
     install -m 0755 ${WORKDIR}/panda-webcontrol.py ${D}/${bindir}
     mkdir -p ${D}/opt/etc/www
     install -m 0644 ${WORKDIR}/panda-webcontrol.nav.html ${D}/opt/etc/www
+    mkdir -p ${D}/${datadir}/webcontrol
+    cp -r ${WORKDIR}/template_designs ${D}/${datadir}/webcontrol
 }
 
 FILES:${PN} += " \
