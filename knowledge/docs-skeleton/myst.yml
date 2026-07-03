@@ -1,0 +1,40 @@
+version: 1
+project:
+  title: python-copier-template-example
+  github: https://github.com/DiamondLightSource/python-copier-template-example
+  # Uncomment once myst-apidoc-plugin is available:
+  # plugins:
+  #   - ../tools/myst-apidoc-plugin/dist/index.mjs
+  toc:
+    - file: index.md
+    - file: tutorials.md
+      children:
+        - file: tutorials/installation.md
+    - file: how-to.md
+      children:
+        - file: how-to/run-container.md
+        - file: how-to/contribute.md
+    - file: explanations.md
+      children:
+        - file: explanations/decisions.md
+          children:
+            - pattern: explanations/decisions/*.md
+    - file: reference.md
+      children:
+        - pattern: reference/api.md
+        - url: https://github.com/DiamondLightSource/python-copier-template-example/releases
+          title: Release Notes
+site:
+  template: book-theme
+  nav:
+    - title: Tutorials
+      url: /tutorials
+    - title: How-to Guides
+      url: /how-to
+    - title: Explanations
+      url: /explanations
+    - title: Reference
+      url: /reference
+  options:
+    logo: images/PandA-logo-for-black-background.svg
+    github_url: https://github.com/DiamondLightSource/python-copier-template-example

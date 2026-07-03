@@ -1,0 +1,66 @@
+name: CI
+
+# Single entry point for this repo's GitHub Actions CI: the versioned MyST docs
+# build/publish and the GitHub Release (on a tag) that carries the docs.zip
+# asset. There is no Python package here (meta-panda is a Yocto layer), so
+# there is no pyproject/lint job — and no boot-image build here either: that
+# (and the GitLab Release with the boot/zpg assets) is `.gitlab-ci.yml`'s job
+# now, on Diamond's `pollux-dev` runners. The `docs` and `rel-*` branches are
+# gone (docs merged into main; releases are tag-only), so main + tags is the
+# only trigger surface.
+#
+# The docs half consumes the shared version-switcher reusable workflows
+# (DiamondLightSource/myst-version-switcher-plugin) pinned at a tag, following
+# the same pattern as PandABlocks-server/FPGA:
+#
+#   docs    -> docs.yml@<tag>          versioned MyST docs build (build-command input)
+#   release -> release.yml@<tag>       GitHub Release on a tag (attaches docs.zip)
+#   publish -> publish-dispatch.yml    deploy the assembled docs site (the shim that
+#                                      pins publish.yml@<tag>; it branches internally)
+#
+# Every job runs on the same events — a pull request, a push to main, or a tag — so
+# no per-job `if:` event guards are needed. publish runs once for every event in the
+# canonical repo and publish.yml branches internally (deploy / tag re-dispatch /
+# fork-PR warn), so there is no fork guard here.
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['*']            # '*' never matches '/'
+
+jobs:
+  # --- Docs build (never publishes) --------------------------------------------
+  docs:
+    uses: DiamondLightSource/myst-version-switcher-plugin/.github/workflows/docs.yml@v0.23.0
+    with:
+      # `make docs` reads build settings (incl. MYSTMD_VERSION) from CONFIG; docs.yml
+      # sets BASE_URL and packs/uploads the docs.zip artifact. meta-panda's docs are
+      # pure MyST (no python directives), so no extra apt packages are needed.
+      build-command: cp CONFIG.example CONFIG && make docs
+
+  # Tag-only: create the GitHub Release and attach this run's docs.zip (the `docs`
+  # artifact) so `assemble` can reconstruct that released version later. Boot images
+  # and app packages are released from GitLab now (`.gitlab-ci.yml`'s `release-all`).
+  release:
+    needs: [docs]
+    if: github.ref_type == 'tag'
+    uses: DiamondLightSource/myst-version-switcher-plugin/.github/workflows/release.yml@v0.23.0
+    permissions:
+      contents: write    # create the GitHub Release + attach the docs.zip asset
+
+  # One publish job for every event in the canonical repo — publish.yml (via the
+  # publish-dispatch.yml shim) owns the branching (deploy / tag re-dispatch / fork-PR
+  # warn), so there's no fork or ref guard here. `actions: write` lets the re-dispatch
+  # job re-fire the shim; `version-name` injects this run's build inline.
+  publish:
+    needs: [docs]
+    if: github.repository == 'PandABlocks/meta-panda'
+    uses: ./.github/workflows/publish-dispatch.yml
+    with:
+      version-name: ${{ needs.docs.outputs.version-name }}
+    permissions:
+      contents: read
+      actions: write
+      pages: write
+      id-token: write
+      statuses: write

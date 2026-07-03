@@ -1,0 +1,106 @@
+version: 1
+project:
+  title: meta-panda
+  github: https://github.com/PandABlocks/meta-panda
+  plugins:
+    - https://github.com/DiamondLightSource/myst-version-switcher-plugin/releases/download/v0.23.0/version-switcher.mjs
+  # Cross-repository references (mystmd xref + Sphinx intersphinx).
+  # PROTOTYPE for upstreaming into the DLS python-copier-template (Stage A spec §6).
+  # The three core repos are mystmd projects (resolved via their published
+  # myst.xref.json); PandABlocks-client and fastcs-PandABlocks are Sphinx
+  # projects (resolved via their objects.inv). URLs for not-yet-published sites will
+  # warn until those repos deploy their docs branches.
+  references:
+    # PandABlocks-client (Sphinx) is deployed today — used by the Stage A xref probe
+    # in how-to/integrate-with-a-panda. Resolves via its objects.inv.
+    PandABlocks-client: https://pandablocks.github.io/PandABlocks-client/main
+    # PandABlocks-server has completed its version-switcher migration: `main` is
+    # the durable default-branch version, resolved via `<repo>/main/myst.xref.json`.
+    # PandABlocks-FPGA's migration (docs -> main) is landing shortly; pointed at
+    # `main` ahead of that so this doesn't need touching again once it merges
+    # (will 404/warn locally until then). Switch both to `<repo>/stable` once
+    # releases + the stable alias land.
+    PandABlocks-FPGA: https://pandablocks.github.io/PandABlocks-FPGA/main
+    PandABlocks-server: https://pandablocks.github.io/PandABlocks-server/main
+    # Not deployed yet — kept commented (interim /docs target; -> /stable later).
+    # fastcs-PandABlocks: https://diamondlightsource.github.io/fastcs-PandABlocks/docs
+  # Escalate link/cross-reference quality rules from warning to error so that,
+  # combined with `myst build --strict`, a broken link, an unresolved cross
+  # reference, or an empty auto-filled label fails CI instead of publishing a
+  # dead link. See reference/documentation-standards for the linking conventions
+  # these rules enforce.
+  error_rules:
+    - rule: link-resolves
+      severity: error
+    - rule: reference-target-resolves
+      severity: error
+    - rule: link-text-exists
+      severity: error
+  toc:
+    - file: index.md
+    - file: tutorials.md
+      children:
+        - file: tutorials/getting_started.md
+        - file: tutorials/connecting_to_web_control.md
+        - file: tutorials/blinking_leds.md
+        - file: tutorials/position_capture.md
+        - file: tutorials/position_compare.md
+        - file: tutorials/snake_scan.md
+    - file: how-to.md
+      children:
+        # Using a PandA
+        - file: how-to/setup-without-dhcp.md
+        - file: how-to/use-web-control-to-set-up-a-panda.md
+        - file: how-to/save-restore-design.md
+        - file: how-to/monitor-attribute-values.md
+        - file: how-to/integrate-with-a-panda.md
+        # Administering a PandA
+        - file: how-to/upgrade-via-web-admin.md
+        - file: how-to/upgrade-via-ssh.md
+        - file: how-to/packages.md
+        - file: how-to/choose-fpga-bitstream.md
+        # Developing for a PandA
+        - file: how-to/build.md
+        - file: how-to/manual-build.md
+        - file: how-to/test-firmware-changes.md
+        - file: how-to/make-release.md
+        - file: how-to/contribute.md
+    - file: explanations.md
+      children:
+        - file: explanations/boot-process.md
+        - file: explanations/architecture.md
+        - file: explanations/hardware-targets.md
+        - file: explanations/web-control-ui-overview.md
+        - file: explanations/understanding-attribute-state.md
+        - file: explanations/decisions.md
+          children:
+            - pattern: explanations/decisions/*.md
+    - file: reference.md
+      children:
+        - file: reference/opkg.md
+        - file: reference/changes.md
+        - file: reference/machine-targets.md
+        - file: reference/glossary.md
+        - file: reference/troubleshooting.md
+        - file: reference/documentation-standards.md
+        - url: https://github.com/PandABlocks/meta-panda/releases
+          title: Release Notes
+site:
+  template: book-theme
+  parts:
+    navbar_end: navbar_end.md
+  nav:
+    - title: Tutorials
+      url: /tutorials
+    - title: How-to Guides
+      url: /how-to
+    - title: Explanations
+      url: /explanations
+    - title: Reference
+      url: /reference
+  options:
+    # Output page URLs by folder, e.g. /how-to/quickstart rather than the default
+    # flattened /quickstart. Keeps cross-repo xref target paths folder-qualified.
+    folders: true
+    logo: images/PandA-logo-for-black-background.svg
+    github_url: https://github.com/PandABlocks/meta-panda
