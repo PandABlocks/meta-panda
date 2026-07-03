@@ -277,6 +277,12 @@ class CommandHandler(RequestHandler):
         for line in blocking_cmd_lines('journalctl', '-b'):
             self.command_row(line)
 
+    @add_get_page("system/sar")
+    def get_sar_report(self):
+        """Show System Activity Report"""
+        for line in blocking_cmd_lines('panda-web-admin-sar-report.py'):
+            self.write(line)
+
     @add_get_page("system/network")
     def get_network_config(self):
         """Show Network Configuration"""

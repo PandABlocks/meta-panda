@@ -7,6 +7,7 @@ SRC_URI = " \
     file://panda-web-admin.socket \
     file://panda-web-admin.service \
     file://panda-web-admin.py \
+    file://panda-web-admin-sar-report.py \
     file://rootfs-version.sh \
     file://static/favicon.ico \
     file://static/PandA-logo-for-black-background.svg \
@@ -136,6 +137,7 @@ do_install() {
     install -m 0644 ${WORKDIR}/panda-web-admin.socket ${D}/${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/panda-web-admin.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-web-admin.py ${D}/${bindir}
+    install -m 0755 ${WORKDIR}/panda-web-admin-sar-report.py ${D}/${bindir}
     install -m 0755 ${WORKDIR}/rootfs-version.sh ${D}/${bindir}
     cp -r ${WORKDIR}/templates ${D}/${datadir}/web-admin
     cp -r ${WORKDIR}/static ${D}/${datadir}/web-admin
