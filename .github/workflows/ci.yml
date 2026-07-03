@@ -1,41 +1,36 @@
-name: Docs CI
+name: CI
 
-# Build + verify the docs on every event, then publish on INTERNAL events. The
-# build (`_docs.yml`) runs for PRs (including forks), pushes to main/docs, and tags,
-# and uploads each build's `docs` artifact. Publishing is nested here (the `publish`
-# job -> `_publish.yml`) so its status is visible on the PR/commit, but ONLY for
-# internal events on this repo: a fork PR's build runs with a read-only token and
-# must never deploy.
+# Single entry point for this repo's GitHub Actions CI: the versioned MyST docs
+# build + publish, and the Yocto boot build + release. Each substantial job is a
+# reusable `_*.yml` workflow so this file stays orchestration-only; make/kas are
+# the runners. There is no Python package here (meta-panda is a Yocto layer), so
+# there is no pyproject/lint job.
 #
-# `docs` is a publish trigger during the docs migration: the new MyST docs live on
-# the `docs` branch (main has none yet), so `docs` is the live version.
+# The two halves keep their original, different event sets via per-job `if:`
+# guards over a union trigger, so consolidating did not change when anything runs:
+#   docs (docs/publish)      — PRs, pushes to main, tags
+#   boot (make_boot/release) — PRs, tags
+# The release (on a tag) attaches the boot images plus the docs.zip artifact, so
+# there is no separate docs-release step. The `docs` and `rel-*` branches are
+# gone (docs merged into main; releases are tag-only now), so main + tags is the
+# only trigger surface.
+#
+# Docs detail: the build (`_docs.yml`) runs for PRs (including forks) and uploads
+# each build's `docs` artifact; publishing is nested here (the `publish` job) so
+# its status shows on the PR/commit, but ONLY for internal events on this repo —
+# a fork PR's build runs with a read-only token and must never deploy.
 on:
   pull_request:
   push:
-    branches: [main, docs]
+    branches: [main]
     tags: ['*']            # '*' never matches '/'
 
 jobs:
+  # --- Docs (PRs, main pushes, tags) -------------------------------------------
   docs:
     uses: ./.github/workflows/_docs.yml
 
-  # Tag-only: attach this build's docs.zip (bare html/ root) to the GitHub Release
-  # so `assemble` can reconstruct that released version on future deploys.
-  docs-release:
-    needs: [docs]
-    if: github.ref_type == 'tag'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: docs
-      - env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.ref_name }}" docs.zip --clobber --repo "${{ github.repository }}"
-
-  # Internal events only: an internal PR, or a push to main/docs/tag, has a
+  # Internal events only: an internal PR, or a push to main/tag, has a
   # same-repo build we can trust + deploy. Fork PRs (head repo != this repo) are
   # excluded — _docs.yml's build job warns them instead.
   publish:
@@ -53,3 +48,29 @@ jobs:
       pages: write
       id-token: write
       statuses: write
+
+  # --- Yocto boot build (PRs, tags) --------------------------------------------
+  make_boot:
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.ref_type == 'tag'
+    strategy:
+      fail-fast: false
+      matrix:
+        machine:
+          - pandabox
+          - pandabox2
+          - pandabrick
+    uses: ./.github/workflows/_make_boot.yml
+    with:
+      machine: ${{ matrix.machine }}
+
+  # Tag-only: create the GitHub Release and attach the boot images plus this
+  # build's docs.zip (the `docs` artifact) so `assemble` can reconstruct that
+  # released version later.
+  release:
+    needs: [make_boot, docs]
+    if: github.ref_type == 'tag'
+    uses: ./.github/workflows/_release.yml
+    permissions:
+      contents: write    # create the GitHub Release + attach assets

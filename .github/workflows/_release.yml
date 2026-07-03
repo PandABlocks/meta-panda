@@ -1,22 +1,27 @@
+# Create the GitHub Release on a tag and attach every build artifact from this
+# run: the Yocto boot images, plus the docs build (docs.zip, uploaded by
+# _docs.yml). Attaching docs.zip keeps the myst-version-switcher `assemble`
+# action able to reconstruct this released version on future deploys. Tag-gating
+# and the contents:write permission live in the caller (ci.yml).
 on:
   workflow_call:
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v5
         with:
-          name: boot
-          path: boot
+          merge-multiple: true
 
-      - name: Github Release
+      - name: Create GitHub Release
         # We pin to the SHA, not the tag, for security reasons.
         # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
-        uses: softprops/action-gh-release@2d72d869af3bf23602f9593a1e3fd739b80ac1eb  # v0.1.12
+        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # v2.4.1
         with:
           prerelease: ${{ contains(github.ref_name, 'a') || contains(github.ref_name, 'b') || contains(github.ref_name, 'rc') }}
-          files: boot/*.tar.gz
+          files: "*"
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

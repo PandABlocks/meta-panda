@@ -13,7 +13,8 @@ on:
 #
 # Like the other PandABlocks repos, the build is driven through `make docs`, which
 # runs mystmd on demand via npx (pinned by MYSTMD_VERSION in CONFIG) — so we only
-# need Node on the PATH. meta-panda's docs are pure MyST (no python directives).
+# need Node on the PATH, which the ubuntu-latest runner already provides.
+# meta-panda's docs are pure MyST (no python directives).
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,11 +22,6 @@ jobs:
       version-name: ${{ steps.ver.outputs.version-name }}
     steps:
       - uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       # `make docs` reads MYSTMD_VERSION from CONFIG.
       - name: Create CONFIG
@@ -59,7 +55,8 @@ jobs:
         run: rm -rf docs/_build/templates
 
       # Pack the build as docs.zip with a bare html/ root — the durable contract
-      # both _publish.yml's gather and the docs-release asset rely on.
+      # both _publish.yml's gather and the GitHub Release asset (attached by
+      # _release.yml on a tag) rely on.
       - name: Pack docs.zip (bare html/ root)
         run: |
           set -euo pipefail
