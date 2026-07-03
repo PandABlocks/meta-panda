@@ -1,0 +1,11 @@
+[Unit]
+Description=System Activity Report (sa1) - Collect metrics
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/libexec/sa/sa1 -S ALL 1 1
+
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/log/sa

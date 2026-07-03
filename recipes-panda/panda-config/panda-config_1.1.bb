@@ -6,17 +6,27 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI = " \
     file://panda-config.service \
     file://panda-config \
+    file://99-automount-usb.rules \
+    file://sysstat-collect.timer \
+    file://sysstat-collect.service \
 "
 
 RDEPENDS:${PN} = "bash"
 
 inherit systemd
 
-SYSTEMD_SERVICE:${PN} = "panda-config.service"
+SYSTEMD_SERVICE:${PN} = "panda-config.service sysstat-collect.timer sysstat-collect.service"
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 do_install() {
     install -d ${D}/${systemd_system_unitdir} ${D}/${bindir} ${D}/etc/udev/rules.d
     install -m 0644 ${WORKDIR}/panda-config.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-config ${D}/${bindir}
+    install -m 0666 ${WORKDIR}/99-automount-usb.rules \
+        ${D}/etc/udev/rules.d/99-automount-usb.rules
+    install -m 0644 ${WORKDIR}/sysstat-collect.service ${D}/${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/sysstat-collect.timer ${D}/${systemd_system_unitdir}
+
 }
+
+FILES:${PN} += "/etc/udev/rules.d/"
