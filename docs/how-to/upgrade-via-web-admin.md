@@ -57,3 +57,7 @@ install from a fresh SD card:
 3. Optionally add a `config.txt` with network settings
    (see [](setup-without-dhcp.md)).
 4. Insert the SD card into the PandA and power on.
+
+   :::{note}
+   After upgrading, the PandA may occasionally fail to complete its first boot. The status LEDs may remain red, and the device may be unreachable over the network. If this happens, connect to the PandA over the serial console. It may be waiting for a MAC address to be entered before it can continue booting.
+   :::
