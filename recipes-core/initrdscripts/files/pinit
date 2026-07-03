@@ -72,6 +72,17 @@ read_mac_address()
     set-led BOOTING
 }
 
+configure_mac_address()
+{
+    if [ -e /boot/MAC ] && validate_mac_address "$(cat /boot/MAC)"; then
+        echo "Using MAC address from /boot/MAC"
+        cp /boot/MAC /rootfs/qspi/MAC
+        mv /boot/MAC /boot/MAC.done
+    else
+        read_mac_address
+    fi
+}
+
 echo PandA init
 set -x
 
@@ -130,7 +141,7 @@ fi
 # PandABox requires to manually set the MAC address
 { grep "PandABox" /proc/device-tree/model &> /dev/null; } &&
     [ ! -e /rootfs/qspi/MAC ] &&
-    read_mac_address
+    configure_mac_address
 
 kill $LED_DAEMON_PID
 sync
