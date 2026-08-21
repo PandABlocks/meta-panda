@@ -26,7 +26,7 @@ DEPENDS = " \
     python3-pygments-native \
     python3-imagesize-native \
 "
-RDEPENDS:${PN} += "kernel-module-panda python3"
+RDEPENDS:${PN} += "python3"
 
 do_configure() {
     cp -f ${WORKDIR}/CONFIG_server ${S}/CONFIG

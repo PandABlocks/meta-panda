@@ -12,6 +12,7 @@ IMAGE_INSTALL = " \
     led-daemon \
     packagegroup-panda-fpga \
     panda-config \
+    kernel-module-panda \
     panda-server \
     panda-web-admin \
     panda-webcontrol \
@@ -21,7 +22,6 @@ IMAGE_INSTALL = " \
     htop \
     iperf3 \
     i2c-tools \
-    linux-xlnx-udev-rules \
     lsof \
     mtd-utils \
     pciutils \
