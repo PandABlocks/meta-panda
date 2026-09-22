@@ -1,2 +1,8 @@
 build/
 sources/
+
+# Local build settings (copy of CONFIG.example)
+CONFIG
+
+# MyST build output
+docs/_build/
