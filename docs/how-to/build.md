@@ -28,7 +28,7 @@
    ./fetch-fpga-ipks.py
    ```
 
-   This downloads the `panda-fpga-ipks.tar.gz` asset from the
+   This downloads the `panda-fpga-ipks-<tag>.tar.gz` asset from the
    [PandABlocks-FPGA release](https://github.com/PandABlocks/PandABlocks-FPGA/releases)
    named in `fpga-release.txt`, unpacks the packages into `ipks/`, and writes a
    recipe for each one into `recipes-panda/panda-fpga-generated/`.  Neither

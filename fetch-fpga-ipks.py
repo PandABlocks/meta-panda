@@ -30,7 +30,8 @@ GENERATED_DIR = REPO_DIR / "recipes-panda" / "panda-fpga-generated"
 RELEASE_FILE = REPO_DIR / "fpga-release.txt"
 MACHINE_CONF_DIR = REPO_DIR / "conf" / "machine"
 
-TARBALL_NAME = "panda-fpga-ipks.tar.gz"
+# Named by upload-gl-release-to-gh.py, which is what produces this asset.
+TARBALL_NAME = "panda-fpga-ipks-{tag}.tar.gz"
 TARBALL_URL = (
     "https://github.com/PandABlocks/PandABlocks-FPGA/releases/download/"
     "{tag}/" + TARBALL_NAME
@@ -41,6 +42,13 @@ TARBALL_URL = (
 # rather than one recipe each.
 BOOT_PN = "panda-fpga-boot"
 BITSTREAM_PREFIX = "panda-fpga-"
+
+# The slow FPGA firmware rides in the same tarball but is not machine-named, so
+# it cannot be placed in the packagegroup by the usual filename rule.  It is
+# PandABox-only, which is what panda-load-firmware assumes too: it loads
+# slow_top.bin only when /proc/device-tree/model says PandABox.
+SLOWFPGA_PN = "panda-slowfpga"
+PACKAGE_MACHINES = {SLOWFPGA_PN: "pandabox"}
 
 IPK_RE = re.compile(r"^(?P<pn>[a-z0-9][a-z0-9.+-]*)_(?P<pv>[^_]+)_all\.ipk$")
 
@@ -72,12 +80,13 @@ def known_machines():
 
 
 def download_tarball(tag):
-    """Download the release tarball, reusing an already-downloaded copy."""
-    tarball = IPK_DIR / f"panda-fpga-ipks-{tag}.tar.gz"
-    if tarball.exists():
-        print(f"Using already-downloaded {tarball.relative_to(REPO_DIR)}")
-        return tarball
+    """Download the release tarball.
 
+    Always re-downloaded rather than cached on the tag: the asset is uploaded
+    with `gh release upload --clobber`, so the contents behind a tag do change.
+    Use --no-download to work offline.
+    """
+    tarball = IPK_DIR / TARBALL_NAME.format(tag=tag)
     url = TARBALL_URL.format(tag=tag)
     print(f"Downloading {url}")
     try:
@@ -88,8 +97,8 @@ def download_tarball(tag):
     except urllib.error.URLError as exc:
         die(f"could not download {url}: {exc.reason}")
 
-    # Write via a temporary name so an interrupted download is never mistaken
-    # for a usable cached tarball on the next run.
+    # Write via a temporary name so an interrupted download never leaves a
+    # truncated tarball in place of the previous good one.
     partial = tarball.with_suffix(".part")
     partial.write_bytes(payload)
     partial.rename(tarball)
@@ -122,8 +131,8 @@ def extract_tarball(tarball):
 
 
 def collect_ipks():
-    """Sort the ipks in IPK_DIR into bitstream packages and boot packages."""
-    bitstreams = []           # (pn, pv, filename)
+    """Sort the ipks in IPK_DIR into boot packages and everything else."""
+    packages = []           # (pn, pv, filename)
     boots = {}                # machine -> filename
     boot_versions = set()
 
@@ -143,7 +152,7 @@ def collect_ipks():
             boots[machine] = path.name
             boot_versions.add(version)
         else:
-            bitstreams.append((pn, pv, path.name))
+            packages.append((pn, pv, path.name))
 
     if len(boot_versions) > 1:
         die(
@@ -152,23 +161,25 @@ def collect_ipks():
             + "); they share one recipe and so must share one version"
         )
 
-    return bitstreams, boots, boot_versions.pop() if boot_versions else None
+    return packages, boots, boot_versions.pop() if boot_versions else None
 
 
 def machine_of(pn):
-    """The machine a bitstream package belongs to, or None if undeterminable.
+    """The machine a package belongs to, or None if undeterminable.
 
     `panda-fpga-pandabox2-fmc-acq430` -> `pandabox2`, `panda-fpga-pandabrick` ->
     `pandabrick`.  Matching the first token exactly (rather than by prefix)
     is what keeps `pandabox2` from being read as `pandabox`.
     """
+    if pn in PACKAGE_MACHINES:
+        return PACKAGE_MACHINES[pn]
     if not pn.startswith(BITSTREAM_PREFIX):
         return None
     return pn[len(BITSTREAM_PREFIX):].split("-")[0]
 
 
-def write_bitstream_recipes(bitstreams):
-    for pn, pv, filename in bitstreams:
+def write_package_recipes(packages):
+    for pn, pv, filename in packages:
         recipe = GENERATED_DIR / f"{pn}_{pv}.bb"
         recipe.write_text(
             GENERATED_HEADER.format(source=filename)
@@ -197,7 +208,7 @@ def write_boot_recipe(boots, version):
     print(f"Wrote {recipe.relative_to(REPO_DIR)}")
 
 
-def write_packagegroup(bitstreams):
+def write_packagegroup(packages):
     """Per-machine RDEPENDS for packagegroup-panda-fpga, derived from the ipks.
 
     Always written, even when empty: packagegroup-panda-fpga.bb `require`s this
@@ -205,7 +216,7 @@ def write_packagegroup(bitstreams):
     """
     machines = known_machines()
     by_machine = {}
-    for pn, _pv, filename in bitstreams:
+    for pn, _pv, filename in packages:
         machine = machine_of(pn)
         if machine is None or machine not in machines:
             warn(
@@ -218,12 +229,12 @@ def write_packagegroup(bitstreams):
     lines = [
         GENERATED_HEADER.format(source="the ipks in ipks/"),
         "#\n",
-        "# Per-machine FPGA bitstream packages.  The hand-maintained entries\n",
-        "# (panda-slowfpga, xu5, zedboard) live in packagegroup-panda-fpga.bb.\n",
+        "# Per-machine FPGA packages.  The xu5 and zedboard entries are still\n",
+        "# hand-maintained in packagegroup-panda-fpga.bb.\n",
     ]
     for machine in sorted(by_machine):
-        packages = " ".join(sorted(by_machine[machine]))
-        lines.append(f'\nRDEPENDS:${{PN}}:append:{machine} = " {packages}"\n')
+        names = " ".join(sorted(by_machine[machine]))
+        lines.append(f'\nRDEPENDS:${{PN}}:append:{machine} = " {names}"\n')
 
     fragment = GENERATED_DIR / "packagegroup-panda-fpga-apps.inc"
     fragment.write_text("".join(lines))
@@ -255,9 +266,14 @@ def main():
         print(f"PandABlocks-FPGA release: {tag}")
         extract_tarball(download_tarball(tag))
 
-    bitstreams, boots, boot_version = collect_ipks()
-    if not bitstreams and not boots:
+    packages, boots, boot_version = collect_ipks()
+    if not packages and not boots:
         die(f"no usable ipks in {IPK_DIR.relative_to(REPO_DIR)}")
+    if not any(pn == SLOWFPGA_PN for pn, _pv, _filename in packages):
+        warn(
+            f"no {SLOWFPGA_PN} ipk in this release; pandabox images will have "
+            "no slow FPGA firmware"
+        )
     if not boots:
         warn(
             "no panda-fpga-boot ipk found; the build will fail to resolve "
@@ -270,10 +286,10 @@ def main():
         shutil.rmtree(GENERATED_DIR)
     GENERATED_DIR.mkdir(parents=True)
 
-    write_bitstream_recipes(bitstreams)
+    write_package_recipes(packages)
     if boots:
         write_boot_recipe(boots, boot_version)
-    write_packagegroup(bitstreams)
+    write_packagegroup(packages)
 
 
 if __name__ == "__main__":

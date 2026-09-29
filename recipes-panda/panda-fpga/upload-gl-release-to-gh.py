@@ -20,11 +20,16 @@ def get_links(tag):
         f'{GITLAB_API_URL}/projects/7925/releases/{tag}/assets/links').json()
 
 
+def get_slowfpga_links(tag):
+    return requests.get(
+        f'{GITLAB_API_URL}/projects/7758/releases/{tag}/assets/links').json()
+
+
 def main():
     args = parse_args()
     os.makedirs(f'release-{args.tag}', exist_ok=True)
     names = []
-    for link_info in get_links(args.tag):
+    for link_info in get_links(args.tag) + get_slowfpga_links(args.tag):
         name = link_info['name']
         names.append(name)
         url = link_info['direct_asset_url']
@@ -43,7 +48,7 @@ def main():
     subprocess.run(['gh', 'release', 'create', args.tag,
                     '--generate-notes', '--fail-on-no-commits', '--prerelease'],
                     check=False)
-    subprocess.run(['gh', 'release', 'upload', args.tag,
+    subprocess.run(['gh', 'release', 'upload', '--clobber', args.tag,
                     f'panda-fpga-ipks-{args.tag}.tar.gz'], check=True)
 
 
