@@ -2,23 +2,17 @@ DESCRIPTION = "Panda FPGA packages for a specific machine"
 
 inherit packagegroup
 
+# The bitstream packages for the machines in the current PandABlocks-FPGA
+# release are generated from the ipks by fetch-fpga-ipks.py.  This is a require
+# rather than an include so that forgetting step 1 of the build fails here,
+# loudly, instead of silently producing an image with no bitstreams.
+require recipes-panda/panda-fpga-generated/packagegroup-panda-fpga-apps.inc
+
+# Everything below is hand-maintained: the slow FPGA comes from a separate
+# PandABlocks-slowFPGA release, and the experimental boards are not part of the
+# ipk tarball.
 RDEPENDS:${PN}:append:pandabox = " \
-    panda-fpga-pandabox-no-fmc \
     panda-slowfpga \
-    panda-fpga-pandabox-fmc-24vio \
-    panda-fpga-pandabox-fmc-acq427 \
-    panda-fpga-pandabox-fmc-acq430 \
-    panda-fpga-pandabox-fmc-lback-sfp-lback \
-"
-
-RDEPENDS:${PN}:append:pandabox2 = " \
-    panda-fpga-pandabox2-no-fmc \
-    panda-fpga-pandabox2-fmc-acq430 \
-    panda-fpga-pandabox2-fmc-lback-sfp-sync \
-"
-
-RDEPENDS:${PN}:append:pandabrick = " \
-    panda-fpga-pandabrick \
 "
 
 RDEPENDS:${PN}:append:xu5 = " \

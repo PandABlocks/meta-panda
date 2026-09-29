@@ -22,7 +22,25 @@
    python3 -m venv venv && . venv/bin/activate && pip install kas
    ```
 
-3. Build the image.  `kas-container` pulls the required build container image
+3. Fetch the prebuilt FPGA packages and generate their recipes:
+
+   ```bash
+   ./fetch-fpga-ipks.py
+   ```
+
+   This downloads the `panda-fpga-ipks.tar.gz` asset from the
+   [PandABlocks-FPGA release](https://github.com/PandABlocks/PandABlocks-FPGA/releases)
+   named in `fpga-release.txt`, unpacks the packages into `ipks/`, and writes a
+   recipe for each one into `recipes-panda/panda-fpga-generated/`.  Neither
+   directory is tracked in git — both are regenerated from scratch on every run.
+
+   To build against a different release, either edit `fpga-release.txt` or pass
+   `--release <tag>`.  To build against a locally built bitstream, drop its
+   `.ipk` into `ipks/` and run `./fetch-fpga-ipks.py --no-download`, which
+   regenerates the recipes from whatever `ipks/` holds without fetching
+   anything.
+
+4. Build the image.  `kas-container` pulls the required build container image
    automatically — no manual Docker setup is needed:
 
    ```bash
@@ -45,7 +63,7 @@
    The default machine is `pandabox`.  Output lands under
    `build/tmp/deploy/images/<machine>`.
 
-4. (Optional) Collect the output files, for example for pandabox:
+5. (Optional) Collect the output files, for example for pandabox:
 
    ```bash
    mkdir boot
@@ -55,8 +73,8 @@
    zip boot-pandabox.zip boot/*
    ```
 
-   Alternatively, the `build.sh` helper script builds and collects everything
-   for a specific machine in one step:
+   Alternatively, the `build.sh` helper script runs both steps and collects
+   everything for a specific machine in one go:
 
    ```bash
    ./build.sh <MACHINE> </path/to/workdir>

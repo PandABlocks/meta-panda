@@ -72,6 +72,14 @@ To test a custom FPGA bitstream:
    ssh root@<panda-hostname> opkg install --force-reinstall /tmp/panda-fpga_<version>.ipk
    ```
 
+   :::{tip}
+   To build the custom bitstream *into an image* instead of installing it on a
+   running PandA, drop the `.ipk` into `ipks/` in your `meta-panda` checkout and
+   run `./fetch-fpga-ipks.py --no-download`.  That regenerates the recipes from
+   whatever `ipks/` holds, without fetching the pinned release over the top of
+   your package.  See [](/how-to/build.md).
+   :::
+
 3. Override the active bitstream if needed — see [](choose-fpga-bitstream.md).
 
 4. Restart the relevant service:

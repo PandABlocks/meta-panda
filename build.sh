@@ -15,6 +15,10 @@ function error {
     exit 1
 }
 
+# Step 1: fetch the prebuilt FPGA ipks for the pinned release and generate
+# their recipes.  Step 2 (the kas build below) needs them to exist.
+./fetch-fpga-ipks.py || error "fetching FPGA ipks failed"
+
 kas-container build ./kas.yml || error "kas build failed"
 cd ${KAS_WORK_DIR}
 BOOT_DIR=boot-${KAS_MACHINE}

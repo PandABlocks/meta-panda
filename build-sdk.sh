@@ -15,5 +15,9 @@ function error {
     exit 1
 }
 
+# Step 1: fetch the prebuilt FPGA ipks for the pinned release and generate
+# their recipes.  Step 2 (the kas build below) needs them to exist.
+./fetch-fpga-ipks.py || error "fetching FPGA ipks failed"
+
 kas-container build -c populate_sdk ./kas.yml || error "kas build failed"
 cp -f ${KAS_WORK_DIR}/build/tmp/deploy/sdk/pandablocks-sdk-${KAS_MACHINE}.sh . || error "Failed to copy SDK installer"

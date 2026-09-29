@@ -25,6 +25,11 @@ build:
   script:
     - export SSTATE_TAR="$CACHE_DIR/sstate-cache-$KAS_MACHINE-$(sha256sum kas.yml | cut -d ' ' -f 1).tar.gz"
     - if [ -f "$SSTATE_TAR" ]; then mkdir -p build/sstate-cache; tar -xzf "$SSTATE_TAR" -C build/sstate-cache; fi
+    # Step 1: fetch the prebuilt FPGA ipks for the release pinned in
+    # fpga-release.txt and generate their recipes.  Deliberately not part of
+    # the sstate key above: keying on fpga-release.txt too would force a full
+    # rebuild of everything on an FPGA bump, where only the FPGA recipes change.
+    - ./fetch-fpga-ipks.py
     - kas build kas.yml
     - mkdir boot
     - cp -Lf build/tmp/deploy/images/$KAS_MACHINE/fitImage-petalinux-initramfs-image-$KAS_MACHINE-$KAS_MACHINE boot/image.ub
