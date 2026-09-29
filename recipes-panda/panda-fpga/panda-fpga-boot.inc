@@ -2,16 +2,8 @@ SUMMARY = "Boot part from PandABlocks-FPGA"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-# The SRC_URI for the machines in the current PandABlocks-FPGA release is set by
-# the generated recipe that requires this file (see fetch-fpga-ipks.py).  The
-# experimental boards below are not part of that release, so they keep their
-# hand-pinned URLs; the ;name= parameter is what ties each URL to its checksum.
-# XU5 SoC on a ST1 board
-SRC_URI:xu5 = "https://github.com/PandABlocks/meta-panda/releases/download/4.2b1/panda-fpga-boot_xu5-4.1-29-g950117b-dirty_all.ipk;name=xu5-boot"
-SRC_URI[xu5-boot.sha256sum] = "e1c7cc941447266f69529486ae1a6c7ae6526349874b1452c4f20d77a2336dba"
-# Zedboard
-SRC_URI:zedboard = "https://github.com/PandABlocks/meta-panda/releases/download/4.2b1/panda-fpga-boot_zedboard-4.1-29-g950117b-dirty_all.ipk;name=zedboard-boot"
-SRC_URI[zedboard-boot.sha256sum] = "484b0e73adc4e772b7d8c284b947fd0e8d49a66a93b594fa129e944a44689d71"
+# SRC_URI is set per machine by the generated recipe that requires this file
+# (see fetch-fpga-ipks.py), from whatever boot ipks are in ipks/.
 
 do_unpack[depends] += "xz-native:do_populate_sysroot"
 

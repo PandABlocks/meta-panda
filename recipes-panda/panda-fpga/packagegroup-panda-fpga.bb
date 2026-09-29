@@ -8,13 +8,3 @@ inherit packagegroup
 # forgetting step 1 of the build fails here, loudly, instead of silently
 # producing an image with no bitstreams.
 require recipes-panda/panda-fpga-generated/packagegroup-panda-fpga-apps.inc
-
-# Hand-maintained: the experimental boards are not part of the ipk tarball.
-
-RDEPENDS:${PN}:append:xu5 = " \
-    panda-fpga-xu5-no-fmc \
-"
-
-RDEPENDS:${PN}:append:zedboard = " \
-    panda-fpga-zedboard-no-fmc \
-"

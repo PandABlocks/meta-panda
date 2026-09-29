@@ -229,8 +229,7 @@ def write_packagegroup(packages):
     lines = [
         GENERATED_HEADER.format(source="the ipks in ipks/"),
         "#\n",
-        "# Per-machine FPGA packages.  The xu5 and zedboard entries are still\n",
-        "# hand-maintained in packagegroup-panda-fpga.bb.\n",
+        "# Per-machine FPGA packages, from the ipks present at generation time.\n",
     ]
     for machine in sorted(by_machine):
         names = " ".join(sorted(by_machine[machine]))
