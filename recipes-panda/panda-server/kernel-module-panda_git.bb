@@ -11,8 +11,7 @@ SRC_URI:append = " \
     git://github.com/PandABlocks/PandABlocks-server;branch=main;protocol=https \
     file://CONFIG_driver \
 "
-SRCREV = "61ffc333cd3b8dbb4d8202e8275aeb1b85ab7312"
-PV = "4.1+git${SRCPV}"
+require recipes-panda/panda-server-generated/panda-server-release.inc
 S = "${WORKDIR}/git"
 MAKE_TARGETS = "driver"
 MODULES_MODULE_SYMVERS_LOCATION = "build/driver"

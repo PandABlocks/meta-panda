@@ -43,13 +43,35 @@
    `--no-download` to regenerate without going to the network at all.
 
    :::{note}
-   Since `ipks/` accumulates, bumping to a new release leaves the previous
-   release's packages behind.  Two versions of the same package means BitBake
-   silently builds the higher one, so the script warns when it sees that —
-   delete the ipks you no longer want.
+   A `panda-fpga-ipks-*.tar.gz` already in `ipks/` is taken as the release you
+   meant to build, and is neither downloaded nor unpacked again — so after
+   editing `fpga-release.txt`, delete the old tarball as well.
+
+   `ipks/` accumulates, so bumping a release also leaves the previous release's
+   packages behind.  Two versions of the same package means BitBake builds the
+   higher one; delete the ipks you no longer want if that is not what you are
+   after.
    :::
 
-4. Build the image.  `kas-container` pulls the required build container image
+4. Resolve the PandABlocks-server release:
+
+   ```bash
+   ./fetch-panda-server-rev.py
+   ```
+
+   `panda-server` and `kernel-module-panda` are built from one
+   [PandABlocks-server](https://github.com/PandABlocks/PandABlocks-server)
+   checkout, so both take their version and commit from a single generated
+   file.  This resolves the tag named in `panda-server-release.txt` to a commit
+   and writes `PV` and `SRCREV` into
+   `recipes-panda/panda-server-generated/panda-server-release.inc`, which is
+   not tracked in git either.
+
+   To build a different version, edit `panda-server-release.txt` or pass
+   `--release <tag>`.  The lookup is skipped when the generated file already
+   pins the tag you asked for; `--force` resolves it again.
+
+5. Build the image.  `kas-container` pulls the required build container image
    automatically — no manual Docker setup is needed:
 
    ```bash
@@ -74,7 +96,7 @@
    them build without supplying your own FPGA packages, see
    [](/reference/machine-targets.md).
 
-5. (Optional) Collect the output files, for example for pandabox:
+6. (Optional) Collect the output files, for example for pandabox:
 
    ```bash
    mkdir boot
@@ -84,8 +106,8 @@
    zip boot-pandabox.zip boot/*
    ```
 
-   Alternatively, the `build.sh` helper script runs both steps and collects
-   everything for a specific machine in one go:
+   Alternatively, the `build.sh` helper script runs every step above and
+   collects everything for a specific machine in one go:
 
    ```bash
    ./build.sh <MACHINE> </path/to/workdir>

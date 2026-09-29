@@ -10,8 +10,7 @@ SRC_URI += " \
     file://panda-server-wrapper \
     file://panda-extension-server-wrapper \
 "
-SRCREV = "61ffc333cd3b8dbb4d8202e8275aeb1b85ab7312"
-PV = "4.1+git${SRCPV}"
+require recipes-panda/panda-server-generated/panda-server-release.inc
 S = "${WORKDIR}/git"
 
 inherit python3native

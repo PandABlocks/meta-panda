@@ -26,10 +26,13 @@ build:
     - export SSTATE_TAR="$CACHE_DIR/sstate-cache-$KAS_MACHINE-$(sha256sum kas.yml | cut -d ' ' -f 1).tar.gz"
     - if [ -f "$SSTATE_TAR" ]; then mkdir -p build/sstate-cache; tar -xzf "$SSTATE_TAR" -C build/sstate-cache; fi
     # Step 1: fetch the prebuilt FPGA ipks for the release pinned in
-    # fpga-release.txt and generate their recipes.  Deliberately not part of
-    # the sstate key above: keying on fpga-release.txt too would force a full
-    # rebuild of everything on an FPGA bump, where only the FPGA recipes change.
+    # fpga-release.txt and generate their recipes, then resolve the
+    # panda-server release into the PV/SRCREV its recipes require.  Deliberately
+    # not part of the sstate key above: keying on the release files too would
+    # force a full rebuild of everything on a bump, where only the recipes
+    # pinned by that file change.
     - ./fetch-fpga-ipks.py
+    - ./fetch-panda-server-rev.py
     - kas build kas.yml
     - mkdir boot
     - cp -Lf build/tmp/deploy/images/$KAS_MACHINE/fitImage-petalinux-initramfs-image-$KAS_MACHINE-$KAS_MACHINE boot/image.ub

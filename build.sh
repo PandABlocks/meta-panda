@@ -15,9 +15,11 @@ function error {
     exit 1
 }
 
-# Step 1: fetch the prebuilt FPGA ipks for the pinned release and generate
-# their recipes.  Step 2 (the kas build below) needs them to exist.
+# Step 1: generate the recipes that are pinned by release file rather than
+# written by hand -- the FPGA ipks, and panda-server's PV/SRCREV.  Step 2 (the
+# kas build below) needs both to exist.
 ./fetch-fpga-ipks.py || error "fetching FPGA ipks failed"
+./fetch-panda-server-rev.py || error "resolving the panda-server release failed"
 
 kas-container build ./kas.yml || error "kas build failed"
 cd ${KAS_WORK_DIR}
