@@ -7,6 +7,10 @@ import subprocess
 from pathlib import Path
 
 GITLAB_API_URL="https://gitlab.diamond.ac.uk/api/v4"
+# The release lives with the packages it ships, not with this layer.  Passing
+# --repo explicitly also means the script does not depend on being run from a
+# particular checkout.
+GITHUB_REPO = 'PandABlocks/PandABlocks-FPGA'
 
 
 def parse_args():
@@ -45,10 +49,11 @@ def main():
 
     subprocess.run(['tar', '-czf', f'panda-fpga-ipks-{args.tag}.tar.gz', '-C',
                     f'release-{args.tag}'] + names, check=True)
-    subprocess.run(['gh', 'release', 'create', args.tag,
+    subprocess.run(['gh', 'release', 'create', args.tag, '--repo', GITHUB_REPO,
                     '--generate-notes', '--fail-on-no-commits', '--prerelease'],
                     check=False)
     subprocess.run(['gh', 'release', 'upload', '--clobber', args.tag,
+                    '--repo', GITHUB_REPO,
                     f'panda-fpga-ipks-{args.tag}.tar.gz'], check=True)
 
 
