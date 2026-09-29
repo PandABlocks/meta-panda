@@ -14,7 +14,9 @@ signature automatically.
 The release tag is pinned in `fpga-release.txt`.  Nothing already in `ipks/` is
 removed or overwritten, so to build against a locally built bitstream you can
 simply drop its ipk in: it survives later fetches, and `--no-download` lets you
-regenerate without going to the network at all.  The flip side is that `ipks/`
+regenerate without going to the network at all.  A `panda-fpga-ipks-*.tar.gz`
+already in `ipks/` has the same effect: it is neither re-downloaded nor
+unpacked again, so delete it to pick up a new release.  The flip side is that `ipks/`
 accumulates, so bumping the release leaves the old ipks behind for you to
 delete.  Several versions of one package are not an error here: each gets its
 own recipe and BitBake builds the highest.
@@ -37,6 +39,7 @@ MACHINE_CONF_DIR = REPO_DIR / "conf" / "machine"
 
 # Named by upload-gl-release-to-gh.py, which is what produces this asset.
 TARBALL_NAME = "panda-fpga-ipks-{tag}.tar.gz"
+TARBALL_GLOB = "panda-fpga-ipks-*.tar.gz"
 TARBALL_URL = (
     "https://github.com/PandABlocks/PandABlocks-FPGA/releases/download/"
     "{tag}/" + TARBALL_NAME
@@ -87,9 +90,11 @@ def known_machines():
 def download_tarball(tag):
     """Download the release tarball.
 
-    Always re-downloaded rather than cached on the tag: the asset is uploaded
-    with `gh release upload --clobber`, so the contents behind a tag do change.
-    Use --no-download to work offline.
+    Only reached when IPK_DIR holds no tarball at all: one already there is
+    taken as the one you meant to build from, and is neither re-downloaded nor
+    unpacked again.  Delete it to pick up a re-uploaded asset -- the release is
+    published with `gh release upload --clobber`, so the contents behind a tag
+    do change.
     """
     tarball = IPK_DIR / TARBALL_NAME.format(tag=tag)
     url = TARBALL_URL.format(tag=tag)
@@ -293,7 +298,19 @@ def main():
     else:
         tag = args.release or read_pinned_release()
         print(f"PandABlocks-FPGA release: {tag}")
-        extract_tarball(download_tarball(tag))
+        where = IPK_DIR.relative_to(REPO_DIR)
+        # A tarball already sitting in IPK_DIR means it has been fetched and
+        # unpacked before, so both steps are skipped and the recipes are
+        # generated from what is on disk.
+        present = sorted(IPK_DIR.glob(TARBALL_GLOB))
+        if present:
+            names = ", ".join(path.name for path in present)
+            print(f"{names} already in {where}; not downloading or unpacking again")
+            wanted = TARBALL_NAME.format(tag=tag)
+            if not any(path.name == wanted for path in present):
+                warn(f"that is not {wanted}; delete it to fetch the pinned release")
+        else:
+            extract_tarball(download_tarball(tag))
 
     packages, boots, boot_version = collect_ipks()
     if not packages and not boots:
