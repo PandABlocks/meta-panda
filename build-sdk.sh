@@ -19,7 +19,7 @@ function error {
 # written by hand -- the FPGA ipks, and panda-server's PV/SRCREV.  Step 2 (the
 # kas build below) needs both to exist.
 ./fetch-fpga-ipks.py || error "fetching FPGA ipks failed"
-./fetch-panda-server-rev.py || error "resolving the panda-server release failed"
+./fetch-source-revs.py || error "resolving the panda-server release failed"
 
 kas-container build -c populate_sdk ./kas.yml || error "kas build failed"
 cp -f ${KAS_WORK_DIR}/build/tmp/deploy/sdk/pandablocks-sdk-${KAS_MACHINE}.sh . || error "Failed to copy SDK installer"

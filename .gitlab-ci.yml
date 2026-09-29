@@ -32,7 +32,7 @@ build:
     # force a full rebuild of everything on a bump, where only the recipes
     # pinned by that file change.
     - ./fetch-fpga-ipks.py
-    - ./fetch-panda-server-rev.py
+    - ./fetch-source-revs.py
     - kas build kas.yml
     - mkdir boot
     - cp -Lf build/tmp/deploy/images/$KAS_MACHINE/fitImage-petalinux-initramfs-image-$KAS_MACHINE-$KAS_MACHINE boot/image.ub

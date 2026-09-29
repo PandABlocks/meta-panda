@@ -11,7 +11,7 @@ SRC_URI += " \
     file://panda-webcontrol-wrapper \
     file://panda-webcontrol.nav.html \
 "
-SRCREV = "b1226e78e9efe5cfe08bfd687ce87c3e783dd89b"
+require recipes-panda/panda-webcontrol-generated/panda-webcontrol-release.inc
 S = "${WORKDIR}/git"
 
 RDEPENDS:${PN} += " \

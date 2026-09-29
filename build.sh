@@ -19,7 +19,7 @@ function error {
 # written by hand -- the FPGA ipks, and panda-server's PV/SRCREV.  Step 2 (the
 # kas build below) needs both to exist.
 ./fetch-fpga-ipks.py || error "fetching FPGA ipks failed"
-./fetch-panda-server-rev.py || error "resolving the panda-server release failed"
+./fetch-source-revs.py || error "resolving the panda-server release failed"
 
 kas-container build ./kas.yml || error "kas build failed"
 cd ${KAS_WORK_DIR}

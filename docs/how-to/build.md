@@ -53,23 +53,31 @@
    after.
    :::
 
-4. Resolve the PandABlocks-server release:
+4. Resolve the pinned upstream releases:
 
    ```bash
-   ./fetch-panda-server-rev.py
+   ./fetch-source-revs.py
    ```
 
-   `panda-server` and `kernel-module-panda` are built from one
-   [PandABlocks-server](https://github.com/PandABlocks/PandABlocks-server)
-   checkout, so both take their version and commit from a single generated
-   file.  This resolves the tag named in `panda-server-release.txt` to a commit
-   and writes `PV` and `SRCREV` into
-   `recipes-panda/panda-server-generated/panda-server-release.inc`, which is
-   not tracked in git either.
+   The recipes built from a GitHub checkout take their version and commit from
+   a generated file rather than carrying them inline.  Each upstream repository
+   is pinned as a git tag in a top-level release file:
 
-   To build a different version, edit `panda-server-release.txt` or pass
-   `--release <tag>`.  The lookup is skipped when the generated file already
-   pins the tag you asked for; `--force` resolves it again.
+   | Release file | Repository | Recipes |
+   |---|---|---|
+   | `panda-server-release.txt` | [PandABlocks-server](https://github.com/PandABlocks/PandABlocks-server) | `panda-server`, `kernel-module-panda` |
+   | `panda-webcontrol-release.txt` | [PandABlocks-webcontrol](https://github.com/PandABlocks/PandABlocks-webcontrol) | `python3-panda-webcontrol` |
+
+   This resolves each tag to a commit and writes `PV` and `SRCREV` into
+   `recipes-panda/<name>-generated/`, which is not tracked in git either.  The
+   server and its driver are built from one checkout, so pinning them together
+   is what stops them drifting apart.
+
+   To build a different version, edit the release file, or pass a single source
+   and `--release <tag>`, e.g.
+   `./fetch-source-revs.py panda-webcontrol --release 4.0`.  The lookup is
+   skipped when the generated file already pins the tag you asked for;
+   `--force` resolves it again.
 
 5. Build the image.  `kas-container` pulls the required build container image
    automatically — no manual Docker setup is needed:
