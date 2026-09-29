@@ -21,7 +21,11 @@ SRC_URI = " \
     file://templates/index.html \
     file://templates/nav.html \
     file://panda-fpga.docs.html.in \
+    file://panda-server.docs.html.in \
+    file://panda-webcontrol.docs.html.in \
     file://fpga-release.txt \
+    file://panda-server-release.txt \
+    file://panda-webcontrol-release.txt \
     file://README.rst \
 "
 S = "${WORKDIR}"
@@ -58,14 +62,19 @@ do_install() {
     cp -r ${WORKDIR}/templates ${D}/${datadir}/web-admin
     cp -r ${WORKDIR}/static ${D}/${datadir}/web-admin
 
-    # The docs page renders every *.docs.html in /opt/etc/www.  The FPGA docs
-    # live on GitHub Pages, one site per release, so the link has to name the
-    # release this image was built against -- which is the one pinned in the
-    # top-level fpga-release.txt that fetch-fpga-ipks.py reads.
+    # The docs page renders every *.docs.html in /opt/etc/www.  Each component's
+    # docs live on GitHub Pages, one site per release, so every link has to name
+    # the release this image was built against -- which is the one pinned in the
+    # top-level release file that generates that component's recipes.
     install -d ${D}/opt/etc/www
-    sed "s|@FPGA_RELEASE@|$(cat ${WORKDIR}/fpga-release.txt)|g" \
-        ${WORKDIR}/panda-fpga.docs.html.in > ${D}/opt/etc/www/panda-fpga.docs.html
-    chmod 0644 ${D}/opt/etc/www/panda-fpga.docs.html
+    install_docs() {
+        sed "s|@RELEASE@|$(cat ${WORKDIR}/$2)|g" \
+            ${WORKDIR}/$1.docs.html.in > ${D}/opt/etc/www/$1.docs.html
+        chmod 0644 ${D}/opt/etc/www/$1.docs.html
+    }
+    install_docs panda-fpga fpga-release.txt
+    install_docs panda-server panda-server-release.txt
+    install_docs panda-webcontrol panda-webcontrol-release.txt
 }
 
 FILES:${PN} += " \

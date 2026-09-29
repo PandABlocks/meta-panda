@@ -4,10 +4,10 @@
 <h2>PandABlocks-FPGA</h2>
 
 <p>
-Documentation for the FPGA firmware in this image, release @FPGA_RELEASE@.
+Documentation for the FPGA firmware in this image, release @RELEASE@.
 </p>
 
 <a target="_blank" rel="noopener noreferrer"
-   href="https://pandablocks.github.io/PandABlocks-FPGA/@FPGA_RELEASE@/">
+   href="https://pandablocks.github.io/PandABlocks-FPGA/@RELEASE@/">
   PandABlocks-FPGA Documentation
 </a>

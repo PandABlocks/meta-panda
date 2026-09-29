@@ -1,0 +1,15 @@
+<!-- The release placeholder below is substituted at build time from the
+     top-level panda-server-release.txt, so this points at the documentation
+     for the server release the image was built against. -->
+<h2>TCP Server</h2>
+
+<p>
+  The TCP server is meant for integration into Control systems like EPICS and
+  Tango. It exposes an ASCII Control interface on port 8888 and a binary Data
+  interface on port 8889.
+</p>
+
+<a target="_blank" rel="noopener noreferrer"
+   href="https://pandablocks.github.io/PandABlocks-server/@RELEASE@/">
+  TCP Server Documentation
+</a>
