@@ -12,10 +12,12 @@ IMAGE_INSTALL = " \
     led-daemon \
     packagegroup-panda-fpga \
     panda-config \
+    panda-fpga-boot \
+    panda-fpga-loader \
     kernel-module-panda \
     panda-server \
     panda-web-admin \
-    panda-webcontrol \
+    python3-panda-webcontrol \
     bridge-utils \
     fpga-manager-script \
     git-revision-file \

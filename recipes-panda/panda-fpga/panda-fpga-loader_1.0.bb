@@ -8,7 +8,7 @@ SRC_URI = " \
     file://panda-load-firmware \
 "
 
-RDEPENDS:${PN} = "pandai2c bash kernel-module-panda"
+RDEPENDS:${PN} = "pandai2c bash"
 
 do_install() {
     install -d ${D}/${systemd_system_unitdir} ${D}/${bindir}

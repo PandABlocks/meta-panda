@@ -2,12 +2,6 @@ DESCRIPTION = "Panda FPGA packages for a specific machine"
 
 inherit packagegroup
 
-RDEPENDS:${PN} = " \
-    panda-fpga-boot \
-    panda-fpga-loader \
-    panda-fpga-doc \
-"
-
 RDEPENDS:${PN}:append:pandabox = " \
     panda-fpga-pandabox-no-fmc \
     panda-slowfpga \
