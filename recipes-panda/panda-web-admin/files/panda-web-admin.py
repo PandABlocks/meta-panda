@@ -304,8 +304,8 @@ class CommandHandler(RequestHandler):
         self.list_package_instructions()
         self.p("The following packages are already installed")
         pkg_list = sorted(
-            (item for item in blocking_cmd_lines('opkg', 'list') if
-                 item.startswith(b'panda-')))
+            item for item in blocking_cmd_lines('opkg', 'list')
+                if b'panda-' in item)
         if pkg_list:
             details = {}
             for line in pkg_list:
