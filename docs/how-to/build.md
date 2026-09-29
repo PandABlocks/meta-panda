@@ -32,13 +32,22 @@
    [PandABlocks-FPGA release](https://github.com/PandABlocks/PandABlocks-FPGA/releases)
    named in `fpga-release.txt`, unpacks the packages into `ipks/`, and writes a
    recipe for each one into `recipes-panda/panda-fpga-generated/`.  Neither
-   directory is tracked in git — both are regenerated from scratch on every run.
+   directory is tracked in git.  The recipes are regenerated from scratch every
+   run; `ipks/` is only ever added to — nothing already there is removed or
+   overwritten.
 
    To build against a different release, either edit `fpga-release.txt` or pass
    `--release <tag>`.  To build against a locally built bitstream, drop its
-   `.ipk` into `ipks/` and run `./fetch-fpga-ipks.py --no-download`, which
-   regenerates the recipes from whatever `ipks/` holds without fetching
-   anything.
+   `.ipk` into `ipks/`: because existing files are never overwritten, yours is
+   used in place of the release's copy and survives later fetches.  Add
+   `--no-download` to regenerate without going to the network at all.
+
+   :::{note}
+   Since `ipks/` accumulates, bumping to a new release leaves the previous
+   release's packages behind.  Two versions of the same package means BitBake
+   silently builds the higher one, so the script warns when it sees that —
+   delete the ipks you no longer want.
+   :::
 
 4. Build the image.  `kas-container` pulls the required build container image
    automatically — no manual Docker setup is needed:

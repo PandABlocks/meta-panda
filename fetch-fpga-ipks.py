@@ -4,18 +4,23 @@
 This is step 1 of the two-step build; step 2 is the usual `kas build`.
 
 PandABlocks-FPGA publishes every bitstream and boot package for a release as a
-single `panda-fpga-ipks.tar.gz` asset.  We download that, unpack it flat into
-`ipks/`, and write one recipe per ipk into `recipes-panda/panda-fpga-generated/`.
-The ipk filename carries everything BitBake needs -- `<PN>_<PV>_all.ipk` -- so
-there is nothing to pin by hand and no sha256 to recompute: a `file://` SRC_URI
-is checksummed into the task signature automatically.
+single `panda-fpga-ipks-<tag>.tar.gz` asset.  We download that, unpack it flat
+into `ipks/`, and write one recipe per ipk into
+`recipes-panda/panda-fpga-generated/`.  The ipk filename carries everything
+BitBake needs -- `<PN>_<PV>_all.ipk` -- so there is nothing to pin by hand and
+no sha256 to recompute: a `file://` SRC_URI is checksummed into the task
+signature automatically.
 
-The release tag is pinned in `fpga-release.txt`.  To build against a locally
-built bitstream instead, drop its ipk into `ipks/` and re-run with
-`--no-download`.
+The release tag is pinned in `fpga-release.txt`.  Nothing already in `ipks/` is
+removed or overwritten, so to build against a locally built bitstream you can
+simply drop its ipk in: it survives later fetches, and `--no-download` lets you
+regenerate without going to the network at all.  The flip side is that `ipks/`
+accumulates, so bumping the release leaves the old ipks behind for you to
+delete; the generator warns when that leaves two versions of one package.
 """
 
 import argparse
+import hashlib
 import re
 import shutil
 import sys
@@ -105,13 +110,28 @@ def download_tarball(tag):
     return tarball
 
 
-def extract_tarball(tarball):
-    """Unpack the ipks flat into IPK_DIR, replacing any ipks already there."""
-    for stale in IPK_DIR.glob("*.ipk"):
-        stale.unlink()
+def same_content(path, fileobj):
+    """Whether an on-disk file and an open tar member hold the same bytes."""
+    if fileobj is None:
+        return False
+    if path.stat().st_size != fileobj.seek(0, 2):
+        return False
+    fileobj.seek(0)
+    digest = hashlib.sha256(fileobj.read()).hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest() == digest
 
+
+def extract_tarball(tarball):
+    """Unpack the ipks flat into IPK_DIR without touching what is already there.
+
+    Nothing in IPK_DIR is removed or overwritten, so an ipk you put there by
+    hand survives later fetches and wins over the release's copy of the same
+    filename.  The cost is that IPK_DIR accumulates: see check_for_duplicates.
+    """
     with tarfile.open(tarball) as tar:
         members = []
+        kept = []
+        overrides = []
         for member in tar.getmembers():
             if not member.isfile():
                 continue
@@ -122,12 +142,27 @@ def extract_tarball(tarball):
             if not member.name.endswith(".ipk"):
                 warn(f"skipping non-ipk member {member.name}")
                 continue
+            existing = IPK_DIR / member.name
+            if existing.exists():
+                kept.append(member.name)
+                # Same name but different bytes means a local build is
+                # shadowing the release copy -- worth saying out loud, unlike
+                # the usual case of re-fetching ipks already unpacked.
+                if not same_content(existing, tar.extractfile(member)):
+                    overrides.append(member.name)
+                continue
             members.append(member)
-        if not members:
+        if not members and not kept:
             die(f"no ipks found in {tarball.name}")
         tar.extractall(IPK_DIR, members=members)
 
-    print(f"Extracted {len(members)} ipks into {IPK_DIR.relative_to(REPO_DIR)}")
+    where = IPK_DIR.relative_to(REPO_DIR)
+    if members:
+        print(f"Extracted {len(members)} ipks into {where}")
+    if kept:
+        print(f"Kept {len(kept)} ipks already in {where} (not overwritten)")
+    for name in sorted(overrides):
+        print(f"  {name} differs from the release copy -- keeping yours")
 
 
 def collect_ipks():
@@ -148,7 +183,12 @@ def collect_ipks():
             if not version:
                 die(f"{path.name}: boot ipk version {pv!r} has no <machine>- prefix")
             if machine in boots:
-                die(f"two boot ipks for machine {machine}: {boots[machine]}, {path.name}")
+                die(
+                    f"two boot ipks for machine {machine} in "
+                    f"{IPK_DIR.relative_to(REPO_DIR)}: {boots[machine]}, "
+                    f"{path.name}. They share one recipe, so delete the one "
+                    "you do not want."
+                )
             boots[machine] = path.name
             boot_versions.add(version)
         else:
@@ -162,6 +202,27 @@ def collect_ipks():
         )
 
     return packages, boots, boot_versions.pop() if boot_versions else None
+
+
+def check_for_duplicates(packages):
+    """Warn when IPK_DIR holds more than one version of the same package.
+
+    Nothing is removed from IPK_DIR, so bumping the release leaves the previous
+    one's ipks behind and both get a recipe.  BitBake then silently builds the
+    higher version, which may not be the one you intended.
+    """
+    versions = {}
+    for pn, pv, _filename in packages:
+        versions.setdefault(pn, []).append(pv)
+    for pn in sorted(versions):
+        if len(versions[pn]) > 1:
+            warn(
+                f"{pn} has several versions in "
+                f"{IPK_DIR.relative_to(REPO_DIR)} "
+                f"({', '.join(sorted(versions[pn]))}); bitbake will build the "
+                f"highest. Delete the ones you do not want, or set "
+                f"PREFERRED_VERSION_{pn}."
+            )
 
 
 def machine_of(pn):
@@ -268,6 +329,7 @@ def main():
     packages, boots, boot_version = collect_ipks()
     if not packages and not boots:
         die(f"no usable ipks in {IPK_DIR.relative_to(REPO_DIR)}")
+    check_for_duplicates(packages)
     if not any(pn == SLOWFPGA_PN for pn, _pv, _filename in packages):
         warn(
             f"no {SLOWFPGA_PN} ipk in this release; pandabox images will have "
