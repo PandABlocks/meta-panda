@@ -20,6 +20,8 @@ SRC_URI = " \
     file://templates/footer.html \
     file://templates/index.html \
     file://templates/nav.html \
+    file://panda-fpga.docs.html.in \
+    file://fpga-release.txt \
     file://README.rst \
 "
 S = "${WORKDIR}"
@@ -55,9 +57,19 @@ do_install() {
     install -m 0755 ${WORKDIR}/rootfs-version.sh ${D}/${bindir}
     cp -r ${WORKDIR}/templates ${D}/${datadir}/web-admin
     cp -r ${WORKDIR}/static ${D}/${datadir}/web-admin
+
+    # The docs page renders every *.docs.html in /opt/etc/www.  The FPGA docs
+    # live on GitHub Pages, one site per release, so the link has to name the
+    # release this image was built against -- which is the one pinned in the
+    # top-level fpga-release.txt that fetch-fpga-ipks.py reads.
+    install -d ${D}/opt/etc/www
+    sed "s|@FPGA_RELEASE@|$(cat ${WORKDIR}/fpga-release.txt)|g" \
+        ${WORKDIR}/panda-fpga.docs.html.in > ${D}/opt/etc/www/panda-fpga.docs.html
+    chmod 0644 ${D}/opt/etc/www/panda-fpga.docs.html
 }
 
 FILES:${PN} += " \
     ${bindir} \
     ${datadir} \
+    /opt/etc/www \
 "

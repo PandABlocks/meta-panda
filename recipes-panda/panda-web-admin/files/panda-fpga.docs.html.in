@@ -1,0 +1,13 @@
+<!-- The release placeholder below is substituted at build time from the
+     top-level fpga-release.txt, so this points at the documentation for the
+     FPGA release the image was built against. -->
+<h2>PandABlocks-FPGA</h2>
+
+<p>
+Documentation for the FPGA firmware in this image, release @FPGA_RELEASE@.
+</p>
+
+<a target="_blank" rel="noopener noreferrer"
+   href="https://pandablocks.github.io/PandABlocks-FPGA/@FPGA_RELEASE@/">
+  PandABlocks-FPGA Documentation
+</a>
