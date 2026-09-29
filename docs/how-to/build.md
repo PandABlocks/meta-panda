@@ -57,11 +57,13 @@
    To target a different machine set `KAS_MACHINE`, e.g.:
 
    ```bash
-   KAS_MACHINE=xu5-st1 kas-container build ./kas.yml
+   KAS_MACHINE=pandabrick kas-container build ./kas.yml
    ```
 
    The default machine is `pandabox`.  Output lands under
-   `build/tmp/deploy/images/<machine>`.
+   `build/tmp/deploy/images/<machine>`.  For the valid values, and which of
+   them build without supplying your own FPGA packages, see
+   [](/reference/machine-targets.md).
 
 5. (Optional) Collect the output files, for example for pandabox:
 
