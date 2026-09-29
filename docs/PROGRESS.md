@@ -1,7 +1,8 @@
 # Docs Rewrite Progress — meta-panda
 
 Tracks every target page for this repo. Update the relevant line **in the same commit** as the file
-it refers to. Statuses: ☐ todo · ◐ stub · ✅ converted · 🔍 needs-review · ⛔ blocked (→ issue #).
+it refers to. Statuses: ☐ todo · ◐ stub · ✅ converted · 🔍 needs-review · ⛔ blocked (→ issue #) ·
+➡️ moved-out (page now lives in another repo; linked from here with `xref:`).
 Page list expanded from `06-source-provenance-map.md`.
 
 ## Stage A — scaffold
@@ -14,7 +15,8 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ Pages deploy wired — `.github/workflows/docs.yml` switched from Sphinx to `myst build` (see Notes)
 
 ## Tutorials
-- ✅ tutorials/tutorial0_connecting_to_web_control — source: webcontrol/userguide/quick-start.rst — converted
+- ➡️ tutorials/tutorial0_connecting_to_web_control — source: webcontrol/userguide/quick-start.rst — converted here,
+  then moved to PandABlocks-webcontrol (`tutorials/connecting-to-web-control`); see Notes
 - ✅ tutorials/tutorial1_blinking_leds — source: tutorials/tutorial1_blinking_leds.rst — converted
 - ✅ tutorials/tutorial2_position_capture — source: tutorials/tutorial2_position_capture.rst — converted
 - ⛔ tutorials/tutorial3_position_compare — source: tutorials/tutorial3_position_compare.rst (stub) — blocked: capture
@@ -28,9 +30,10 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ how-to/packages — source: how-to/packages.rst — converted
 - ✅ how-to/upgrade-via-ssh — source: how-to/remote.rst — pre-5.0 + post-5.0 covered; 24V EEPROM DLS-only noted; gap audit verify noted
 - ✅ how-to/upgrade-via-web-admin — source: how-to/web-interface.rst — pre-5.0 zpg path + fresh SD card install added; zpg filename verify noted
-- ✅ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — converted (Prompt E); attribute widgets folded in; 4 widget subsections (View/Edit, Dropdown, Text Input, Checkbox) + trailing sentence kept as blocked: capture stub w/ issue link
-- ✅ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — split out (Prompt E); Saving a Design + Opening an Existing Design
-- ✅ how-to/monitor-attribute-values — source: webcontrol/userguide/monitoring_attribute_values.rst — converted
+- ➡️ how-to/use-web-control-to-set-up-a-panda — source: webcontrol/userguide/working_with_a_design.rst — converted (Prompt E); attribute widgets folded in; 4 widget subsections (View/Edit, Dropdown, Text Input, Checkbox) + trailing sentence kept as blocked: capture stub w/ issue link. Moved to PandABlocks-webcontrol; the outstanding screenshot capture moved with it
+- ➡️ how-to/save-restore-design — source: working_with_a_design.rst (Saving/Opening) — split out (Prompt E); Saving a Design + Opening an Existing Design. Moved to PandABlocks-webcontrol
+- ➡️ how-to/monitor-attribute-values — source: webcontrol/userguide/monitoring_attribute_values.rst — converted here,
+  then moved to PandABlocks-webcontrol; still referenced from `explanations/understanding-attribute-state`
 - ✅ how-to/integrate-with-a-panda — source: NEW (Interview5; client + fastcs) — skeleton written; xref probe preserved
 - ✅ how-to/test-firmware-changes — source: NEW (Interview5 §1-2) — authored
 - ✅ how-to/choose-fpga-bitstream — source: NEW (Interview5 §10; Interview3 §4) — authored
@@ -47,7 +50,8 @@ Page list expanded from `06-source-provenance-map.md`.
 - ✅ explanations/boot-process — converted from explanations/boot-process.rst
 - ✅ explanations/architecture — skeleton authored from Interview1; TCP/client/EPICS/data flow
 - ⛔ explanations/hardware-targets — blocked: author
-- ✅ explanations/web-control-ui-overview — converted from user_interface_overview.rst; screenshots reused
+- ➡️ explanations/web-control-ui-overview — converted from user_interface_overview.rst; screenshots reused.
+  Moved to PandABlocks-webcontrol
 - ✅ explanations/understanding-attribute-state — 8 states described; all 8 state icons recreated as standalone SVGs in `images/attribute-state/` (material-style glyphs in the colour spec) and wired in (Prompt C done; no malcolm reference in docs)
 - ✅ explanations/decisions + decisions/0001,0002,COPYME — kept from scaffold (no change)
 
@@ -57,7 +61,8 @@ Issues not yet created — Stage B (Prompt B) will create and link them. Blocked
 - ⛔ tutorials/tutorial4_snake_scan — issue #12 — human-capture
 - ⛔ reference/changes — issue #14 — verify (3.0->4.0)
 - ⛔ explanations/hardware-targets — issue #19 — author
-- ⛔ how-to/use-web-control-to-set-up-a-panda (widget screenshots + trailing sentence) — issue #13 — human-capture
+- ➡️ how-to/use-web-control-to-set-up-a-panda (widget screenshots + trailing sentence) — was issue #13 —
+  human-capture; no longer tracked here, the page and its blocker live in PandABlocks-webcontrol
 
 - ⛔ reference/machine-targets (hardware details) — issue #15 — verify
 
@@ -75,6 +80,14 @@ Issues not yet created — Stage B (Prompt B) will create and link them. Blocked
   files in-tree at their `06` paths (under `docs/_legacy_rst/...`). They also remain on
   `origin/main` / `origin/rel-v2023.2`. Screenshots stay reusable in place there; tutorial
   screenshots also live at `docs/images/`. Delete `_legacy_rst/` once conversion is complete.
+- **Web control pages moved out.** The five web control user-documentation pages
+  (`tutorials/connecting_to_web_control`, `how-to/use-web-control-to-set-up-a-panda`,
+  `how-to/save-restore-design`, `how-to/monitor-attribute-values`,
+  `explanations/web-control-ui-overview`) were deleted from this repo in `209a327` and now live in
+  [PandABlocks-webcontrol](https://github.com/PandABlocks/PandABlocks-webcontrol), whose docs are
+  published at <https://pandablocks.github.io/PandABlocks-webcontrol/main>. meta-panda links to them
+  with `xref:PandABlocks-webcontrol/...` (target registered in `myst.yml project.references`), so they
+  are no longer conversion targets for this repo.
 - **Logo / icon swap** already done upstream in the skeleton: `images/PandA-logo-for-black-background.svg`.
 - **xref/intersphinx prototype.** `myst.yml project.references` currently activates only
   `PandABlocks-client` (deployed). The probe link in `how-to/integrate-with-a-panda` resolves in

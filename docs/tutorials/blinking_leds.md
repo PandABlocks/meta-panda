@@ -6,7 +6,7 @@ so that different LEDs flash at different rates.
 ## Prerequisites
 
 - A PandA powered on and reachable in your browser
-  (see [](connecting_to_web_control.md)).
+  (see [Connecting to web control](xref:PandABlocks-webcontrol/tutorials/connecting-to-web-control)).
 - The `template_tutorial1_leds` design saved on your PandA (pre-loaded on all
   standard PandA images).
 

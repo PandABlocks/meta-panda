@@ -89,6 +89,7 @@ The `repo` keys available from this repository, as configured in
 | `PandABlocks-client` | `PandABlocks-client` | Sphinx (`objects.inv`) |
 | `PandABlocks-FPGA` | `PandABlocks-FPGA` | MyST (`myst.xref.json`) |
 | `PandABlocks-server` | `PandABlocks-server` | MyST (`myst.xref.json`) |
+| `PandABlocks-webcontrol` | `PandABlocks-webcontrol` | MyST (`myst.xref.json`) |
 | `fastcs-PandABlocks` | `fastcs-PandABlocks` | Sphinx (`objects.inv`) |
 
 `fastcs-PandABlocks` is present in `myst.yml` but commented out until that repo

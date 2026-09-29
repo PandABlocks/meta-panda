@@ -15,7 +15,7 @@ lose access to the web interface for control. Follow [*How do I authorise a publ
 1. Insert a USB stick into the PandA.
 2. Open the web admin interface at `http://<panda-hostname>/admin/`.
 3. Navigate to **Packages → List Installed Packages**.
-4. Select the **panda-webcontrol** package.
+4. Select the **python3-panda-webcontrol** package.
 5. Click on **delete selected packages** .
 
 ## Removing the panda-webcontrol package through ssh 
