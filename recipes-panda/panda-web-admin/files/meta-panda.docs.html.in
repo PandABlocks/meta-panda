@@ -1,0 +1,13 @@
+<!-- The release placeholder below is substituted at build time from the tag
+     this meta-panda checkout was built from, so this points at the
+     documentation for the system in this image. -->
+<h2>meta-panda</h2>
+
+<p>
+Documentation for the panda linux system.
+</p>
+
+<a target="_blank" rel="noopener noreferrer"
+   href="https://pandablocks.github.io/meta-panda/@RELEASE@/">
+  meta-panda Documentation
+</a>

@@ -1,7 +1,7 @@
 <!-- The release placeholder below is substituted at build time from the
      top-level panda-webcontrol-release.txt, so this points at the
      documentation for the release the image was built against. -->
-<h2>Web Control</h2>
+<h2>PandABlocks-webcontrol</h2>
 
 <p>
   Web Control provides a webserver that exposes a browser based Graphical User

@@ -1,7 +1,7 @@
 <!-- The release placeholder below is substituted at build time from the
      top-level panda-server-release.txt, so this points at the documentation
      for the server release the image was built against. -->
-<h2>TCP Server</h2>
+<h2>PandABlocks-server</h2>
 
 <p>
   The TCP server is meant for integration into Control systems like EPICS and

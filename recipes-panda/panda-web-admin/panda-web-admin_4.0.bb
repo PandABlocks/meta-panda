@@ -23,12 +23,39 @@ SRC_URI = " \
     file://panda-fpga.docs.html.in \
     file://panda-server.docs.html.in \
     file://panda-webcontrol.docs.html.in \
+    file://meta-panda.docs.html.in \
     file://fpga-release.txt \
     file://panda-server-release.txt \
     file://panda-webcontrol-release.txt \
     file://README.rst \
 "
 S = "${WORKDIR}"
+
+def meta_panda_docs_version(d):
+    """The docs version published for this meta-panda checkout.
+
+    The other components name a release file; meta-panda is this layer, so the
+    tag comes from the checkout itself.  Anything that is not exactly a tag --
+    a branch, a tarball with no .git, a commit past the last tag -- has no
+    versioned docs of its own, and `main` is where those are published.
+    """
+    import subprocess
+    try:
+        described = subprocess.run(
+            ["git", "-C", d.getVar("THISDIR"), "describe", "--tags", "--exact-match"],
+            capture_output=True,
+            text=True,
+        )
+    except OSError:
+        return "main"
+    if described.returncode != 0:
+        return "main"
+    return described.stdout.strip() or "main"
+
+# Read at parse time so it lands in the task signature: the package is then
+# rebuilt when the tag changes, rather than restored from sstate with a link to
+# whatever it was built at before.
+META_PANDA_DOCS_VERSION = "${@meta_panda_docs_version(d)}"
 
 inherit python3native
 DEPENDS = " \
@@ -68,13 +95,14 @@ do_install() {
     # top-level release file that generates that component's recipes.
     install -d ${D}/opt/etc/www
     install_docs() {
-        sed "s|@RELEASE@|$(cat ${WORKDIR}/$2)|g" \
+        sed "s|@RELEASE@|$2|g" \
             ${WORKDIR}/$1.docs.html.in > ${D}/opt/etc/www/$1.docs.html
         chmod 0644 ${D}/opt/etc/www/$1.docs.html
     }
-    install_docs panda-fpga fpga-release.txt
-    install_docs panda-server panda-server-release.txt
-    install_docs panda-webcontrol panda-webcontrol-release.txt
+    install_docs panda-fpga "$(cat ${WORKDIR}/fpga-release.txt)"
+    install_docs panda-server "$(cat ${WORKDIR}/panda-server-release.txt)"
+    install_docs panda-webcontrol "$(cat ${WORKDIR}/panda-webcontrol-release.txt)"
+    install_docs meta-panda "${META_PANDA_DOCS_VERSION}"
 }
 
 FILES:${PN} += " \
