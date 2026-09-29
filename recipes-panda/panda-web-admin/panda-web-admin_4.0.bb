@@ -20,7 +20,6 @@ SRC_URI = " \
     file://templates/footer.html \
     file://templates/index.html \
     file://templates/nav.html \
-    file://meta-panda.docs.html \
     file://README.rst \
 "
 S = "${WORKDIR}"
@@ -56,12 +55,9 @@ do_install() {
     install -m 0755 ${WORKDIR}/rootfs-version.sh ${D}/${bindir}
     cp -r ${WORKDIR}/templates ${D}/${datadir}/web-admin
     cp -r ${WORKDIR}/static ${D}/${datadir}/web-admin
-    mkdir -p ${D}/opt/etc/www
-    install -m 0644 ${WORKDIR}/meta-panda.docs.html ${D}/opt/etc/www
 }
 
 FILES:${PN} += " \
     ${bindir} \
     ${datadir} \
-    /opt/etc/www \
 "

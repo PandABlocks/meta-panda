@@ -13,18 +13,6 @@ SRC_URI += " \
 require recipes-panda/panda-server-generated/panda-server-release.inc
 S = "${WORKDIR}/git"
 
-inherit python3native
-
-DEPENDS = " \
-    python3-sphinx-native \
-    python3-docutils-native \
-    python3-six-native \
-    python3-sphinx-rtd-theme-native \
-    python3-babel-native \
-    python3-jinja2-native \
-    python3-pygments-native \
-    python3-imagesize-native \
-"
 RDEPENDS:${PN} += "python3"
 
 do_configure() {
@@ -42,10 +30,6 @@ do_install() {
     install -m 0644 ${WORKDIR}/panda-extension-server.service ${D}/${systemd_system_unitdir}
     install -m 0755 ${WORKDIR}/panda-extension-server-wrapper ${D}/${bindir}
     install -m 0755 ${WORKDIR}/panda-server-wrapper ${D}/${bindir}
-    install -d ${D}/opt/share/www
-    cp -r ${S}/build/html ${D}/opt/share/www/panda-server
-    install -d ${D}/opt/etc/www
-    install -m 0644 ${S}/etc/panda-server.docs.html  ${D}/opt/etc/www
 }
 
 inherit systemd
@@ -56,4 +40,3 @@ SYSTEMD_SERVICE:${PN} = " \
 SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 FILES:${PN} += "${bindir}"
-FILES:${PN} += "/opt/share/www /opt/etc/www"
